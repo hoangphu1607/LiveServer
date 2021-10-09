@@ -12,19 +12,18 @@ class home extends controllers{
             "thongtinsach"=>$this->sach->thongtinsach(),
         ]);
     }
-
     public function chi_tiet_loaisach($id){
         $this->view("trangchu",[
-            "page"=>"giua2",
-            "id"=>$id,
+            "page"=>"thongtinsach",
             "phanloai"=>$this->sach->loaisach(),
+            "thongtinsach"=>$this->sach->thongtinsach_theoloai($id)
         ]);
     }
     public function thongtinsach($id){
         $this->view("trangchu",[
             "page"=>"chitiet_sach",
-            "id"=>$id,
             "phanloai"=>$this->sach->loaisach(),
+            "ctsach"=>$this->sach->chitiet_sach($id),
         ]);
     }
 

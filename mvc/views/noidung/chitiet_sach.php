@@ -1,30 +1,43 @@
     <!-- Product section-->
-     <section class="py-1">
+     <section class="py-0">
+     <?php $kq_ctsach = json_decode($data["ctsach"], true);?>
             <div class="container-fluid px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-3"><img class="card-img-top mb-5 mb-md-0 img-thumbnail hinhanhct" src="public/anhsach/sach_lt_java.jpg" alt="..." /></div>
-                    <div class="col-md-9">
-                        <h1 class="display-5 fw-bolder">Shop item template</h1>
-                        <div class="fs-5 mb-5">
-                            <span class="text-decoration-line-through">$45.00</span>
-                            <span>$40.00</span>
+                    <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0 img-thumbnail hinhanhct" src="<?php  echo $kq_ctsach[0]["AnhDaiDien"]; ?>" alt="<?php  echo $kq_ctsach[0]["TenSach"]; ?> " /></div>
+                    <div class="col-md-8">
+                        <h1 class="display-5 fw-bolder"> <?php  echo $kq_ctsach[0]["TenSach"]; ?> </h1>
+                        <div class="fs-5 mb-3">
+                        <a href="./home/chi_tiet_loaisach/<?php echo $kq_ctsach[0]["MaLoaiSach"]  ?>" class="badge badge-success">Loại sách: <?php echo $kq_ctsach[0]["TenLoaiSach"]; ?> </a> <br>
+                        <a href="#" class="badge badge-info">Tên tác giả: <?php echo $kq_ctsach[0]["TenTG"]; ?> </a>
                         </div>
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                        <p class="lead"><?php echo $kq_ctsach[0]["Noidungngan"]; ?> </p>
                         <div class="d-flex">
-                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                            <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                 <i class="bi-cart-fill me-1"></i>
-                                Add to cart
+                                Đặt sách
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+         
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <h2 class="fw-bolder mb-4">Tổng Quan Sách</h2>
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-12">
+                <p class="lead"><?php echo $kq_ctsach[0]["Chuong"]; ?></p>
+                </div>
+                </div>
+            </div>
         </section>
+
+      
+    
         <!-- Related items section-->
         <section class="py-1 bg-light">
             <div class="container-fluid px-4 px-lg-5 mt-5">
-                <h2 class="fw-bolder mb-4">Related products</h2>
+                <h2 class="fw-bolder mb-4">Sách liên quan</h2>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
                         <div class="card h-100">
