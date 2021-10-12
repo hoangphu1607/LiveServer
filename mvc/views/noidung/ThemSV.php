@@ -19,54 +19,52 @@
                         </div>
                         <form class="user">
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="TemSach"
-                                    placeholder="Tên Sách" name="TenSach">
+                                <input type="text" class="input-group" id="MSSV"
+                                    placeholder="Mã Số Sinh Viên" name="MSSV">
                             </div>
                             <div class="form-group ">
-                                <select name="MaLoaiSach" id="MaLoaiSach" class="form-select" aria-label="Default select example">
-                                    <option value="volvo">Loại Sách 1</option>
-                                    <option value="saab">Loại Sách 2</option>                                                                      
+                                <input type="text" class="input-group" id="TenSv"
+                                    placeholder="Tên Sinh Viên" name="TenSv">
+                            </div>
+                            <div class="form-group ">
+                                <input type="text" class="input-group" id="CMND"
+                                    placeholder="CMND" name="CMND">
+                            </div>                            
+                            <div class="form-group ">
+                                <select name="GioiTinh" id="GioiTinh" class="form-select" aria-label="Default select example">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nữ</option>                                                                      
                                 </select>                                
                             </div>
                             <div class="form-group ">
-                                <select name="MaTacGia" id="MaTacGia" class="form-select" aria-label="Default select example">
-                                    <option value="volvo" >Tác Giả 1</option>
-                                    <option value="saab">Tác Giả 2</option>                                                                     
+                                <select name="KhoaHoc" id="Khoa" class="form-select" aria-label="Default select example">
+                                    <option value="K43" >Khóa 43</option>
+                                    <option value="K44">Khóa 44</option> 
+                                    <option value="K45">Khóa 45</option>                                                                    
+                                </select>                                
+                            </div>   
+                            <div class="form-group ">
+                                <select name="KhoaCN" id="Khoa" class="form-select" aria-label="Default select example">
+                                    <option value="CNTT" >Công Nghệ Thông Tin</option>
+                                    <option value="OTo">Ô Tô</option> 
+                                    <option value="Điện">Điện</option>                                                                    
                                 </select>                                
                             </div>                            
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="Gia"
-                                    placeholder="Giá Tiền" name="Gia">
+                                <input type="text" class="input-group" id="MaQuyen"
+                                    placeholder="Quyền truy cập" name="MaQuyen">
                             </div>
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="SoLuong"
-                                    placeholder="Số Lượng" name="SoLuong">
-                            </div>                            
-                            <div class="form-group ">
-                                <label for="Anh">Chọn Ảnh Đại Diện</label>
-                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="Anh">                                
+                                <input type="password" class="input-group" id="MatKhau"
+                                    placeholder="Mật Khẩu" name="MatKhau">
                             </div>
-                            <div class="form-group ">
-                                <label for="multiple">Chọn Các Ảnh Chi Tiết</label>
-                                <input type="file" name="multiple" multiple="multiple" id="multiple_img" accept="image/png, image/jpeg">
-                            </div>
-                            <div class="form-group ">
-                                <label for="time">Thời Gian Nhập Sách: </label>
-                                <input type="date" id="time" name="time">
-                            </div>
-                            <div class="form-group ">
-                               <textarea name="noidungngna" id="Noidungngan" cols="30" rows="10"></textarea>
-                            </div>
-                            
-                            
-
                             <!-- <div class="form-group">
                                 <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                                     placeholder="Email Address">
                             </div> -->
                             
                             <a href="#" class="btn btn-primary btn-user btn-block">
-                                Thêm Sách Vào Thư Viện
+                               Thêm Sinh Viên
                             </a>
                             <!-- <hr>
                             <a href="index.html" class="btn btn-google btn-user btn-block">
