@@ -34,7 +34,8 @@ class home extends controllers{
             "thongtinsach"=>$this->sach->thongtinsach_theoloai($id,$trang),
             "sotrang" =>$this->sach->sotrang_theoloai($id),
             "check"=>1,
-            "id"=>$id
+            "id"=>$id,
+            "trang"=>$trang
         ]);
      }
      catch (\Exception $ex) {

@@ -13,13 +13,13 @@
 
             <?php if ($data['check'] == 1) {
                 for ($i = 1; $i <= $sotrang; $i++) {
-                    if ($i != $tranght) {
+                    
                         if ($i > $tranght - 3 && $i < $tranght + 3) { ?>
 
-                            <li class="page-item"><a class="page-link" href="./home/chi_tiet_loaisach/<?php echo $data["id"] ?>/<?php echo $i ?>"><?php echo $i ?></a></li>
+                            <li class="page-item"><a <?php if ($i == $tranght) echo "style='background-color:#C1FFC1 ;' "; ?> class="page-link" href="./home/chi_tiet_loaisach/<?php echo $data["id"] ?>/<?php echo $i ?>"><?php echo $i ?></a></li>
                         <?php
                         }
-                    }
+                    
                 }
             } else if ($data['check'] == 0) {
                 for ($i = 1; $i <= $sotrang; $i++) {
