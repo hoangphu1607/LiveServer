@@ -4,7 +4,8 @@
 <head>
 
     <meta charset="utf-8">
-    <base href="http://localhost/live/">
+    <!-- <base href="http://localhost/live/"> -->   <!-- Không có cổng thì chạy cái này -->
+    <base href="http://localhost:8080/LiveServer/">    <!-- Ai có cổng thì chạy cái này -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
