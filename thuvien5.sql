@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 09, 2021 lúc 11:55 AM
+-- Thời gian đã tạo: Th10 12, 2021 lúc 09:13 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.10
 
@@ -236,7 +236,39 @@ INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `Chuong`, `SoLuong`, `Ng
 (1, 'Lập trình căn bản', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd\r\n', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......\r\n', 10, '2012-09-12', 'public/anhsach/sach_lt_java.jpg', '200000', 4, 1),
 (2, 'AV chuyên ngành', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 100, '2013-09-18', 'public/anhsach/sach_lt_java.jpg', '120000', 4, 1),
 (3, 'Tư tưởng HCM', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 50, '2016-08-10', 'public/anhsach/sach_lt_java.jpg', '300000', 2, 3),
-(4, 'Toán CC A3', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 120, '2014-09-18', 'public/anhsach/sach_lt_java.jpg', '125000', 4, 1);
+(4, 'Toán CC A3', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 120, '2014-09-18', 'public/anhsach/sach_lt_java.jpg', '125000', 4, 1),
+(6, 'sach1', 'dhaspfncaspjfasfasfamaslfasfmasasasdasf', 'Chương 1: .....\r\nChương 2: .....\r\nChương 3: .....\r\nChương 4: .....\r\nChương 5: .....', 100, '2014-10-17', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1),
+(7, 'sach2', 'japsljasfjafasnfaslfasnfaslnfaslnfasnflasnflasnflknas', 'Chương 1:', 5, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '60', 1, 1),
+(8, 'sach3', 'gao ồ gao ồ gaooooooooooooo', 'Chương trình', 50, '2016-10-10', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1),
+(9, 'sach4', 'nsfànlầnlf', 'Chương 2:', 15, '2015-10-17', 'public/anhsach/sach_lt_java.jpg', '30', 1, 1),
+(10, 'sach5', 'aaaaa', 'Chương 3', 30, '2016-10-19', 'public/anhsach/sach_lt_java.jpg', '40', 1, 1),
+(11, 'sach6', 'bbbbbbbbbbbbbbbb', 'Chương 3:', 40, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '55', 2, 1),
+(12, 'sach7', 'ccccccccccccccc', '1', 21, '2016-10-18', 'public/anhsach/sach_lt_java.jpg', '30', 2, 1),
+(13, 'sach8', 'ddddddddddddddddd', '2', 22, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2),
+(14, 'sach9', 'eeeeeeeeeeee', '3', 100, '2014-10-15', 'public/anhsach/sach_lt_java.jpg', '22', 2, 2),
+(15, 'sach10', 'âđssâsađasssssaa', '4', 0, '0000-00-00', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2),
+(16, 'sach11', 'ádnalsálflấlfn', '5', 10, '2021-10-13', 'public/anhsach/sach_lt_java.jpg', '50', 2, 2),
+(17, 'sach11', 'ádnálalsfá', '4', 20, '2019-10-16', 'public/anhsach/sach_lt_java.jpg', '20', 3, 2),
+(18, 'sach12', 'áđâsđasadầ', '4', 30, '2014-10-07', 'public/anhsach/sach_lt_java.jpg', '55', 3, 3),
+(19, 'sach12', 'asfalskfalskfnaslnf', '6', 25, '2015-10-21', 'public/anhsach/sach_lt_java.jpg', '35', 3, 3),
+(20, 'sach13', 'asbdlasflasf', '7', 30, '2016-10-25', 'public/anhsach/sach_lt_java.jpg', '10', 3, 3),
+(21, 'sach14', 'asggfasdasd', '5', 20, '2015-10-23', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3),
+(22, 'sach15', 'asflasflasfna;sfn', '7', 21, '2014-10-20', 'public/anhsach/sach_lt_java.jpg', '80', 3, 3),
+(23, 'sach16', 'alsklfasnfansfjasfjas;f', '9', 22, '2017-10-18', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3),
+(24, 'sach17', 'asasfasnfas,fmasfasf', '10', 100, '2012-10-16', 'public/anhsach/sach_lt_java.jpg', '40', 3, 3),
+(25, 'sach18', 'asasgfasfasdasd', '11', 26, '2018-10-15', 'public/anhsach/sach_lt_java.jpg', '90', 4, 3),
+(26, 'sach19', 'asfassafafas', '12', 60, '2018-10-02', 'public/anhsach/sach_lt_java.jpg', '600', 4, 3),
+(27, 'sachhh', 'asasfasfasfasf', '13', 60, '2017-10-11', 'public/anhsach/sach_lt_java.jpg', '20', 4, 2),
+(28, 'sach211', 'asasfasfsa', '14', 50, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '12', 4, 2),
+(29, 'sach113', 'asasfasfjasfbjaksbf', '15', 40, '2014-10-18', 'public/anhsach/sach_lt_java.jpg', '45', 2, 2),
+(30, 'sach34', 'asfasfasfs', '12345', 78, '2016-10-27', 'public/anhsach/sach_lt_java.jpg', '6000', 4, 2),
+(31, 'sach35', 'asdasfasfas', '12345', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2),
+(32, 'sachaa', 'asbfasbflsfblasf', '12345', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3),
+(33, 'sachss', 'asasfasfasfas', '12345', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3),
+(34, 'sacht', 'âfagagagága', '12345', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1),
+(35, 'sachj', 'asasfasgagas', '12345', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2),
+(36, 'sachck', 'asffafasfagfa', '12345', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3),
+(37, 'sachcuoi', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -423,7 +455,7 @@ ALTER TABLE `phieumuon`
 -- AUTO_INCREMENT cho bảng `sach`
 --
 ALTER TABLE `sach`
-  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT cho bảng `sinhvien`
