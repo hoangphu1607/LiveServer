@@ -30,7 +30,7 @@
         <ul class="navbar-nav bg-gradient-nam sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
                     <img src="public/img/logo_vlute.png" alt="logo trường đại học sư phạm kỹ thuật vĩnh long" id="logo_truong">
                 </div>
@@ -42,7 +42,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Menu</span></a>
             </li>
