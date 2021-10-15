@@ -1,10 +1,11 @@
 <?php
 class home extends controllers{
-    private $sach;
+    public $sach;
     private $get_url;
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
+     
     }
     // public function sayhi($trang = 1){
     //     $this->view("trangchu",[
@@ -29,13 +30,13 @@ class home extends controllers{
             $trang=1;
         }
         $this->view("trangchu",[
-            "page"=>"thongtinsach",
+            "page"=>"sach",
             "phanloai"=>$this->sach->loaisach(),
             "thongtinsach"=>$this->sach->thongtinsach_theoloai($id,$trang),
             "sotrang" =>$this->sach->sotrang_theoloai($id),
             "check"=>1,
             "id"=>$id,
-            "trang"=>$trang
+            "trang"=>$trang,
         ]);
      }
      catch (\Exception $ex) {
@@ -64,7 +65,7 @@ class home extends controllers{
             }
         ////    
             $this->view("trangchu",[
-            "page"=>"thongtinsach",
+            "page"=>"sach",
             "phanloai"=>$this->sach->loaisach(),
             "thongtinsach"=>$this->sach->phantrang_sach($trang),
             "sotrang" => $this->sach->sotrang(),
@@ -79,6 +80,22 @@ class home extends controllers{
         }
      
     }
+    public function anh(){
+        if(isset($_POST["gui"]) ){
+            $anh = $_FILES["anh"];
+            $nam = $this->model("ad");
+            if($nam->insertdata($anh)){
+                echo "thanh cong";
+            }
+            else{
+                echo "that bai";
+            }
+        }
+        $this->view("test",[
+            "page"=>"giua"
+        ]);
+    }
+
 
 } 
 ?>

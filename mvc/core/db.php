@@ -1,5 +1,5 @@
 <?php 
-class db{
+class db {
     public $conn;
     protected  $server_name ="localhost";
     protected $user_name ="root";

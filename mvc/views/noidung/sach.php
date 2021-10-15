@@ -1,8 +1,17 @@
+<div class="container-fluid">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông tin sách</h1>
+</div>
+<?php //require_once "thongtinsach.php" ?>
+
 <div class="row">
     <?php
     $kq_sach = json_decode($data["thongtinsach"], true);
     $sotrang = $data["sotrang"];
     $tranght = $data["trang"];
+    if ($data['check'] == 1) {
+        $id = $data['id'];
+    }
     foreach ($kq_sach as $sach) { ?>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card shadow mb-4">
@@ -27,5 +36,6 @@
     }
     ?>
    
-     <?php require_once "giua2.php" ?>
+     <?php require_once "phantrang.php" ?>
+</div>
 </div>

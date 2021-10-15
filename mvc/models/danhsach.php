@@ -51,13 +51,15 @@ class danhsach extends db
         $qr3 = "SELECT MaSach FROM `sach`";
         $row = mysqli_query($this->conn, $qr3);
         $tong_so_sp = $row->num_rows;
-        return ceil($tong_so_sp / $this->sotin1trang);        
+        return ceil($tong_so_sp / $this->sotin1trang);
+        
     }
     public function sotrang_theoloai($id){
         $qr3 = "SELECT MaSach FROM `sach` WHERE MaLoaiSach=$id";
         $row = mysqli_query($this->conn, $qr3);
         $tong_so_sp = $row->num_rows;
-        return ceil($tong_so_sp / $this->sotin1trang);        
+        return ceil($tong_so_sp / $this->sotin1trang);
+        
     }
 
     public function phantrang_sach($trang)
@@ -65,7 +67,6 @@ class danhsach extends db
         $tranghientai = ($trang - 1) * $this->sotin1trang;
         $qr4 = "SELECT * FROM `sach` LIMIT  $tranghientai,$this->sotin1trang";
         $row2 = mysqli_query($this->conn, $qr4);
-
         $mang = array();
         while ($kq = mysqli_fetch_array($row2)) {
             $mang[] = $kq;

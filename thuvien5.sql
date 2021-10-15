@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 12, 2021 lúc 09:13 AM
+-- Thời gian đã tạo: Th10 13, 2021 lúc 08:11 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.10
 
@@ -268,7 +268,20 @@ INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `Chuong`, `SoLuong`, `Ng
 (34, 'sacht', 'âfagagagága', '12345', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1),
 (35, 'sachj', 'asasfasgagas', '12345', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2),
 (36, 'sachck', 'asffafasfagfa', '12345', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3),
-(37, 'sachcuoi', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2);
+(37, 'sachcuoi', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(38, 'sachcuoi loai 4/1', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(39, 'sachcuoi loai 4/2', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(40, 'sach35 ', 'asdasfasfas', '12345', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2),
+(41, 'sachaa 4/3', 'asbfasbflsfblasf', '12345', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3),
+(42, 'sachss 4/4', 'asasfasfasfas', '12345', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3),
+(43, 'sacht 4/6', 'âfagagagága', '12345', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1),
+(44, 'sachj 4/7', 'asasfasgagas', '12345', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2),
+(45, 'sachck 4/8', 'asffafasfagfa', '12345', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3),
+(46, 'sachcuoi 4/9', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(47, 'sachcuoi loai 4/10', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(48, 'sachcuoi loai 4/11', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(49, 'sachcuoi loai 4/12', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
+(50, 'sachcuoi loai 4/13', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -283,9 +296,10 @@ CREATE TABLE `sinhvien` (
   `CMND` int(11) NOT NULL,
   `GioiTinh` text COLLATE utf8_unicode_ci NOT NULL,
   `MaKhoa` int(11) NOT NULL,
-  `MaQuyen` int(11) NOT NULL,
+  `MaQuyen` int(11) NOT NULL DEFAULT 3,
   `MatKhau` text COLLATE utf8_unicode_ci NOT NULL,
-  `MaKhoaCN` int(11) NOT NULL
+  `MaKhoaCN` int(11) NOT NULL,
+  CONSTRAINT KIEMTRA CHECK (MaQuyen != 1 AND MaQuyen !=2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -294,7 +308,7 @@ CREATE TABLE `sinhvien` (
 
 INSERT INTO `sinhvien` (`IDSV`, `MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) VALUES
 (1, 18004107, 'Nguyễn Lê Ngọc Seng', 331123321, 'Nam', 1, 3, '123465', 1),
-(2, 18004085, 'Mai Nhật Nem', 331456654, 'Nam', 1, 3, '123', 1),
+(2, 18004085, 'Mai Nhật Nem', 331456654, 'Nam', 1, 3, '$2y$10$HzBDIM8zanBWzAGvfPXWKOTSNktyIPygSb.vxnTHaHT0vVG6jMNAG', 1),
 (3, 18004099, 'Võ Hoàng Phúu', 331012210, 'Nam', 1, 3, '123', 1);
 
 -- --------------------------------------------------------
@@ -455,7 +469,7 @@ ALTER TABLE `phieumuon`
 -- AUTO_INCREMENT cho bảng `sach`
 --
 ALTER TABLE `sach`
-  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT cho bảng `sinhvien`

@@ -7,5 +7,9 @@ class controllers{
     public function view($view,$data=[]){
         require_once "./mvc/views/".$view.".php";
     }
+    // public function contro($model){
+    //     require_once "./mvc/controllers/".$model.".php";
+    //     return new $model;
+    // }
 }
 ?>
