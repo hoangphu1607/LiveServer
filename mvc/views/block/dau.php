@@ -4,7 +4,8 @@
 <head>
 
     <meta charset="utf-8">
-    <base href="http://localhost/live/">
+    <!-- <base href="http://localhost/live/"> -->
+    <base href="http://localhost:8080/LiveServer/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -20,6 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/hoangphu.css">
 </head>
 
 <body id="page-top">

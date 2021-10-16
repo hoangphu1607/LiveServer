@@ -1,6 +1,10 @@
 <?php
 class ThemSV extends controllers{
-
+    private $fileExcel;
+    public function __construct()
+    {
+        $this->fileExcel = $this->model("themfileExcel");
+    }
 
     function sayhi(){        
         $this->view("trangchu",[
@@ -10,8 +14,10 @@ class ThemSV extends controllers{
     
     public function themfileExcel(){
         $this->view("trangchu",[
-            "page" => "themfileExcel"            
+            "page" => "ThemSV" ,
+            "themfileExcel"=>$this->file->addSV()
         ]);
     }
+
 } 
 ?>

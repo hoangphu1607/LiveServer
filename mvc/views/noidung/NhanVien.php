@@ -20,9 +20,19 @@
                         </div>
                         <form class="user" method="POST" enctype="multipart/form-data">
                             <div class="form-group ">
-                                <label for="file">Chọn File Excel</label>
-                                <input type="file" id="fileExecl" accept="file_extension" name="fileExecl">                                
+                                <input type="text" class="input-group" id="MaNhanVien"
+                                    placeholder="Mã Nhân Viên" name="MaNhanVien">
                             </div>
+                            <div class="form-group ">
+                                <input type="text" class="input-group" id="TenNhanVien"
+                                    placeholder="Tên Nhân Viên" name="TenNhanVien">
+                            </div>
+                            <div class="form-group ">
+                                <select name="GioiTinh" id="GioiTinh">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nu</option>
+                                </select>
+                            </div>                            
                             <div class="form-group ">
                                 <input type="submit" name="submit" value="Gửi" class="btn btn-success">
                             </div>
