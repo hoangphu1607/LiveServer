@@ -7,7 +7,17 @@
 <script src="public/js/modal/modal.js"></script>
 <link rel="stylesheet" href="public/css/hoangphu.css">
 <div class="container-fluid">
-
+<?php     
+    if(isset($data['result'])){
+        $kq = $data['result'];
+        if($kq == true){
+            echo "Thêm Thành Công";
+        }
+        else
+            echo "Thêm Thất Bại";
+    }       
+    
+?>
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
@@ -18,11 +28,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Thêm Khoa Chuyên Ngành</h1>
                         </div>
-                        <form class="user">
-                            <div class="form-group ">
-                                <input type="text" class="input-group" id="Khoa"
-                                    placeholder="Mã Khoa" name="Khoa">
-                            </div>
+                        <form class="user" action="./quantri/addKhoa" method="POST">                            
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="TenKhoa"
                                     placeholder="Tên Khoa" name="TenKhoa">
@@ -33,10 +39,7 @@
                                     placeholder="Email Address">
                             </div> -->
                             <div class="form-group ">
-                                <button class="btn btn-success">
-                                    <i class="fas fa-user-plus"></i>
-                                    <span>Thêm Khoa</span> 
-                                </button>
+                                <input type="submit" name="submit" value="Gửi" class="btn btn-success">
                             </div>
                             <!-- <hr>
                             <a href="index.html" class="btn btn-google btn-user btn-block">

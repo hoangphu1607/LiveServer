@@ -7,7 +7,17 @@
 <script src="public/js/modal/modal.js"></script>
 <link rel="stylesheet" href="public/css/hoangphu.css">
 <div class="container-fluid">
-
+<?php     
+    if(isset($data['result'])){
+        $kq = $data['result'];
+        if($kq == true){
+            echo "Thêm Thành Công";
+        }
+        else
+            echo "Thêm Thất Bại";
+    }       
+    
+?>
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
@@ -16,12 +26,14 @@
                 <div class="col-lg-7 div_center">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Chọn File</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Thêm Loại Sách</h1>
                         </div>
-                        <form class="user" method="POST" enctype="multipart/form-data">
+                        <form class="user" method="POST" enctype="multipart/form-data" action="./quantri/addLoaiSach">
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="MaLoaiSach"
-                                    placeholder="Mã Loại Sách" name="MaLoaiSach">
+                                <input type="text" class="input-group" id="MaLoaiSach" 
+                                value="<?php $id_sach = $data['dongcuoi'];
+                                echo ($id_sach["MaLoaiSach"]);  
+                                ?>" placeholder="Mã Loại Sách" name="MaLoaiSach" readonly>
                             </div>
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="TenLoaiSach"
@@ -32,6 +44,7 @@
                             </div>
                         </form>
                         <hr>
+                        
                         <!-- <div class="text-center">
                             <a class="small" href="forgot-password.html">Forgot Password?</a>
                         </div> -->

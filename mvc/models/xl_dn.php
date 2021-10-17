@@ -11,7 +11,7 @@ class xl_dn extends db{
             if(password_verify($matkhau,$mk_hash) == true){
                 $_SESSION["dangnhap"][0]=$kq_tv["IDSV"];
                 $_SESSION["dangnhap"][1]=$kq_tv["HoTen"];
-                header('Location: http://localhost/live/');
+                header('Location: http://localhost:8080/liveserver/');
                 
             }
             else{
