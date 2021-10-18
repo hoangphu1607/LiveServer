@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
+    <script src="public/js/thongbao.js"></script>
 </head>
 
 <body id="page-top">
@@ -155,13 +156,20 @@
 
         </ul>
         <!-- End of Sidebar -->
-
+        <?php 
+            if(isset($data["thongbao"])){
+               echo "<script>
+            
+                 alert('vui long nhập tên sách cần tìm');
+    
+               </script>";
+              
+            } ?>                      
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
+         
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <?php
                 if (isset($data["hiden"]) ==false) { ?>
@@ -173,11 +181,12 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="./home/timkiem" method="POST">
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="./home/timkiem/" method="GET">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="tk_tensach">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="q">
+                                <!-- <input type="hidden" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="p" value="timkiem" > -->
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" name="gui_tk">
+                                    <button class="btn btn-primary" type="submit" >
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
@@ -194,11 +203,11 @@
                                 </a>
                                 <!-- Dropdown - Messages -->
                                 <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search" action="./home/timkiem" method="POST">
+                                    <form class="form-inline mr-auto w-100 navbar-search" action="./home/timkiem/" method="GET">
                                         <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="tk_tensach">
+                                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="q">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit" name="gui_tk">
+                                                <button class="btn btn-primary" type="submit">
                                                     <i class="fas fa-search fa-sm"></i>
                                                 </button>
                                             </div>

@@ -75,11 +75,18 @@ class danhsach extends db
         $tranghientai = ($trang - 1) * $this->sotin1trang;
         $qr4 = "SELECT * FROM `sach` WHERE `TenSach` LIKE '%$tensach%' ORDER BY `MaSach` DESC LIMIT $tranghientai,$this->sotin1trang";
         $row2 = mysqli_query($this->conn, $qr4);
-        $mang = array();
-        while ($kq = mysqli_fetch_array($row2)) {
-            $mang[] = $kq;
+        if($row2->num_rows > 0){
+            $mang = array();
+            while ($kq = mysqli_fetch_array($row2)) {
+                $mang[] = $kq;
+            }
+            return json_encode($mang);
         }
-        return json_encode($mang);
+        else{
+            $mang = 0;
+            return json_encode($mang);
+        }
+     
     }
     
 }

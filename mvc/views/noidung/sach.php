@@ -15,6 +15,15 @@
     if ($data['check'] == 2) {
         $tensach = $data['tensach'];
     }
+    if($kq_sach == 0) { ?>
+<div class="container-fluid">
+<div class="text-center">
+    <img src="public/img/thongbao.png" alt="không tìm thấy sản phẩm" id="thongbao">
+    <h2 class="text-gray-500 mb-0">Không có thông tin sách mà bạn tìm </h2>
+    <a href="index.php">&larr; Quay về trang chủ </a>
+</div>
+</div>
+    <?php } else {
     foreach ($kq_sach as $sach) { ?>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card shadow mb-4">
@@ -36,7 +45,7 @@
             </div>
         </div>
     <?php
-    }
+    }}
     ?>
    
      <?php require_once "phantrang.php" ?>
