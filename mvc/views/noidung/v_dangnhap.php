@@ -5,7 +5,7 @@
 <?php
     // $kq = json_decode($data["dangnhap"], true);
     if (isset($data["dangnhap"])) { 
-        $kq = json_decode($data["dangnhap"], true); ?>
+        $kq = json_decode($data["dangnhap"], true);?>
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>thông báo: </strong> <?php echo $kq ?> .
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -29,13 +29,27 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
+                                <?php if(isset($data["phanquyen"])){?>
+                                <h1 class="h4 text-gray-900 mb-4">Đăng nhập quản trị</h1>
+                                <?php } else {?>
+                                    <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
+                                    <?php } ?>
                             </div>
-                            <form class="user" action="./dangnhap/xldn" method="POST">
+                            <?php if(isset($data["phanquyen"])){?>
+                                <form class="user" action="./admin/xldn" method="POST">
+                            <?php } else {?>
+                                <form class="user" action="./dangnhap/xldn" method="POST">
+                            <?php } ?>
                                 <div class="form-group">
+                                <?php if(isset($data["phanquyen"])){?>
                                     <input type="number" class="form-control form-control-user"
                                         id="mssv"
+                                        placeholder="Nhập chứng minh nhân dân " name="mssv">
+                                        <?php } else {?>
+                                        <input type="number" class="form-control form-control-user"
+                                        id="mssv"
                                         placeholder="Nhập mã số sinh viên " name="mssv">
+                                        <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user"

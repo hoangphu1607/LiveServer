@@ -4,8 +4,7 @@
 <head>
 
     <meta charset="utf-8">
-    <!-- <base href="http://localhost/live/"> -->
-    <base href="http://localhost:8080/LiveServer/">
+    <base href="http://localhost/live/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -21,7 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/hoangphu.css">
 </head>
 
 <body id="page-top">
@@ -98,26 +96,33 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
+            <!-- dau qt-->
+            <?php if(isset($_SESSION["dangnhap"]) && isset($_SESSION["dangnhap"][2])) { ?>
             <div class="sidebar-heading">
-                Addons
+                Quản trị
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Quản lý</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">Thư viện:</h6>
+                        <a class="collapse-item" href="login.html">Quản lý sách</a>
+                        <a class="collapse-item" href="register.html">Quản lý loại sách</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Tài khoản:</h6>
+                        <?php if($_SESSION["dangnhap"][2] == 2) {?>
+                        <a class="collapse-item" href="404.html">Tài khoản giáo viên</a>
+                        <?php } ?>
+                        <a class="collapse-item" href="blank.html">Tài khoản sinh viên</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Thông tin khác:</h6>
+                        <a class="collapse-item" href="404.html">Khóa học</a>
+                        <a class="collapse-item" href="blank.html">Khoa chuyên ngành</a>
                     </div>
                 </div>
             </li>
@@ -126,19 +131,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Thống kê</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Mượn trả</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
+            <?php }?>
+            <!-- cuoi qt-->
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -158,7 +164,7 @@
 
                 <!-- Topbar -->
                 <?php
-                if (isset($data["hiden"]) == false) { ?>
+                if (isset($data["hiden"]) ==false) { ?>
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
@@ -167,11 +173,11 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="./home/timkiem" method="POST">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="tk_tensach">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
+                                    <button class="btn btn-primary" type="submit" name="gui_tk">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
@@ -188,11 +194,11 @@
                                 </a>
                                 <!-- Dropdown - Messages -->
                                 <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                    <form class="form-inline mr-auto w-100 navbar-search" action="./home/timkiem" method="POST">
                                         <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="tk_tensach">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
+                                                <button class="btn btn-primary" type="submit" name="gui_tk">
                                                     <i class="fas fa-search fa-sm"></i>
                                                 </button>
                                             </div>
@@ -258,24 +264,38 @@
                                 <?php if (isset($_SESSION["dangnhap"])) { ?>
                                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["dangnhap"][1] ?> </span>
-                                        <img class="img-profile rounded-circle" src="public/img/undraw_profile.svg">
+                                        <?php if (isset($_SESSION["dangnhap"][2])) {
+                                            if (strcasecmp($_SESSION["dangnhap"]["gioitinh"], "nam") == 0) { ?>
+                                                <img class="img-profile rounded-circle" src="public/img/undraw_profile_2.svg">
+                                            <?php  } else { ?>
+                                                <img class="img-profile rounded-circle" src="public/img/undraw_profile_3.svg">
+                                            <?php }
+                                        } else {
+                                            if (strcasecmp($_SESSION["dangnhap"]["gioitinh"], "nam") == 0) { ?>
+                                                <img class="img-profile rounded-circle" src="public/img/undraw_profile.svg">
+                                            <?php } else { ?>
+                                                <img class="img-profile rounded-circle" src="public/img/undraw_profile_1.svg">
+                                        <?php }
+                                        } ?>
+
                                     </a>
+
                                     <!-- Dropdown - User Information -->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                         <a class="dropdown-item" href="#">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Đổi mật khẩu
                                         </a>
-            
+
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Đăng xuất
                                         </a>
                                     </div>
-                                <?php } else {?>
-                                <a type="button" class="btn btn-success btn-sm rounded-pill test " style="margin-top: 20%;" href="dangnhap/">Đăng nhập</a>
-                                    <?php } ?>
+                                <?php } else { ?>
+                                    <a type="button" class="btn btn-success btn-sm rounded-pill test " style="margin-top: 20%;" href="dangnhap/">Đăng nhập</a>
+                                <?php } ?>
                             </li>
 
                         </ul>

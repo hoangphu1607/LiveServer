@@ -13,16 +13,6 @@ class danhsach extends db
         }
         return json_encode($mang);
     }
-    // public function thongtinsach()
-    // {
-    //     $qr3 = "SELECT * FROM `sach`";
-    //     $row = mysqli_query($this->conn, $qr3);
-    //     $mang = array();
-    //     while ($kq = mysqli_fetch_array($row)) {
-    //         $mang[] = $kq;
-    //     }
-    //     return json_encode($mang);
-    // }
     // WHERE `MaLoaiSach`=$id
     public function thongtinsach_theoloai($id,$trang)
     {
@@ -73,4 +63,23 @@ class danhsach extends db
         }
         return json_encode($mang);
     }
+
+    public function sotrang_theotimkiem($tensach){
+        $qr3 = "SELECT MaSach FROM `sach` WHERE `TenSach` LIKE '%$tensach%' ORDER BY `MaSach` DESC";
+        $row = mysqli_query($this->conn, $qr3);
+        $tong_so_sp = $row->num_rows;
+        return ceil($tong_so_sp / $this->sotin1trang);
+        
+    }
+    public function timkiemtensach($trang,$tensach){
+        $tranghientai = ($trang - 1) * $this->sotin1trang;
+        $qr4 = "SELECT * FROM `sach` WHERE `TenSach` LIKE '%$tensach%' ORDER BY `MaSach` DESC LIMIT $tranghientai,$this->sotin1trang";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    
 }

@@ -12,6 +12,9 @@
     if ($data['check'] == 1) {
         $id = $data['id'];
     }
+    if ($data['check'] == 2) {
+        $tensach = $data['tensach'];
+    }
     foreach ($kq_sach as $sach) { ?>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
             <div class="card shadow mb-4">
@@ -23,7 +26,7 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder"><?php echo $sach["TenSach"] ?></h5>
                         <!-- Product price-->
-                        <?php echo substr($sach["Noidungngan"], 0, 120) . "..."; ?></p>
+                        <?php echo substr($sach["Noidungngan"], 0, 100) . "..."; ?></p>
                     </div>
                 </div>
                 <!-- Product actions-->

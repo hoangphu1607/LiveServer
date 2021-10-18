@@ -11,7 +11,8 @@ class xl_dn extends db{
             if(password_verify($matkhau,$mk_hash) == true){
                 $_SESSION["dangnhap"][0]=$kq_tv["IDSV"];
                 $_SESSION["dangnhap"][1]=$kq_tv["HoTen"];
-                header('Location: http://localhost:8080/liveserver/');
+                $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
+                header('Location: http://localhost/live/');
                 
             }
             else{
@@ -25,14 +26,33 @@ class xl_dn extends db{
         return json_encode($kq);
         
     }
-    public function ktmk($mssv){
-        $qr = "SELECT * FROM `sinhvien` WHERE MSSV =$mssv ";
+    //  
+    public function ktdn_gv($mssv,$matkhau){
+        $qr = "SELECT * FROM `nhanvien` WHERE Cmnd_gv =$mssv "; // AND MatKhau='$matkhau' 
         $row = mysqli_query($this->conn, $qr);
-        $kq = $row->num_rows;
-        if($kq>0){
-            $kq =1;
+        $num = $row->num_rows;
+        $kq=null;
+        if($num > 0){
+            $kq_tv = mysqli_fetch_array($row);
+            $mk_hash = $kq_tv["Matkhau_gv"];
+            if(password_verify($matkhau,$mk_hash) == true){
+                $_SESSION["dangnhap"][0]=$kq_tv["MaNV"];
+                $_SESSION["dangnhap"][1]=$kq_tv["TenNV"];
+                $_SESSION["dangnhap"][2]=$kq_tv["MaQuyen"];
+                $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
+                header('Location: http://localhost/live/');
+                
+            }
+            else{
+                $kq="Sai mật khẩu";
+            }
+            
+        }
+        else{
+            $kq="Không tìm thấy tài khoản";
         }
         return json_encode($kq);
+        
     }
 }
 ?>
