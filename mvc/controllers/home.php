@@ -3,13 +3,13 @@ class home extends controllers
 {
     public $sach;
     private $get_url;
+
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
     }
     public function sayhi($trang = 1)
     {
-
         settype($trang, "integer");
         $this->get_url = $this->sach->sotrang();
         try {
@@ -63,7 +63,6 @@ class home extends controllers
     }
     public function thongtinsach($id)
     {
-        echo $_GET["url"];
         $this->view("trangchu", [
             "page" => "chitiet_sach",
             "phanloai" => $this->sach->loaisach(),

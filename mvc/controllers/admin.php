@@ -71,11 +71,23 @@ class admin extends controllers{
             header('Location: http://localhost/live/admin');
         }
     }
+
     public function qls(){
-        echo "day la quan ly sach";
+        $thongtinsach =  $this->model("M_admin");
+        $this->view("trangchu",[
+            "page"=>"qlsach",
+            "phanloai"=>$this->sach->loaisach(),
+            "thongtinsach"=>$thongtinsach->ad_thongtinsach(),
+        ]);
+        
     }
     public function ql_ls(){
-        echo "day la quan ly sach";
+        $this->view("trangchu",[
+            "page"=>"loaisach",
+            "phanloai"=>$this->sach->loaisach(),
+         
+        ]);
+            
     }
     public function giaovien(){
         echo "day la quan ly giao vien";

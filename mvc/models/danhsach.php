@@ -4,7 +4,7 @@ class danhsach extends db
     private $sotin1trang = 8;
 
     public function loaisach()
-    {
+    {   
         $qr3 = "SELECT * FROM `loaisach`";
         $row = mysqli_query($this->conn, $qr3);
         $mang = array();

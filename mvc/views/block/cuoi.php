@@ -61,6 +61,10 @@
     <!-- Custom scripts for all pages-->
     <script src="public/js/sb-admin-2.min.js"></script>
 
+    <script src="public/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="public/js/demo/datatables-demo.js"></script>                    
+
     <!-- Page level plugins -->
     <!-- <script src="public/vendor/chart.js/Chart.min.js"></script> -->
 

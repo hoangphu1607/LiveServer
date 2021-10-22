@@ -21,6 +21,8 @@
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
     <script src="public/js/thongbao.js"></script>
+    <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -112,8 +114,8 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thư viện:</h6>
-                        <a class="collapse-item" href="login.html">Quản lý sách</a>
-                        <a class="collapse-item" href="register.html">Quản lý loại sách</a>
+                        <a class="collapse-item" href="admin/qls">Quản lý sách</a>
+                        <a class="collapse-item" href="admin/ql_ls">Quản lý loại sách</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Tài khoản:</h6>
                         <?php if($_SESSION["dangnhap"][2] == 2) {?>

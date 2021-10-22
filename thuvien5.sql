@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 18, 2021 lúc 03:21 PM
+-- Thời gian đã tạo: Th10 13, 2021 lúc 08:11 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.10
 
@@ -142,8 +142,6 @@ CREATE TABLE `nhanvien` (
   `MaNV` int(11) NOT NULL,
   `TenNV` text COLLATE utf8_unicode_ci NOT NULL,
   `GioiTinh` text COLLATE utf8_unicode_ci NOT NULL,
-  `Cmnd_gv` int(11) NOT NULL,
-  `Matkhau_gv` text COLLATE utf8_unicode_ci NOT NULL,
   `MaQuyen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -151,9 +149,8 @@ CREATE TABLE `nhanvien` (
 -- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `GioiTinh`, `Cmnd_gv`, `Matkhau_gv`, `MaQuyen`) VALUES
-(1, 'giao vien 1', 'nam', 123456789, '$2y$10$57sKPZ/PIug8mukiKmSCpeGXu0zfCe9JyHbjvH2/oOF.b5jBO6ExG', 1),
-(2, 'giao vien 2', 'nu', 1234, '$2y$10$CcfPaNQ7qvbOTWoUYpD05eZGKA.ovb7HMvVbYL1SJkUdRnPPKYYL.', 2);
+INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `GioiTinh`, `MaQuyen`) VALUES
+(0, 'Nguyễn Sang', 'Nam', 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +234,7 @@ CREATE TABLE `sach` (
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `Chuong`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`) VALUES
 (1, 'Lập trình căn bản', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd\r\n', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......\r\n', 10, '2012-09-12', 'public/anhsach/sach_lt_java.jpg', '200000', 4, 1),
-(2, 'AV chuyên ngành', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 100, '2013-09-18', 'public/anhsach/sach_lt_java.jpg', '120000', 4, 1),
+(2, 'AV chuyên ngành', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 100, '2013-09-18', 'public/anhsach/sach_lt_java.jpg', '120000', 4, 1),
 (3, 'Tư tưởng HCM', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 50, '2016-08-10', 'public/anhsach/sach_lt_java.jpg', '300000', 2, 3),
 (4, 'Toán CC A3', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 120, '2014-09-18', 'public/anhsach/sach_lt_java.jpg', '125000', 4, 1),
 (6, 'sach1', 'dhaspfncaspjfasfasfamaslfasfmasasasdasf', 'Chương 1: .....\r\nChương 2: .....\r\nChương 3: .....\r\nChương 4: .....\r\nChương 5: .....', 100, '2014-10-17', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1),
@@ -301,15 +298,16 @@ CREATE TABLE `sinhvien` (
   `MaKhoa` int(11) NOT NULL,
   `MaQuyen` int(11) NOT NULL DEFAULT 3,
   `MatKhau` text COLLATE utf8_unicode_ci NOT NULL,
-  `MaKhoaCN` int(11) NOT NULL
-) ;
+  `MaKhoaCN` int(11) NOT NULL,
+  CONSTRAINT KIEMTRA CHECK (MaQuyen != 1 AND MaQuyen !=2)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`IDSV`, `MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) VALUES
-(1, 18004107, 'Nguyễn Lê Ngọc Seng', 331123321, 'nu', 1, 3, '$2y$10$P0AcSanj.vkfL9O1NcC2keVcJR0Uc5LZL2MiUV/8moLJY0E6iY8PO', 1),
+(1, 18004107, 'Nguyễn Lê Ngọc Seng', 331123321, 'Nam', 1, 3, '123465', 1),
 (2, 18004085, 'Mai Nhật Nem', 331456654, 'Nam', 1, 3, '$2y$10$HzBDIM8zanBWzAGvfPXWKOTSNktyIPygSb.vxnTHaHT0vVG6jMNAG', 1),
 (3, 18004099, 'Võ Hoàng Phúu', 331012210, 'Nam', 1, 3, '123', 1);
 
@@ -381,7 +379,6 @@ ALTER TABLE `loaisach`
 --
 ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`MaNV`),
-  ADD UNIQUE KEY `Cmnd_gv` (`Cmnd_gv`),
   ADD KEY `fk_PhanQuyenNhanVien` (`MaQuyen`);
 
 --
@@ -457,12 +454,6 @@ ALTER TABLE `loaisach`
   MODIFY `MaLoaiSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `nhanvien`
---
-ALTER TABLE `nhanvien`
-  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT cho bảng `phanquyen`
 --
 ALTER TABLE `phanquyen`
@@ -484,7 +475,7 @@ ALTER TABLE `sach`
 -- AUTO_INCREMENT cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
-  MODIFY `IDSV` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDSV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `tacgia`
