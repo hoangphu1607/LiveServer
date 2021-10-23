@@ -20,8 +20,8 @@ class Quantri extends controllers{
         ]);            
     }  
     public function addLoaiSach(){
-        if(isset($_POST['submit']) && isset($_POST['TenLoaiSach']) && isset($_POST['MaLoaiSach'])){
-            if(!empty($_POST['TenLoaiSach']) && !empty($_POST['MaLoaiSach'])){
+        if(isset($_POST['submit']) && isset($_POST['TenLoaiSach'])){
+            if(!empty($_POST['TenLoaiSach'])){
                 $TenLoaiSach = $_POST['TenLoaiSach'];
 
                 $kq = $this->Obj->Themloaisach($TenLoaiSach);
@@ -87,18 +87,33 @@ class Quantri extends controllers{
                 ]);  
             }            
         }
-    }
-
-    public function ThemSach(){
-        $this->view("trangchu",[
-            "page" => "LoaiSach"                                
-        ]);
-    } 
+    }    
     
     public function pass(){
         $this->view("trangchu",[
             "page" => "change_password"            
         ]);
+    }
+
+    public function TacGia(){
+        $this->view("trangchu",[
+            "page" => "TacGia"            
+        ]);
+    }
+
+    public function addTacGia(){
+        if(isset($_POST['submit']) && isset($_POST['TenTacGia'])){
+            if(!empty($_POST['TenTacGia'])){
+                $TenTacGia = $_POST['TenTacGia'];                               
+
+                $kq = $this->Obj->addTacGia($TenTacGia);
+
+                $this->view("trangchu",[
+                    "page" => "TacGia",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
     }
 }
 ?>
