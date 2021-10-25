@@ -33,5 +33,14 @@
             }
             return $result;
         }
+        public function addTacGia($TenTacGia){ 
+            $result = false;
+            $qr = "INSERT INTO tacgia(TenTG) VALUE ('$TenTacGia')";
+            if(mysqli_query($this->conn,$qr)){
+                $result = true;
+            }
+            return $result;
+        }
+
     }
 ?>

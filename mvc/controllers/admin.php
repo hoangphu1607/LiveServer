@@ -138,12 +138,36 @@ class admin extends controllers{
         echo "day la quan ly giao vien";
     }
     public function sinhvien(){
-        echo "day la quan ly sinh vien";
+        $this->view("trangchu",[
+            "page" => "ThemSV"            
+        ]);
     }
-    public function khoa_hoc(){
-        echo "day la quan ly khoa hoc";
+
+    public function addsinhvien(){        
+        $this->view("trangchu",[
+            "page" => "ThemSV"            
+        ]);
     }
     public function khoacn(){
+        $this->view("trangchu",[
+            "page" => "Khoa"            
+        ]);
+    }
+    public function addkhoacn(){
+        if(isset($_POST['submit']) && isset($_POST['TenKhoa'])){
+            if(!empty($_POST['TenKhoa'])){
+                $TenKhoa = $_POST['TenKhoa'];                               
+
+                $kq = $this->Obj->addKhoa($TenKhoa);
+
+                $this->view("trangchu",[
+                    "page" => "Khoa",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
+    }
+    public function khoa(){
         echo "day la quan ly khoa chuyen nganh";
     }
     public function thongke(){
@@ -151,6 +175,26 @@ class admin extends controllers{
     }
     public function muontra(){
         echo "day la muon tra";
+    }
+
+    public function tacgia(){
+        $this->view("trangchu",[
+            "page" => "TacGia"            
+        ]);
+    }
+    public function addTacGia(){
+        if(isset($_POST['submit']) && isset($_POST['TenTacGia'])){
+            if(!empty($_POST['TenTacGia'])){
+                $TenTacGia = $_POST['TenTacGia'];                               
+
+                $kq = $this->Obj->addTacGia($TenTacGia);
+
+                $this->view("trangchu",[
+                    "page" => "TacGia",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
     }
 }
 ?>
