@@ -1,105 +1,199 @@
 <script src="public/ckeditor/ckeditor.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-
+<?php  date_default_timezone_set('Asia/Ho_Chi_Minh');
+ $loaisach = json_decode($data["phanloai"], true);
+ $tacgia = json_decode($data["tacgia"], true);
+?>
+<!--  -->
+<?php     if (isset($data["thongbao_themsach"])) { 
+        $kq = json_decode($data["thongbao_themsach"], true);
+        ?>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>thông báo: </strong> <?php  
+        if($kq['kq'] == 1)
+        { 
+            echo "thêm thành công";
+        } 
+        else {
+            if($kq['kq'] == 0){
+                echo "thêm Thất bại"."<br>";
+                if($kq['anh']['check'] != 0 && $kq['nhieuanh']['check2'] != 0){
+                    echo $kq['anh']['thongbao']."<br>";
+                    echo $kq['nhieuanh']['thongbao'];
+                }
+                else if($kq['anh']['check'] != 0 && $kq['nhieuanh']['check2'] == 0){
+                    echo $kq['anh']['thongbao'];
+                }
+                else if($kq['anh']['check'] == 0 && $kq['nhieuanh']['check2'] != 0){
+                    echo $kq['nhieuanh']['thongbao'];
+                }
+            } }   ?> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <?php
+    }
+    ?> 
 <div class="container-fluid">
-
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
-            <div class="row">
-                <!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
-                <div class="col-lg-7 div_center">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Thêm Sách Vào Thư Viện</h1>
+            <div class="row container">
+                <div class="col-lg-7 div_center themsach">
+                    <div class="p-5 container-fluid">
+                        <div class="text-center ">
+                            <?php if(isset($data['suasach'])){ ?> 
+                         <h1 class="h4 text-gray-900 ">Chỉnh sửa Sách Vào Thư Viện</h1>
                         </div>
-                        <form class="user">
-                            <div class="form-group ">
-                                <input type="text" class="input-group" id="TemSach"
-                                    placeholder="Tên Sách" name="TenSach">
+                        <form class="form-horizontal" action="admin/themsach" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                            <input type="text" class="form-control"  id="txt" placeholder="tên sách" name="tensach" required >
                             </div>
+
                             <div class="form-group ">
-                                <select name="MaLoaiSach" id="MaLoaiSach" class="form-select" aria-label="Default select example">
-                                    <option value="volvo">Loại Sách 1</option>
-                                    <option value="saab">Loại Sách 2</option>                                                                      
+                                <select name="MaLoaiSach" id="MaLoaiSach" class="form-control" aria-label="Default select example" required>
+                                <option selected disabled hidden value="">Chọn loại sách</option>
+                                    <?php foreach($loaisach as $value){?>
+                                    <option value="<?php echo $value['MaLoaiSach'] ?>"><?php echo $value['TenLoaiSach'] ?></option>   
+                                    <?php } ?>                                                                  
                                 </select>                                
                             </div>
+
                             <div class="form-group ">
-                                <select name="MaTacGia" id="MaTacGia" class="form-select" aria-label="Default select example">
-                                    <option value="volvo" >Tác Giả 1</option>
-                                    <option value="saab">Tác Giả 2</option>                                                                     
+                                <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
+                                <option selected disabled hidden value="">Chọn tác giả</option >
+                                <?php foreach($tacgia as $value2){?>
+                                    <option value="<?php echo $value2['MaTG'] ?>" ><?php echo $value2['TenTG'] ?></option>
+                                    <?php } ?>                                                             
                                 </select>                                
-                            </div>                            
+                            </div>   
+
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="Gia"
-                                    placeholder="Giá Tiền" name="Gia">
+                                <input type="number" class="form-control" id="Gia"
+                                    placeholder="Giá Tiền" name="Gia" required min="0">
                             </div>
+
                             <div class="form-group ">
-                                <input type="text" class="input-group" id="SoLuong"
-                                    placeholder="Số Lượng" name="SoLuong">
-                            </div>                            
+                                <input type="number" class="form-control" id="SoLuong"
+                                    placeholder="Số Lượng" name="SoLuong" required min="0">
+                            </div>    
+
                             <div class="form-group ">
                                 <label for="Anh">Chọn Ảnh Đại Diện</label>
-                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="Anh">                                
+                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh"  required>                                 
+                                <img id="test-img" src="" alt="">
                             </div>
-                            <div class="form-group ">
-                                <label for="multiple">Chọn Các Ảnh Chi Tiết</label>
-                                <input type="file" name="multiple" multiple="multiple" id="multiple_img" accept="image/png, image/jpeg">
-                            </div>
-                            <div class="form-group ">
-                                <label for="time">Thời Gian Nhập Sách: </label>
-                                <input type="date" id="time" name="time">
-                            </div>
-                            <div class="form-group ">
-                               <textarea name="noidungngna" id="Noidungngan" cols="30" rows="10"></textarea>
-                            </div>
-                            
                             
 
-                            <!-- <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Email Address">
-                            </div> -->
+                            <div class="form-group ">
+                                <label for="multiple">Chọn Các Ảnh Chi Tiết</label>
+                                <input type="file" name="n_anh[]" multiple="multiple" id="multiple_img" accept="image/png, image/jpeg" required>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="time">Thời Gian Nhập Sách: </label>
+                                <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>"  required>
+                            </div>
+
+                            <div class="form-group ">
+                               <textarea name="noidungngan" id="Noidungngan" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
                             
-                            <a href="#" class="btn btn-primary btn-user btn-block">
-                                Thêm Sách Vào Thư Viện
-                            </a>
-                            <!-- <hr>
-                            <a href="index.html" class="btn btn-google btn-user btn-block">
-                                <i class="fab fa-google fa-fw"></i> Register with Google
-                            </a>
-                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                            </a> -->
+                            <input type="submit" class="btn btn-primary btn-user btn-block" name="gui" value="Thêm Sách Vào Thư Viện">
+                           
                         </form>
+                        <?php } 
+                        /////////// Dưới thêm , trên sửa ///////////////
+                        else {?> 
+                            <h1 class="h4 text-gray-900 ">Thêm Sách Vào Thư Viện</h1>
+                        </div>
+                        <form class="form-horizontal" action="admin/themsach" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                            <input type="text" class="form-control"  id="txt" placeholder="tên sách" name="tensach" required >
+                            </div>
+
+                            <div class="form-group ">
+                                <select name="MaLoaiSach" id="MaLoaiSach" class="form-control" aria-label="Default select example" required>
+                                <option selected disabled hidden value="">Chọn loại sách</option>
+                                    <?php foreach($loaisach as $value){?>
+                                    <option value="<?php echo $value['MaLoaiSach'] ?>"><?php echo $value['TenLoaiSach'] ?></option>   
+                                    <?php } ?>                                                                  
+                                </select>                                
+                            </div>
+
+                            <div class="form-group ">
+                                <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
+                                <option selected disabled hidden value="">Chọn tác giả</option >
+                                <?php foreach($tacgia as $value2){?>
+                                    <option value="<?php echo $value2['MaTG'] ?>" ><?php echo $value2['TenTG'] ?></option>
+                                    <?php } ?>                                                             
+                                </select>                                
+                            </div>   
+
+                            <div class="form-group ">
+                                <input type="number" class="form-control" id="Gia"
+                                    placeholder="Giá Tiền" name="Gia" required min="0">
+                            </div>
+
+                            <div class="form-group ">
+                                <input type="number" class="form-control" id="SoLuong"
+                                    placeholder="Số Lượng" name="SoLuong" required min="0">
+                            </div>    
+
+                            <div class="form-group ">
+                                <label for="Anh">Chọn Ảnh Đại Diện</label>
+                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh"  required>  
+                                <img id="duongdan" src="" alt="" class="img-rounded" >                            
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="multiple">Chọn Các Ảnh Chi Tiết</label>
+                                <input type="file" name="n_anh[]" multiple="multiple" id="multiple_img" accept="image/png, image/jpeg" required>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="time">Thời Gian Nhập Sách: </label>
+                                <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>"  required>
+                            </div>
+
+                            <div class="form-group ">
+                               <textarea name="noidungngan" id="Noidungngan" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                            
+                            <input type="submit" class="btn btn-primary btn-user btn-block" name="gui" value="Thêm Sách Vào Thư Viện">
+                           
+                        </form>
+                            <?php } ?>
                         <hr>
-                        <!-- <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div> -->
-                        <!-- <div class="text-center">
-                            <a class="small" href="login.html">Already have an account? Login!</a>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+<script>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  var src = document.getElementById("idAnh");
+  var target = document.getElementById("duongdan");
+  showImage(src,target);
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+//     $('input[type="file"]').on('change', function () {
+//     var currentImg = this;
+//     var fileData = currentImg.files[0];
+//     var formĐata = new FormData();
+//     formĐata.append('anh', fileData);
+//     var ajax = new XMLHttpRequest();
+//     ajax.onreadystatechange = function () {
+//         if (ajax.status == 200 && ajax.readyState == 4) {
+//             var imgPath = ajax.responseText;
+//             $('#test').attr('src',imgPath);
+//         }
+//     }
+//     ajax.open("POST", 'ajax/loadhinh', true);
+//     ajax.send(formĐata);
+// });
+ </script>
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
 <script >
     CKEDITOR.replace('Noidungngan');
 </script>

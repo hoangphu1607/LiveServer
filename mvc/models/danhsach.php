@@ -13,6 +13,15 @@ class danhsach extends db
         }
         return json_encode($mang);
     }
+    public function tacgia(){
+        $qr3 = "SELECT * FROM `tacgia`";
+        $row = mysqli_query($this->conn, $qr3);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
     // WHERE `MaLoaiSach`=$id
     public function thongtinsach_theoloai($id,$trang)
     {

@@ -5,7 +5,7 @@
 <?php
     // $kq = json_decode($data["dangnhap"], true);
     if (isset($data["dangnhap"])) { 
-        $kq = json_decode($data["dangnhap"], true);?>
+        $kq = json_decode($data["dangnhap"], true); ?>
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>thông báo: </strong> <?php echo $kq ?> .
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

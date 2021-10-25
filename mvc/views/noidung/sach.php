@@ -35,7 +35,14 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder"><?php echo $sach["TenSach"] ?></h5>
                         <!-- Product price-->
-                        <?php echo substr($sach["Noidungngan"], 0, 100) . "..."; ?></p>
+                        <?php if(strlen($sach["Noidungngan"]) > 100 ){
+                            ?>
+                            <div><?php echo substr($sach["Noidungngan"], 0, 100)."...."; ?></div> <p style="color:blue;">xem them</p>
+                            <?php
+                        }else {  ?>
+                            <div><?php echo substr($sach["Noidungngan"], 0, 100) ; ?></div>
+                        <?php } ?>
+                      
                     </div>
                 </div>
                 <!-- Product actions-->

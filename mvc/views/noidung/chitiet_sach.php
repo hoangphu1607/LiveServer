@@ -10,7 +10,7 @@
                         <a href="./home/chi_tiet_loaisach/<?php echo $kq_ctsach[0]["MaLoaiSach"]  ?>" class="badge badge-success">Loại sách: <?php echo $kq_ctsach[0]["TenLoaiSach"]; ?> </a> <br>
                         <a href="#" class="badge badge-info">Tên tác giả: <?php echo $kq_ctsach[0]["TenTG"]; ?> </a>
                         </div>
-                        <p class="lead"><?php echo $kq_ctsach[0]["Noidungngan"]; ?> </p>
+                        <div class="lead"> <?php echo $kq_ctsach[0]["Noidungngan"]; ?> </div>
                         <div class="d-flex">
                             <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
@@ -21,7 +21,8 @@
                     </div>
                 </div>
             </div>
-         
+            <?php
+         /*
             <div class="container-fluid px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">Tổng Quan Sách</h2>
                 <div class="row gx-4 gx-lg-5 align-items-center">
@@ -30,6 +31,8 @@
                 </div>
                 </div>
             </div>
+            */ 
+            ?>
         </section>
 
       

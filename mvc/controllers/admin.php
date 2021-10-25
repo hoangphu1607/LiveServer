@@ -4,9 +4,10 @@ class admin extends controllers{
     {   
         $this->sach = $this->model("danhsach");
         $this->mk =  $this->model("xl_dn");
+        
     }
     public function sayhi(){
-        if(isset($_SESSION["dangnhap"])){
+        if(isset($_SESSION["dangnhap"][2])){
             header('Location: http://localhost/live/');
         }
         $this->view("trangchu",[
@@ -72,6 +73,7 @@ class admin extends controllers{
         }
     }
 
+
     public function qls(){
         $thongtinsach =  $this->model("M_admin");
         $this->view("trangchu",[
@@ -80,6 +82,49 @@ class admin extends controllers{
             "thongtinsach"=>$thongtinsach->ad_thongtinsach(),
         ]);
         
+    }
+    public function themsach(){
+        //&& isset($_POST['tensach']) && isset($_POST['MaLoaiSach']) && isset($_POST['MaTacGia']) && isset($_POST['Gia']) && isset($_POST['SoLuong']) &&  isset($_FILES['anh'])  && isset($_FILES['n_anh']) && isset($_POST['time']) && isset($_POST['noidungngan']) 
+        if(isset($_POST['gui'])){
+            if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
+            && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"])){
+                $tensach = $_POST["tensach"];
+                $maloaisach = $_POST["MaLoaiSach"];
+                $matacgia = $_POST["MaTacGia"];
+                $gia =$_POST["Gia"];
+                $soluong = $_POST["SoLuong"];
+                //
+                /*
+                $anh = $_FILES["anh"];
+                $n_anh = $_FILES["n_anh"];
+                */
+                //
+                $thoigian = $_POST["time"] ;
+                $noidungngan = $_POST["noidungngan"];
+                $nam = $this->model('M_admin');
+                $this->view("trangchu",[
+                    "page"=>"ThemSach",
+                    "phanloai"=>$this->sach->loaisach(),
+                    "thongbao_themsach"=>$nam->themsach($tensach,$noidungngan,$soluong,$thoigian/*,$anh*/,$gia,$maloaisach,$matacgia),
+                    "tacgia"=>$this->sach->tacgia(),
+                ]);
+                
+            }
+        }
+        $this->view("trangchu",[
+            "page"=>"ThemSach",
+            "phanloai"=>$this->sach->loaisach(),
+            "tacgia"=>$this->sach->tacgia(),
+        ]);
+        
+    }
+    public function suasach($masach){
+        $this->view("trangchu",[
+            "page"=>"ThemSach",
+            "phanloai"=>$this->sach->loaisach(),
+            "tacgia"=>$this->sach->tacgia(),
+            "suasach"=>1,
+        ]);
     }
     public function ql_ls(){
         $this->view("trangchu",[
