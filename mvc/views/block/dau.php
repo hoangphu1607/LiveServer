@@ -23,8 +23,6 @@
 <<<<<<< HEAD
     <link href="public/css/admin.css" rel="stylesheet">
 =======
-    <link rel="stylesheet" href="public/css/hoangphu.css">
-    <script src="public/js/thongbao.js"></script>
 >>>>>>> 3cf7368b5d05b60cb7df32e7537d8c05d30c3444
     <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script type= "text/javascript" src="public/jquery/jquery-3.6.0.min.js" > </script>
