@@ -1,14 +1,16 @@
 <?php 
 class admin extends controllers{
+    public $Location = "Location: http://localhost:8080/liveserver/";
     public function __construct()
     {   
         $this->sach = $this->model("danhsach");
         $this->mk =  $this->model("xl_dn");
+        $this->Obj = $this->model("xulydulieu");
         
     }
     public function sayhi(){
         if(isset($_SESSION["dangnhap"][2])){
-            header('Location: http://localhost/live/');
+            header($this->Location);
         }
         $this->view("trangchu",[
             "page"=>"v_dangnhap",
@@ -19,7 +21,7 @@ class admin extends controllers{
     }
     public function xldn(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/live/');
+            header($this->Location);
         }
         else {
         if(isset($_POST["dangnhap"]) && isset($_POST["mssv"]) && isset($_POST["matkhau"]) ){
@@ -66,10 +68,10 @@ class admin extends controllers{
     public function dangxuat(){
         if(isset($_SESSION["dangnhap"])){
             unset($_SESSION["dangnhap"]);
-            header('Location: http://localhost/live/admin');
+            header($this->Location);
         }
         else{
-            header('Location: http://localhost/live/admin');
+            header($this->Location);
         }
     }
 
@@ -137,16 +139,43 @@ class admin extends controllers{
     public function giaovien(){
         echo "day la quan ly giao vien";
     }
-    public function sinhvien(){
+    public function sinhvien(){  
+        $kq = $this->model("M_admin");  
         $this->view("trangchu",[
-            "page" => "ThemSV"            
+            "page" => "ThemSV",   
+            "ketquaKhoa"=>  $kq->showDSKhoa(),
+            "ketquaCN" => $kq->showKhoaCN()
         ]);
     }
 
-    public function addsinhvien(){        
-        $this->view("trangchu",[
-            "page" => "ThemSV"            
-        ]);
+    public function addsinhvien(){
+        $kq = $this->model("M_admin"); 
+        if(isset($_POST['submit']) && isset($_POST['MSSV']) && isset($_POST['TenSv']) && isset($_POST['CMND']) && isset($_POST['GioiTinh']) 
+        && isset($_POST['KhoaHoc']) && isset($_POST['KhoaCN']) && isset($_POST['MatKhau'])){
+            $MSSV = $_POST['MSSV'];
+            $TenSv = $_POST['TenSv'];
+            $CMND = $_POST['CMND'];
+            $GioiTinh = $_POST['GioiTinh'];
+            $KhoaHoc = $_POST['KhoaHoc'];
+            $KhoaCN = $_POST['KhoaCN'];            
+            $MatKhau = password_hash($_POST['MatKhau'], PASSWORD_DEFAULT);
+            $insert = $this->model("M_admin");
+            $this->view("trangchu",[
+                "page" => "ThemSV",   
+                "ketquaKhoa"=>  $kq->showDSKhoa(),
+                "ketquaCN" => $kq->showKhoaCN(),
+                "insert" => $insert-> newSinhVien($MSSV, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $MatKhau, $KhoaCN)
+            ]);
+        }  
+        else{
+            
+            $this->view("trangchu",[
+                "page" => "ThemSV",   
+                "ketquaKhoa"=>  $kq->showDSKhoa(),
+                "ketquaCN" => $kq->showKhoaCN()             
+            ]);
+        }
+        
     }
     public function khoacn(){
         $this->view("trangchu",[
@@ -158,7 +187,7 @@ class admin extends controllers{
             if(!empty($_POST['TenKhoa'])){
                 $TenKhoa = $_POST['TenKhoa'];                               
 
-                $kq = $this->Obj->addKhoa($TenKhoa);
+                $kq = $this->model("M_admin")->addKhoa($TenKhoa);
 
                 $this->view("trangchu",[
                     "page" => "Khoa",
@@ -187,11 +216,38 @@ class admin extends controllers{
             if(!empty($_POST['TenTacGia'])){
                 $TenTacGia = $_POST['TenTacGia'];                               
 
-                $kq = $this->Obj->addTacGia($TenTacGia);
+                $kq = $this->model("M_admin")->addTacGia($TenTacGia);
 
                 $this->view("trangchu",[
                     "page" => "TacGia",
                     "result"=> $kq 
+                ]);  
+            }            
+        }
+    }
+    public function NhanVien(){
+        $this->view("trangchu",[
+            "page" => "NhanVien"            
+        ]);
+    }
+    public function ShowNV(){
+        $kq = $this->model("M_admin")->showNhanVien(); 
+        $this->view("trangchu",[
+            "page" => "shownv", 
+            "result" => $kq                      
+        ]);
+    }
+    public function addNV(){
+        if(isset($_POST['submit']) && isset($_POST['TenNhanVien']) && isset($_POST['GioiTinh']) && isset($_POST['pass']) && isset($_POST['CMND'])){
+            if(!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])){
+                $TenNhanVien = $_POST['TenNhanVien'];
+                $GioiTinh = $_POST['GioiTinh'];               
+                $CMND = $_POST['CMND'];
+                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);                
+
+                $this->view("trangchu",[
+                    "page" => "NhanVien",
+                    "result"=> $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass),
                 ]);  
             }            
         }
