@@ -28,15 +28,23 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Thêm Nhân Viên</h1>
                         </div>
-                        <form class="user" method="POST" enctype="multipart/form-data" action="./quantri/addNV">                            
+                        <form class="user" method="POST" enctype="multipart/form-data" action="./admin/addNV">                            
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="TenNhanVien"
                                     placeholder="Tên Nhân Viên" name="TenNhanVien">
                             </div>
+                            <div class="form-group ">                                
+                                <input type="text" class="input-group" id="CMND"
+                                    placeholder="CMND" name="CMND">
+                            </div>
+                            <div class="form-group ">
+                                <input type="password" class="input-group" id="pass"
+                                    placeholder="Mật Khẩu" name="pass">
+                            </div>
                             <div class="form-group ">
                                 <select name="GioiTinh" id="GioiTinh">
                                     <option value="Nam">Nam</option>
-                                    <option value="Nu">Nu</option>
+                                    <option value="Nu">Nữ</option>
                                 </select>
                             </div>                            
                             <div class="form-group ">

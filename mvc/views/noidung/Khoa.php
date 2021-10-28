@@ -28,7 +28,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Thêm Khoa Chuyên Ngành</h1>
                         </div>
-                        <form class="user" action="./quantri/addKhoa" method="POST">                            
+                        <form class="user" action="./admin/addKhoa" method="POST">                            
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="TenKhoa"
                                     placeholder="Tên Khoa" name="TenKhoa">

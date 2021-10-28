@@ -28,7 +28,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Thêm Tác Giả</h1>
                         </div>
-                        <form class="user" method="POST" enctype="multipart/form-data" action="./quantri/addTacGia">
+                        <form class="user" method="POST" enctype="multipart/form-data" action="./admin/addTacGia">
                             
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="TenTacGia"

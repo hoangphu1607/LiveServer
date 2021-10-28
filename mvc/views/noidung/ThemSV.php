@@ -7,7 +7,13 @@
 <script src="public/js/modal/modal.js"></script>
 
 <div class="container-fluid">
-
+<?php 
+    if(isset($data["ketquaKhoa"]) && $data["ketquaCN"]){
+        $kq_khoa = json_decode($data["ketquaKhoa"], true);                                    
+        $kq_CN = json_decode($data["ketquaCN"],true);
+    }    
+    // print_r($kq_CN);
+?>
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
@@ -18,7 +24,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Thêm Sinh Viên Mới</h1>
                         </div>
-                        <form class="user">
+                        <form class="user" action="admin/addsinhvien" method="POST">
                             <div class="form-group ">
                                 <input type="text" class="input-group" id="MSSV"
                                     placeholder="Mã Số Sinh Viên" name="MSSV">
@@ -39,22 +45,26 @@
                             </div>
                             <div class="form-group ">
                                 <select name="KhoaHoc" id="Khoa" class="form-select" aria-label="Default select example">
-                                    <option value="K43" >Khóa 43</option>
-                                    <option value="K44">Khóa 44</option> 
-                                    <option value="K45">Khóa 45</option>                                                                    
+                                    <?php
+                                        foreach($kq_khoa as $khoa){
+                                            ?>
+                                                <option value="<?php echo $khoa["MaKhoaHoc"] ?>"> <?php echo $khoa["TenKhoaHoc"] ?></option>
+                                            <?php
+                                        }
+                                    ?>
                                 </select>                                
                             </div>   
                             <div class="form-group ">
                                 <select name="KhoaCN" id="Khoa" class="form-select" aria-label="Default select example">
-                                    <option value="CNTT" >Công Nghệ Thông Tin</option>
-                                    <option value="OTo">Ô Tô</option> 
-                                    <option value="Điện">Điện</option>                                                                    
+                                <?php
+                                    foreach($kq_CN as $CN){
+                                        ?>
+                                            <option value="<?php echo $CN["MaKhoaCN"] ?>"> <?php echo $CN["TenCN"] ?></option>
+                                        <?php
+                                    }
+                                ?>                                                                  
                                 </select>                                
-                            </div>                            
-                            <div class="form-group ">
-                                <input type="text" class="input-group" id="MaQuyen"
-                                    placeholder="Quyền truy cập" name="MaQuyen">
-                            </div>
+                            </div> 
                             <div class="form-group ">
                                 <input type="password" class="input-group" id="MatKhau"
                                     placeholder="Mật Khẩu" name="MatKhau">
@@ -64,10 +74,11 @@
                                     placeholder="Email Address">
                             </div> -->
                             <div class="form-group ">
-                                <button class="btn btn-success">
+                                <!-- <button class="btn btn-success">
                                     <i class="fas fa-user-plus"></i>
                                     <span>Thêm Sinh Viên</span> 
-                                </button>
+                                </button> -->
+                                <input type="submit" id = "submit" name = "submit" class="btn btn-success fas fa-user-plus" value="Thêm Sinh Viên">
                             </div>
                             <!-- <hr>
                             <a href="index.html" class="btn btn-google btn-user btn-block">
