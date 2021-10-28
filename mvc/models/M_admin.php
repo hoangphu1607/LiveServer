@@ -49,9 +49,7 @@ class M_admin extends db
         $kq = array("thongbao" => $thongbao, "duongdan" => $duongdan, "check" => $uploadOk);
         return $kq;
      
-    }
-
-    
+    }    
     public function ad_thongtinsach()
     {
         $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG ORDER BY `MaSach` DESC";
@@ -279,5 +277,27 @@ class M_admin extends db
         }
         return $result;
     }
+
+    public function showSinhVien(){
+        $sql = "SELECT * FROM sinhvien,khoahoc,khoachuyennganh 
+        WHERE sinhvien.MaKhoa = khoahoc.MaKhoaHoc and sinhvien.MaKhoaCN = khoachuyennganh.MaKhoaCN";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
+    public function showTacGia(){ 
+        $sql = "SELECT * FROM tacgia";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }    
 }
+
 ?>

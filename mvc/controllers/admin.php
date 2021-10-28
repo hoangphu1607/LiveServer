@@ -177,6 +177,13 @@ class admin extends controllers{
         }
         
     }
+    public function showSinhVien(){
+        $kq_sv = $this->model("M_admin")->showSinhVien();
+        $this->view("trangchu",[
+            "page" => "showSV",
+            "kq_sv" => $kq_sv            
+        ]);
+    }
     public function khoacn(){
         $this->view("trangchu",[
             "page" => "Khoa"            
@@ -195,6 +202,14 @@ class admin extends controllers{
                 ]);  
             }            
         }
+    }
+    public function showKhoaCN()
+    {
+        $kq_khoaCN = $this->model("M_admin")->showKhoaCN();
+        $this->view("trangchu",[
+            "page" => "showKhoaCN",
+            "kq_khoaCN" => $kq_khoaCN            
+        ]);
     }
     public function khoa(){
         echo "day la quan ly khoa chuyen nganh";
@@ -224,6 +239,14 @@ class admin extends controllers{
                 ]);  
             }            
         }
+    }
+    public function showTacGia()
+    {
+        $kq_tg = $this->model("M_admin")->showTacGia();
+        $this->view("trangchu",[
+            "page" => "showTacGia",
+            "kq_tg" => $kq_tg            
+        ]);
     }
     public function NhanVien(){
         $this->view("trangchu",[
