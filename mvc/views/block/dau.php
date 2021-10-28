@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8">
-    <base href="http://localhost:8080/liveserver/">
+    <base href="http://localhost/live/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -24,6 +24,7 @@
     <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script type= "text/javascript" src="public/jquery/jquery-3.6.0.min.js" > </script>
     <script type= "text/javascript" src="public/js/loadhinh.js"> </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 

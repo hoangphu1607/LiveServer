@@ -55,7 +55,7 @@ class home extends controllers
                 "id" => $id,
                 "trang" => $trang,
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             http_response_code(404);
             $this->view("404", []);
             die();
@@ -63,11 +63,17 @@ class home extends controllers
     }
     public function thongtinsach($id)
     {
+    try {
         $this->view("trangchu", [
             "page" => "chitiet_sach",
             "phanloai" => $this->sach->loaisach(),
             "ctsach" => $this->sach->chitiet_sach($id),
         ]);
+    } catch (\Exception $ex) {
+        http_response_code(404);
+        $this->view("404", []);
+        die();
+    }
     }
 
     public function timkiem($trang = 1)

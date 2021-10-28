@@ -1,57 +1,25 @@
 <?php
 class M_admin extends db
 {
-    public function test($a){
-        $hinhanh = $a;
-        $foder_luu = "public/uploads/";
-        $duongdan = $foder_luu . basename($hinhanh);
-        $uploadOk = 0;
-        $thongbao = "";
-        $duoifile = strtolower(pathinfo($duongdan, PATHINFO_EXTENSION));
-        // Check if image file is a actual image or fake image
-        $check = getimagesize($_FILES["anh"]["tmp_name"]);
-        if ($check === false) {
-            $uploadOk++;
+    public function xoa_anhct($id){
+        $check = false;
+        $qr4 = "DELETE FROM `anhchitiet` WHERE id=$id ";
+        $qr5 = "SELECT * FROM `anhchitiet` WHERE id=$id";
+        if ($row2 = mysqli_query($this->conn, $qr5)){
+           $kq = mysqli_fetch_array($row2);
+            if (mysqli_query($this->conn, $qr4)){
+                $check = true;
+                unlink($kq['Link']);
+            };
+        
         }
-        // Check file size
-        if ($_FILES["anh"]["size"] > 3 * 1024 * 1024) {
-            $uploadOk++;
-        }
-
-        // // Allow certain file formats
-        if (
-            $duoifile != "jpg" && $duoifile != "png" && $duoifile != "jpeg"
-            && $duoifile != "gif"
-        ) {
-            $uploadOk++;
-        }
-
-
-        // Check if file already exists
-        if (file_exists($duongdan)) {
-            $dem = 0;
-            $ten = pathinfo($hinhanh, PATHINFO_FILENAME);
-            $tenhinh = $ten . '.' . $duoifile;
-            while (file_exists($foder_luu . $tenhinh)) {
-                $dem++;
-                $hinhanh = $ten . $dem . '.' . $duoifile;
-                $tenhinh = $hinhanh;
-            }
-            $duongdan = $foder_luu . basename($hinhanh);
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-           move_uploaded_file($_FILES["anh"]["tmp_name"], $duongdan);
-        }
-         else {          
-                $thongbao = "Vui lòng kiểm tra lại hình ảnh đại diện";         
-        }
-        $kq = array("thongbao" => $thongbao, "duongdan" => $duongdan, "check" => $uploadOk);
-        return $kq;
-     
+        return $check;
     }
+    public function suasach(){
+        
 
-    
+
+    }
     public function ad_thongtinsach()
     {
         $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG ORDER BY `MaSach` DESC";
@@ -90,10 +58,30 @@ class M_admin extends db
 
         return json_encode($mang);
     }
+    public function show_sach_sua($masach){
+        $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG AND sach.MaSach= $masach";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+        
+    }
+    public function show_anh_ct_sua($masach){
+        $qr4 = "SELECT * FROM anhchitiet WHERE anhchitiet.MaSach = $masach";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
     public function chon_1_anh()
     {
         $hinhanh = $_FILES['anh']['name'];
-        $foder_luu = "public/uploads/";
+        $foder_luu = "public/anhsach/";
         $duongdan = $foder_luu . basename($hinhanh);
         $uploadOk = 0;
         $thongbao = "";
@@ -143,7 +131,7 @@ class M_admin extends db
     {
         $anh = $_FILES['n_anh'];
         $dem_anh = count($anh["name"]);
-        $foder_luu = "public/uploads/";
+        $foder_luu = "public/anhchitiet_sach/";
         //biến thông báo
         $uploadOk = 0;
         $so_hinh_luu = 0;
@@ -199,4 +187,6 @@ class M_admin extends db
         $kq = array("check2" => $uploadOk, "thongbao" => $thongbao2, "duongdan" => $mangluu,"so_hinh_luu"=> $so_hinh_luu);
         return $kq;
     }
+
+        
 }

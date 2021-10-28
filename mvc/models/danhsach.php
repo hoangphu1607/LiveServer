@@ -26,7 +26,7 @@ class danhsach extends db
     public function thongtinsach_theoloai($id,$trang)
     {
         $tranghientai = ($trang - 1) * $this->sotin1trang;
-        $qr4 = "SELECT * FROM `sach` WHERE `MaLoaiSach`=$id LIMIT  $tranghientai,$this->sotin1trang";
+        $qr4 = "SELECT * FROM `sach`  WHERE `MaLoaiSach`=$id ORDER BY `MaSach` DESC LIMIT  $tranghientai,$this->sotin1trang";
         $row2 = mysqli_query($this->conn, $qr4);
 
         $mang = array();
@@ -64,7 +64,7 @@ class danhsach extends db
     public function phantrang_sach($trang)
     {
         $tranghientai = ($trang - 1) * $this->sotin1trang;
-        $qr4 = "SELECT * FROM `sach` LIMIT  $tranghientai,$this->sotin1trang";
+        $qr4 = "SELECT * FROM `sach` ORDER BY `MaSach` DESC  LIMIT  $tranghientai,$this->sotin1trang ";
         $row2 = mysqli_query($this->conn, $qr4);
         $mang = array();
         while ($kq = mysqli_fetch_array($row2)) {
