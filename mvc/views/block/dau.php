@@ -20,7 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
-    <link href="public/css/hoangphu.css" rel="stylesheet">
     <link href="public/css/admin.css" rel="stylesheet">
     <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script type= "text/javascript" src="public/jquery/jquery-3.6.0.min.js" > </script>
