@@ -118,19 +118,4 @@ class home extends controllers
      
     }
 
-    public function anh()
-    {
-        if (isset($_POST["gui"])) {
-            $anh = $_FILES["anh"];
-            $nam = $this->model("ad");
-            if ($nam->insertdata($anh)) {
-                echo "thanh cong";
-            } else {
-                echo "that bai";
-            }
-        }
-        $this->view("test", [
-            "page" => "giua"
-        ]);
-    }
 }

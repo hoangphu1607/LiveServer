@@ -5,9 +5,7 @@
     max-width:60px ;
     max-height:60px ;
 }
-.test{
-    background-color:#1cc88aa1 !important; 
-}
+
 .hinhanh{
     max-width: auto; 
     height: 300px; 
@@ -22,9 +20,49 @@
     margin-left: 10%;
     margin-right: 10%;
 }
-#thongbao{
-    max-width: 75%; 
+#thongbaotimkiem{
+    max-width: 30%; 
     height: auto; 
+}
+/*  */
+#themanh_sua{
+    width: 90%;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+#images{
+    width: 90%;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+figure{
+    width: 45%;
+}
+img{
+    width: 100%;
+}
+figcaption{
+    text-align: center;
+    font-size: 2.4vmin;
+    margin-top: 0.5vmin;
+}
+
+#duongdan{
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    position: relative;
+    margin: auto;
+    display: flex;
+    gap: 20px
+
 }
 
 

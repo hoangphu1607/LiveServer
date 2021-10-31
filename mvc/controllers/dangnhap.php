@@ -9,7 +9,7 @@ class dangnhap extends controllers{
     }
     public function sayhi(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/live/');
+            header('Location: http://localhost/LiveServer/');
         }
         $this->view("trangchu",[
             "page"=>"v_dangnhap",
@@ -19,7 +19,7 @@ class dangnhap extends controllers{
     }  
     public function xldn(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/live/');
+            header('Location: http://localhost/LiveServer/');
         }
         else {
         if(isset($_POST["dangnhap"]) && isset($_POST["mssv"]) && isset($_POST["matkhau"]) ){
@@ -65,10 +65,10 @@ class dangnhap extends controllers{
     public function dangxuat(){
         if(isset($_SESSION["dangnhap"])){
             unset($_SESSION["dangnhap"]);
-            header('Location: http://localhost/live/dangnhap');
+            header('Location: http://localhost/LiveServer/dangnhap');
         }
         else{
-            header('Location: http://localhost/live/dangnhap');
+            header('Location: http://localhost/LiveServer/dangnhap');
         }
     }
 }

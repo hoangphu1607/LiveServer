@@ -15,11 +15,35 @@ class M_admin extends db
         }
         return $check;
     }
-    public function suasach(){
-        
+    public function suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia)
+    {
+        // $duongdan = $this->chon_1_anh();
+        // $nhieu_anh = $this->chon_nhieu_anh();
+        // $kq = false;
+        // if ($duongdan['check'] == 0 && $nhieu_anh['check2'] == 0) {
+        //     $anh =  $duongdan['duongdan'];
+        //     $qr4 = "UPDATE `sach` SET `TenSach`='$tensach',`Noidungngan`='$noidungngan',`SoLuong`='$soluong',`NgayNhap`='$ngaynhap',`AnhDaiDien`='$anh',`Gia`='$gia',`MaLoaiSach`='$maloaisach',`MaTacGia`='$matacgia' WHERE `MaSach`='$masach'";
+        //     if (mysqli_query($this->conn, $qr4)) {
+        //         $kq = true;
+        //         $cout_anh = $nhieu_anh["so_hinh_luu"];
+        //         for ($i = 0; $i <  $cout_anh; $i++) {
+        //             $dd_nhieu_anh = $nhieu_anh["duongdan"][$i];
+        //             $qr5 = "INSERT INTO `anhchitiet` (`MaSach`, `id`, `Link`) VALUES ('$masach', NULL, '$dd_nhieu_anh')";
+        //             if (mysqli_query($this->conn, $qr5)) {
+        //                 $kq = true;
+        //             }
+        //         }
+        //     }
+        //     $mang = array("kq" => $kq, "anh" => $duongdan, "nhieuanh" => $nhieu_anh);
+        // } else {
+        //     $kq = false;
+        //     $mang = array("kq" => $kq, "anh" => $duongdan ,"nhieuanh"=> $nhieu_anh);
+        //     unlink($duongdan['duongdan']);
+        // }
 
-
+        // return json_encode($mang);
     }
+
     public function ad_thongtinsach()
     {
         $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG ORDER BY `MaSach` DESC";
@@ -54,6 +78,7 @@ class M_admin extends db
         } else {
             $kq = false;
             $mang = array("kq" => $kq, "anh" => $duongdan ,"nhieuanh"=> $nhieu_anh);
+            unlink($duongdan['duongdan']);
         }
 
         return json_encode($mang);

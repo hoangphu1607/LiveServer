@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông tin sách</h1>
@@ -18,7 +19,7 @@
     if($kq_sach == 0) { ?>
 <div class="container-fluid">
 <div class="text-center">
-    <img src="public/img/thongbao.png" alt="không tìm thấy sản phẩm" id="thongbao">
+    <img src="public/img/thongbao.png" alt="không tìm thấy sản phẩm" id="thongbaotimkiem">
     <h2 class="text-gray-500 mb-0">Không có thông tin sách mà bạn tìm </h2>
     <a href="index.php">&larr; Quay về trang chủ </a>
 </div>

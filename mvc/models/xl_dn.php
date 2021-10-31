@@ -12,7 +12,7 @@ class xl_dn extends db{
                 $_SESSION["dangnhap"][0]=$kq_tv["IDSV"];
                 $_SESSION["dangnhap"][1]=$kq_tv["HoTen"];
                 $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
-                header('Location: http://localhost/live/');
+                header('Location: http://localhost/LiveServer/');
                 
             }
             else{
@@ -40,7 +40,7 @@ class xl_dn extends db{
                 $_SESSION["dangnhap"][1]=$kq_tv["TenNV"];
                 $_SESSION["dangnhap"][2]=$kq_tv["MaQuyen"];
                 $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
-                header('Location: http://localhost/live/');
+                header('Location: http://localhost/LiveServer/');
                 
             }
             else{

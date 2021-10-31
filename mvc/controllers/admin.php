@@ -7,8 +7,8 @@ class admin extends controllers{
         
     }
     public function sayhi(){
-        if(isset($_SESSION["dangnhap"][2])){
-            header('Location: http://localhost/live/');
+        if(isset($_SESSION["dangnhap"])){
+            header('Location: http://localhost/LiveServer/');
         }
         $this->view("trangchu",[
             "page"=>"v_dangnhap",
@@ -19,7 +19,7 @@ class admin extends controllers{
     }
     public function xldn(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/live/');
+            header('Location: http://localhost/LiveServer/');
         }
         else {
         if(isset($_POST["dangnhap"]) && isset($_POST["mssv"]) && isset($_POST["matkhau"]) ){
@@ -66,10 +66,10 @@ class admin extends controllers{
     public function dangxuat(){
         if(isset($_SESSION["dangnhap"])){
             unset($_SESSION["dangnhap"]);
-            header('Location: http://localhost/live/admin');
+            header('Location: http://localhost/LiveServer/admin');
         }
         else{
-            header('Location: http://localhost/live/admin');
+            header('Location: http://localhost/LiveServer/admin');
         }
     }
 
@@ -110,33 +110,64 @@ class admin extends controllers{
                 ]);
                 
             }
+            else{
+                echo "nhap đủ thong tin";//viet sau
+            }
+
         }
-        $this->view("trangchu",[
+        else{ $this->view("trangchu",[
             "page"=>"ThemSach",
             "phanloai"=>$this->sach->loaisach(),
             "tacgia"=>$this->sach->tacgia(),
         ]);
+        }
         
     }
     public function suasach($masach){
-        $admin = $this->model('M_admin');
-        // if(isset($_POST['gui'])){
-        //     if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
-        //     && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && isset($_FILES["anh"]) && isset($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"])){
-        //         echo "co anh sua";
-        //     }
-        //     else {
-        //         echo "khong ton tai anh";
-        //     }
-        // }
-        $this->view("trangchu",[
-            "page"=>"ThemSach",
-            "show_suasach"=>$admin->show_sach_sua($masach),
-            "ha_ct"=>$admin->show_anh_ct_sua($masach),
-            "phanloai"=>$this->sach->loaisach(),
-            "tacgia"=>$this->sach->tacgia(),
-            "suasach"=>1,
-        ]);
+        if(isset($_POST['gui'])){
+            if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
+            && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) ){
+
+                $tensach = $_POST["tensach"];
+                $maloaisach = $_POST["MaLoaiSach"];
+                $matacgia = $_POST["MaTacGia"];
+                $gia =$_POST["Gia"];
+                $soluong = $_POST["SoLuong"];
+                $thoigian = $_POST["time"] ;
+                $noidungngan = $_POST["noidungngan"];
+
+                if(empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0])){
+                    echo "chưa có anh dt";
+                    //update ảnh chi tiết
+                }
+                else if(empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name'])){
+                    echo "chưa có anh ct";
+                      //update ảnh đại diện
+                }
+                else if(empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0])){
+                    echo "cả 2 đều không có";
+                      //update nội dung
+
+                }
+                else {
+                    echo "cả 2 đều có";
+                      //update tất cả
+                }
+                
+                
+  
+                
+        }
+    }
+    $admin = $this->model('M_admin');
+    $this->view("trangchu",[
+        "page"=>"ThemSach",
+        "show_suasach"=>$admin->show_sach_sua($masach),
+        "ha_ct"=>$admin->show_anh_ct_sua($masach),
+        "phanloai"=>$this->sach->loaisach(),
+        "tacgia"=>$this->sach->tacgia(),
+        "suasach"=>1,
+    ]);
     }
     public function ql_ls(){
         $this->view("trangchu",[
@@ -165,4 +196,3 @@ class admin extends controllers{
         echo "day la muon tra";
     }
 }
-?>

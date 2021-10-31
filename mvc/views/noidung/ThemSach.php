@@ -52,7 +52,7 @@ $tacgia = json_decode($data["tacgia"], true);
 
                             <div class="form-group ">
                                 <select name="MaLoaiSach" id="MaLoaiSach" class="form-control" aria-label="Default select example" required>
-                                    <option selected disabled hidden value="<?php echo $show[0]['MaLoaiSach'] ?>"> <?php echo $show[0]['TenLoaiSach'] ?> </option>
+                                    <option selected value="<?php echo $show[0]['MaLoaiSach'] ?>"> <?php echo $show[0]['TenLoaiSach'] ?> </option>
                                     <?php foreach ($loaisach as $value) { ?>
                                         <option value="<?php echo $value['MaLoaiSach'] ?>"><?php echo $value['TenLoaiSach'] ?></option>
                                     <?php } ?>
@@ -61,7 +61,7 @@ $tacgia = json_decode($data["tacgia"], true);
 
                             <div class="form-group ">
                                 <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
-                                    <option selected disabled hidden value="<?php echo $show[0]['MaTG'] ?>"><?php echo $show[0]['TenTG'] ?></option>
+                                    <option selected value="<?php echo $show[0]['MaTG'] ?>"><?php echo $show[0]['TenTG'] ?></option>
                                     <?php foreach ($tacgia as $value2) { ?>
                                         <option value="<?php echo $value2['MaTG'] ?>"><?php echo $value2['TenTG'] ?></option>
                                     <?php } ?>
