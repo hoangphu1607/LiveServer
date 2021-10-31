@@ -212,6 +212,130 @@ class M_admin extends db
         $kq = array("check2" => $uploadOk, "thongbao" => $thongbao2, "duongdan" => $mangluu,"so_hinh_luu"=> $so_hinh_luu);
         return $kq;
     }
+    public function showDSKhoa(){
+        $result = false;
+        $sql = "SELECT * FROM `khoahoc`";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function getLastRow(){
+        $tv = mysqli_query($this->conn,"SELECT MaLoaiSach FROM loaisach WHERE MaLoaiSach=(SELECT max(MaLoaiSach) FROM loaisach)");
+        $kq = mysqli_fetch_assoc($tv) ;
+        return json_encode($kq);          
+    }
+    
+    public function Themloaisach($TenLoaiSach){ 
+        $result = false;
+        $qr = "INSERT INTO loaisach(TenLoaiSach) VALUE ('$TenLoaiSach')";
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    } 
+    public function ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass){ 
+        $result = false;
+        $qr = "INSERT INTO nhanvien(TenNV,GioiTinh,MaQuyen,Cmnd_gv,Matkhau_gv) VALUE ('$TenNhanVien','$GioiTinh','1','$CMND','$pass')";
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    } 
+    
+    public function showNhanVien(){
+        $result = false;
+        $sql = "SELECT * FROM nhanvien";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function addKhoa($TenKhoa){ 
+        $result = false;
+        $qr = "INSERT INTO khoachuyennganh(TenCN) VALUE ('$TenKhoa')";
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    }
+    public function addTacGia($TenTacGia){ 
+        $result = false;
+        $qr = "INSERT INTO tacgia(TenTG) VALUE ('$TenTacGia')";
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    }
 
+    public function showKhoaCN(){
+        $result = false;
+        $sql = "SELECT * FROM khoachuyennganh";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function newSinhVien($MSSV, $TenSV, $CMND, $GioiTinh, $MaKhoa, $MatKhau, $KhoaCN){
+        $result = false;
+        $qr = "INSERT INTO sinhvien(`MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) 
+        VALUE ('$MSSV','$TenSV','$CMND','$GioiTinh','$MaKhoa','3','$MatKhau','$KhoaCN')";        
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function showSinhVien(){
+        $sql = "SELECT * FROM sinhvien,khoahoc,khoachuyennganh 
+        WHERE sinhvien.MaKhoa = khoahoc.MaKhoaHoc and sinhvien.MaKhoaCN = khoachuyennganh.MaKhoaCN";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
+    public function showTacGia(){ 
+        $sql = "SELECT * FROM tacgia";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    } 
+
+    public function addKhoaHoc($TenKhoaHoc,$NamBatDau)
+    {
+        $result = false;
+        $qr = "INSERT INTO khoahoc(TenKhoaHoc,NamBatDau) VALUE ('$TenKhoaHoc','$NamBatDau')";
+        if(mysqli_query($this->conn,$qr)){
+            $result = true;
+        }
+        return $result;
+    }
+    public function showKhoaHoc()
+    {
+        $sql = "SELECT * FROM khoahoc";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
+    public function showTable_NV()
+    {        
+        
+    }
         
 }

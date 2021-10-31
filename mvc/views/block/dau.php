@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8">
-    <base href="http://localhost/LiveServer/">
+    <base href="http://localhost:8080/liveserver/">
     <!--  <base href="http://localhost/LiveServer/">  -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,12 +21,13 @@
     <!-- Custom styles for this template-->
     <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="public/css/nhatnam.css" rel="stylesheet">
+    <link rel="stylesheet" href="hoangphu.css">
     <link href="public/css/admin.css" rel="stylesheet">
     <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script type= "text/javascript" src="public/jquery/jquery-3.6.0.min.js" > </script>
     <script type= "text/javascript" src="public/js/loadhinh.js"> </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    
 </head>
 
 <body id="page-top">

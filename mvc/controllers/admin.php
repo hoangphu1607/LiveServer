@@ -1,5 +1,6 @@
 <?php 
 class admin extends controllers{
+    public $Location = "Location: http://localhost:8080/liveserver/";
     public function __construct()
     {   
         $this->sach = $this->model("danhsach");
@@ -8,7 +9,7 @@ class admin extends controllers{
     }
     public function sayhi(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/LiveServer/');
+            header($this->Location);
         }
         $this->view("trangchu",[
             "page"=>"v_dangnhap",
@@ -19,7 +20,7 @@ class admin extends controllers{
     }
     public function xldn(){
         if(isset($_SESSION["dangnhap"])){
-            header('Location: http://localhost/LiveServer/');
+            header($this->Location);
         }
         else {
         if(isset($_POST["dangnhap"]) && isset($_POST["mssv"]) && isset($_POST["matkhau"]) ){
@@ -66,10 +67,10 @@ class admin extends controllers{
     public function dangxuat(){
         if(isset($_SESSION["dangnhap"])){
             unset($_SESSION["dangnhap"]);
-            header('Location: http://localhost/LiveServer/admin');
+            header($this->Location.'/admin');
         }
         else{
-            header('Location: http://localhost/LiveServer/admin');
+            header($this->Location.'/admin');
         }
     }
 
@@ -181,13 +182,182 @@ class admin extends controllers{
         echo "day la quan ly giao vien";
     }
     public function sinhvien(){
-        echo "day la quan ly sinh vien";
+        $kq = $this->model("M_admin");  
+        $this->view("trangchu",[
+            "page" => "ThemSV",   
+            "ketquaKhoa"=>  $kq->showDSKhoa(),
+            "ketquaCN" => $kq->showKhoaCN()
+        ]);
+    }
+    public function addsinhvien(){
+        $kq = $this->model("M_admin"); 
+        if(isset($_POST['submit']) && isset($_POST['MSSV']) && isset($_POST['TenSv']) && isset($_POST['CMND']) && isset($_POST['GioiTinh']) 
+        && isset($_POST['KhoaHoc']) && isset($_POST['KhoaCN']) && isset($_POST['MatKhau'])){
+            $MSSV = $_POST['MSSV'];
+            $TenSv = $_POST['TenSv'];
+            $CMND = $_POST['CMND'];
+            $GioiTinh = $_POST['GioiTinh'];
+            $KhoaHoc = $_POST['KhoaHoc'];
+            $KhoaCN = $_POST['KhoaCN'];            
+            $MatKhau = password_hash($_POST['MatKhau'], PASSWORD_DEFAULT);
+            $insert = $this->model("M_admin");
+            $this->view("trangchu",[
+                "page" => "ThemSV",   
+                "ketquaKhoa"=>  $kq->showDSKhoa(),
+                "ketquaCN" => $kq->showKhoaCN(),
+                "insert" => $insert-> newSinhVien($MSSV, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $MatKhau, $KhoaCN)
+            ]);
+        }  
+        else{
+            
+            $this->view("trangchu",[
+                "page" => "ThemSV",   
+                "ketquaKhoa"=>  $kq->showDSKhoa(),
+                "ketquaCN" => $kq->showKhoaCN()             
+            ]);
+        }
+        
+    }
+    public function showSinhVien(){
+        $kq_sv = $this->model("M_admin")->showSinhVien();
+        $this->view("trangchu",[
+            "page" => "showSV",
+            "kq_sv" => $kq_sv            
+        ]);
+    }
+    
+    public function khoacn(){
+        $this->view("trangchu",[
+            "page" => "Khoa"            
+        ]);
+    }
+    public function addkhoacn(){
+        if(isset($_POST['submit']) && isset($_POST['TenKhoa'])){
+            if(!empty($_POST['TenKhoa'])){
+                $TenKhoa = $_POST['TenKhoa'];                               
+
+                $kq = $this->model("M_admin")->addKhoa($TenKhoa);
+
+                $this->view("trangchu",[
+                    "page" => "Khoa",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
+    }
+    public function showKhoaCN()
+    {
+        $kq_khoaCN = $this->model("M_admin")->showKhoaCN();
+        $this->view("trangchu",[
+            "page" => "showKhoaCN",
+            "kq_khoaCN" => $kq_khoaCN            
+        ]);
     }
     public function khoa_hoc(){
         echo "day la quan ly khoa hoc";
     }
-    public function khoacn(){
-        echo "day la quan ly khoa chuyen nganh";
+    public function tacgia(){
+        $this->view("trangchu",[
+            "page" => "TacGia"            
+        ]);
+    }
+    public function addTacGia(){
+        if(isset($_POST['submit']) && isset($_POST['TenTacGia'])){
+            if(!empty($_POST['TenTacGia'])){
+                $TenTacGia = $_POST['TenTacGia'];                               
+
+                $kq = $this->model("M_admin")->addTacGia($TenTacGia);
+
+                $this->view("trangchu",[
+                    "page" => "TacGia",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
+    }
+    public function showTacGia()
+    {
+        $kq_tg = $this->model("M_admin")->showTacGia();
+        $this->view("trangchu",[
+            "page" => "showTacGia",
+            "kq_tg" => $kq_tg            
+        ]);
+    }
+    public function NhanVien(){
+        $this->view("trangchu",[
+            "page" => "NhanVien"            
+        ]);
+    }
+    public function ShowNV(){
+        $kq = $this->model("M_admin")->showNhanVien(); 
+        $this->view("trangchu",[
+            "page" => "shownv", 
+            "result" => $kq                      
+        ]);
+    }
+    public function addNV(){
+        if(isset($_POST['submit']) && isset($_POST['TenNhanVien']) && isset($_POST['GioiTinh']) && isset($_POST['pass']) && isset($_POST['CMND'])){
+            if(!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])){
+                $TenNhanVien = $_POST['TenNhanVien'];
+                $GioiTinh = $_POST['GioiTinh'];               
+                $CMND = $_POST['CMND'];
+                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);                
+
+                $this->view("trangchu",[
+                    "page" => "NhanVien",
+                    "result"=> $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass),
+                ]);  
+            }            
+        }
+    }
+    public function newNV()
+    {
+        if(isset($_POST['submit']) && isset($_POST['TenNhanVien']) && isset($_POST['GioiTinh']) && isset($_POST['pass']) && isset($_POST['CMND'])){
+            if(!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])){
+                $TenNhanVien = $_POST['TenNhanVien'];
+                $GioiTinh = $_POST['GioiTinh'];               
+                $CMND = $_POST['CMND'];
+                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);                
+                $kq = $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass);                 
+            }            
+        }
+    }
+    public function KhoaHoc()
+    {
+        $this->view("trangchu",[
+            "page" => "KhoaHoc"
+        ]);
+    }
+    public function addKhoaHoc()
+    {
+        if(isset($_POST['submit']) && isset($_POST['TenKhoaHoc']) && isset($_POST['NamBatDau'])){
+            if(!empty($_POST['TenKhoaHoc']) && !empty($_POST['NamBatDau'])){
+                $TenKhoaHoc = $_POST['TenKhoaHoc'];                               
+                $NamBatDau = $_POST['NamBatDau'];
+                $kq = $this->model("M_admin")->addKhoaHoc($TenKhoaHoc,$NamBatDau);
+
+                $this->view("trangchu",[
+                    "page" => "KhoaHoc",
+                    "result"=> $kq 
+                ]);  
+            }            
+        }
+    }
+
+    public function showKhoaHoc()
+    {
+        $kq = $this->model("M_admin")->showKhoaHoc(); 
+        $this->view("trangchu",[
+            "page" => "showKhoaHoc", 
+            "kq_KhoaHoc" => $kq                      
+        ]);
+    }
+    public function showTable()
+    {
+        $this->view("null",[
+            "page" => "dataTableNV",
+            "result" =>$this->model("M_admin")->showNhanVien()
+        ]);
     }
     public function thongke(){
         echo "day la thong ke";
