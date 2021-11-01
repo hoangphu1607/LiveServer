@@ -334,6 +334,9 @@ class admin extends controllers{
                 $kq = $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass);                 
             }            
         }
+        $this->view("trangchu",[
+            "page" => "NhanVien",            
+        ]);
     }
     public function KhoaHoc()
     {

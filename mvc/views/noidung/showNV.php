@@ -18,7 +18,7 @@
 							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" id="AddNV">&times;</span></button>
 						</div>
 						<div class="modal-body">                                                    
-                            <div class="form-group ">
+                            <div class="form-group">
                                 <input type="text" class="input-group" id="TenNhanVien"
                                     placeholder="Tên Nhân Viên" name="TenNhanVien">
                             </div>
@@ -76,18 +76,14 @@
                         <th>Xóa</th>
                         </tr>
                     </tfoot>
-                    <tbody>
-                    <?php $i=1 ; 
-                        foreach ($kq_nv as $nv) { ?> 
-                        <tr>
-                            <td><?php echo $i ?></td>
-                            <td><?php echo $nv["TenNV"] ?></td>
-                            <td><?php echo $nv["GioiTinh"] ?></td>
-                            <td><?php echo $nv["Cmnd_gv"] ?></td>                            
-                            <td><a  type="button" class="btn btn-success" href="admin/suanhanvien/<?php  echo $nv["MaNV"] ?>">Sửa</a></td>
-                            <td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>
-                        </tr>
-                        <?php $i++; } ?>
+                    <tbody id="table-NV">
+                        <?php
+                            $i = 1;
+                            foreach($kq_nv as $nv){
+                                
+                            }
+                        ?>
+
                     </tbody>
                 </table>
             </div>
@@ -95,14 +91,14 @@
     </div>
 </div>
 <script>
-   $('#AddNV').click(function()
+   $('#button_insert').click(function()
     {
         $.ajax({
             url : 'admin/showTable',
             type : 'POST',
             dataType : 'text',
             success : function (result){
-                $('#table-NV').html(result);
+                $('#table-NV').append(result);
             }
         });
     }); 
@@ -111,7 +107,7 @@
         type : 'POST',
         dataType : 'text',
         success : function (result){
-            $('#table-NV').html(result);
+            $('#table-NV').append(result);
         }
     });
 </script>
