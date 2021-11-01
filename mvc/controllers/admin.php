@@ -372,6 +372,16 @@ class admin extends controllers{
     {
         $this->model("M_admin")->showTable_NV();
     }
+    public function showTable1()
+    {
+        $test = array(
+            "ten"=>$_POST['ten'],
+            "CMND"=>$_POST['CMND'],
+            "pass"=>$_POST['pass'],
+            "gt"=>$_POST['gt'],
+        );
+       echo json_encode($test);
+    }
     public function thongke(){
         echo "day la thong ke";
     }
