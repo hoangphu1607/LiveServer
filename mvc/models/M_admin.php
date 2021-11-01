@@ -337,7 +337,30 @@ class M_admin extends db
 
     public function showTable_NV()
     {        
-        
+        $sql = "SELECT * FROM nhanvien";
+        $row = mysqli_query($this->conn, $sql);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        $i = 1;    
+            
+        foreach($mang as $nv){
+            if($i % 2 == 0){
+                echo "<tr class='even'>"; 
+            }
+            else{
+                echo "<tr class='odd'>"; 
+            }          
+            echo '<td class="sorting_1"> '. $i.'</td>';
+            echo '<td> '. $nv["TenNV"].'</td>';
+            echo '<td> '. $nv["GioiTinh"].'</td>';
+            echo '<td> '. $nv["Cmnd_gv"].'</td>';
+            echo '<td><a  type="button" class="btn btn-success" href="admin/suanhanvien/' .$nv["MaNV"] .'">Sửa</a></td>';
+            echo '<td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>';                            
+            echo "</tr>";
+            $i++;
+        }
     }
         
 }

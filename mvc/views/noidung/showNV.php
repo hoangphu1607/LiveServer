@@ -37,7 +37,7 @@
                                 </select>
                             </div>                            
                             <div class="form-group ">
-                                <input type="button" name="submit" value="Gửi" id="button_insert" class="btn btn-success">
+                            <button type="button" name="submit" value="Gửi" id="button_insert" class="btn btn-success"></button>   
                                 
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             </div>

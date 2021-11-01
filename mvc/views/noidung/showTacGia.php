@@ -34,8 +34,7 @@
                     <?php $i=1 ; 
                         foreach ($kq_tg as $tg) { ?> 
                         <tr>
-                            <td><?php echo $i ?></td>
-                            <td><?php echo $tg["MaTG"] ?></td>
+                            <td><?php echo $i ?></td>                            
                             <td><?php echo $tg["TenTG"] ?></td>                                                                       
                             <td><a  type="button" class="btn btn-success" href="admin/suanhanvien/<?php  echo $tg["MaTG"] ?>">Sửa</a></td>
                             <td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>

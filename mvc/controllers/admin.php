@@ -367,10 +367,7 @@ class admin extends controllers{
     }
     public function showTable()
     {
-        $this->view("null",[
-            "page" => "dataTableNV",
-            "result" =>$this->model("M_admin")->showNhanVien()
-        ]);
+        $this->model("M_admin")->showTable_NV();
     }
     public function thongke(){
         echo "day la thong ke";
