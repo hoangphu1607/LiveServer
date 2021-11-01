@@ -125,16 +125,18 @@ class admin extends controllers{
         
     }
     public function suasach($masach){
+        $admin = $this->model('M_admin');
+
+       
         if(isset($_POST['gui'])){
             if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
             && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) ){
-
                 $tensach = $_POST["tensach"];
                 $maloaisach = $_POST["MaLoaiSach"];
                 $matacgia = $_POST["MaTacGia"];
                 $gia =$_POST["Gia"];
                 $soluong = $_POST["SoLuong"];
-                $thoigian = $_POST["time"] ;
+                $ngaynhap = $_POST["time"] ;
                 $noidungngan = $_POST["noidungngan"];
 
                 if(empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0])){
@@ -151,8 +153,18 @@ class admin extends controllers{
 
                 }
                 else {
-                    echo "cả 2 đều có";
-                      //update tất cả
+                    $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
+                    $this->view("trangchu",[
+                        "page"=>"ThemSach",
+                        "kq_suasach"=> $admin->suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia),
+                        "show_suasach"=>$admin->show_sach_sua($masach),
+                        "ha_ct"=>$admin->show_anh_ct_sua($masach),
+                        "phanloai"=>$this->sach->loaisach(),
+                        "tacgia"=>$this->sach->tacgia(),
+                        "suasach"=>1,
+                      
+                    ]);
+                    unlink($anhdaidien[0]['AnhDaiDien']);
                 }
                 
                 
@@ -160,7 +172,7 @@ class admin extends controllers{
                 
         }
     }
-    $admin = $this->model('M_admin');
+
     $this->view("trangchu",[
         "page"=>"ThemSach",
         "show_suasach"=>$admin->show_sach_sua($masach),
@@ -169,6 +181,7 @@ class admin extends controllers{
         "tacgia"=>$this->sach->tacgia(),
         "suasach"=>1,
     ]);
+  
     }
     public function ql_ls(){
         $this->view("trangchu",[

@@ -45,8 +45,19 @@ $tacgia = json_decode($data["tacgia"], true);
                                 ?>
                                 <h1 class="h4 text-gray-900 ">Chỉnh sửa Sách Vào Thư Viện</h1>
                         </div>
+
+                        <?php if (isset($data['kq_suasach'])) {
+                                    $kq_suasach = json_decode($data["kq_suasach"], true);
+                                    echo "cap nhật tất cả thành công";
+                                }
+                        ?>
+
                         <form class="form-horizontal" action="admin/suasach/<?php echo $show[0]['MaSach'] ?>" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">Tên sách</span>
+                                </div>
                                 <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach" value="<?php echo $show[0]['TenSach'] ?>" required>
                             </div>
 
@@ -68,40 +79,49 @@ $tacgia = json_decode($data["tacgia"], true);
                                 </select>
                             </div>
 
-                            <div class="form-group ">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">VNĐ</span>
+                                </div>
                                 <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0" value="<?php echo $show[0]['Gia'] ?>">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.000</span>
+                                </div>
                             </div>
 
-                            <div class="form-group ">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Số lượng</span>
+                                </div>
                                 <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0" value="<?php echo $show[0]['SoLuong'] ?>">
                             </div>
 
                             <div class="form-group ">
                                 <label for="Anh">Chọn Ảnh Đại Diện</label>
-                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh" >
+                                <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh">
                                 <div>
-                                <img id="duongdan" src="<?php echo $show[0]['AnhDaiDien'] ?>" alt="" class="img-rounded">
+                                    <img id="duongdan" src="<?php echo $show[0]['AnhDaiDien'] ?>" alt="" class="img-rounded">
                                 </div>
                             </div>
 
 
                             <div class="form-group ">
                                 <label for="multiple">Chọn Các Ảnh Chi Tiết</label>
-                                <input type="file" name="n_anh[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg" onchange="preview1()" >
+                                <input type="file" name="n_anh[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg" onchange="preview1()">
                                 <div id="images">
-                                <?php 
-                                $num =0;
-                                foreach ( $hinh_ct as $link) { ?>
-                                    <figure id="ah<?php echo $num ?>">
-                                        <img  src="<?php echo $link['Link'] ?>">
-                                        <figcaption> <button id="<?php echo  $link['id'] ?>" value="<?php echo $num ?>"  type="button" class="btn btn-danger xoa_anhct" style="zoom:80%" >Xóa Hình: <?php echo pathinfo($link['Link'])['basename']; ?></button></figcaption>
-                                    </figure>                              
-                                    <?php $num++; } ?>
+                                    <?php
+                                    $num = 0;
+                                    foreach ($hinh_ct as $link) { ?>
+                                        <figure id="ah<?php echo $num ?>">
+                                            <img src="<?php echo $link['Link'] ?>">
+                                            <figcaption> <button id="<?php echo  $link['id'] ?>" value="<?php echo $num ?>" type="button" class="btn btn-danger xoa_anhct" style="zoom:80%">Xóa Hình: <?php echo pathinfo($link['Link'])['basename']; ?></button></figcaption>
+                                        </figure>
+                                    <?php $num++;
+                                    } ?>
                                 </div>
                                 <div id="themanh_sua">
                                 </div>
                             </div>
-
                             <div class="form-group ">
                                 <label for="time">Thời Gian Nhập Sách: </label>
                                 <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>" value="<?php echo $show[0]['NgayNhap'] ?>" required>
@@ -114,7 +134,7 @@ $tacgia = json_decode($data["tacgia"], true);
                             <input type="submit" class="btn btn-primary btn-user btn-block" name="gui" value="Sửa thông tin sách">
 
                         </form>
-                        
+
                     <?php }
                             /////////// Dưới thêm , trên sửa ///////////////
                             else { ?>
@@ -165,7 +185,7 @@ $tacgia = json_decode($data["tacgia"], true);
 
                         <div class="form-group ">
                             <label for="time">Thời Gian Nhập Sách: </label>
-                            <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>"  required>
+                            <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>" required>
                         </div>
 
                         <div class="form-group ">
