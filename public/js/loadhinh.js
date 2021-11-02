@@ -57,12 +57,10 @@ function preview1() {
 
 function show() {
   $(document).ready(function () {
-    $(".xoa_anhct").click(function () {
-      var id_hinh = this.id;
-      var so = $(this).attr("value");
+    $(".xoahct").click(function () {
+      var id_hinh = this.value;
       var test = { 'hinh': id_hinh };
-      var anh = this.parentNode.offsetParent.children[so].attributes.id.value;
- 
+      var anh = $(this).closest('figure').attr('id');
       $.post("ajax/xoa_hinhct",test,function(data){
        data = JSON.parse(data);
         if(data == true){ 
@@ -73,9 +71,7 @@ function show() {
            setTimeout(function() {
             $("#"+anh).remove();
            },3000);
-  
            // location.reload();
-
 
         }
       });

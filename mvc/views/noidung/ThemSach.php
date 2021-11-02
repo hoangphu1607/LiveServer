@@ -4,6 +4,18 @@ $loaisach = json_decode($data["phanloai"], true);
 $tacgia = json_decode($data["tacgia"], true);
 $cn = json_decode($data["khoa"], true);
 ?>
+
+<?php 
+    if (isset($data["xoahinh_old"])) {
+        $xoahinh_old = json_decode($data["xoahinh_old"], true);
+        $kq_sua = json_decode($data["kq_suasach"], true);
+        if($kq_sua == true){
+            unlink($xoahinh_old[0]['AnhDaiDien']);
+        }
+
+    }
+ 
+?>
 <!--  -->
 <?php if (isset($data["thongbao_themsach"])) {
     $kq = json_decode($data["thongbao_themsach"], true);
@@ -32,6 +44,45 @@ $cn = json_decode($data["khoa"], true);
 <?php
 }
 ?>
+
+<?php if (isset($data["kq_suasach"])) {
+    $kq_sua = json_decode($data["kq_suasach"], true);
+?>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>thông báo: </strong> <?php
+                                        if (isset($kq_sua['anh']['check']) && $kq_sua['nhieuanh']['check2']) {
+                                            if ($kq_sua['kq'] == 1) {
+                                                echo "sửa thành công";
+                                            } else {
+                                                if ($kq_sua['kq'] == 0) {
+                                                    echo "sửa thất bại" . "<br>";
+                                                    if ($kq_sua['anh']['check'] != 0 && $kq_sua['nhieuanh']['check2'] != 0) {
+                                                        echo $kq_sua['anh']['thongbao'] . "<br>";
+                                                        echo $kq_sua['nhieuanh']['thongbao'];
+                                                    } else if ($kq_sua['anh']['check'] != 0 && $kq_sua['nhieuanh']['check2'] == 0) {
+                                                        echo $kq_sua['anh']['thongbao'];
+                                                    } else if ($kq_sua['anh']['check'] == 0 && $kq_sua['nhieuanh']['check2'] != 0) {
+                                                        echo $kq_sua['nhieuanh']['thongbao'];
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            if ($kq_sua == 1) {
+                                                echo "sửa thành công";
+                                            } else {
+                                                if ($kq_sua == 0) {
+                                                    echo "sửa Thất bại";
+                                                }
+                                            }
+                                        } ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php
+}
+?>
+
 <div class="container-fluid">
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -121,11 +172,11 @@ $cn = json_decode($data["khoa"], true);
                                 <div id="images">
                                     <?php
                                     $num = 0;
-                                    foreach ($hinh_ct as $link) { 
+                                    foreach ($hinh_ct as $link) {
                                         $tenanhcanxoa = pathinfo($link['Link'])['basename'] ?>
                                         <figure id="ah<?php echo $num ?>">
                                             <img src="<?php echo $link['Link'] ?>">
-                                            <figcaption> <button id="<?php echo  $link['id'] ?>" value="<?php echo $num ?>" type="button" class="btn btn-danger xoa_anhct" style="zoom:80%">Xóa Hình: <?php echo substr($tenanhcanxoa,0, 15)."...."; ?></button></figcaption>
+                                            <figcaption> <button value="<?php echo  $link['id'] ?>" type="button" class="btn btn-danger xoahct" style="zoom:80%">Xóa Hình: <?php echo substr($tenanhcanxoa, 0, 15); ?></button></figcaption>
                                         </figure>
                                     <?php $num++;
                                     } ?>
@@ -133,6 +184,7 @@ $cn = json_decode($data["khoa"], true);
                                 <div id="themanh_sua">
                                 </div>
                             </div>
+
                             <div class="form-group ">
                                 <label for="time">Thời Gian Nhập Sách: </label>
                                 <input type="date" id="time" name="time" min="2000-01-02" max="<?php echo date('Y-m-d'); ?>" value="<?php echo $show[0]['NgayNhap'] ?>" required>
@@ -175,14 +227,14 @@ $cn = json_decode($data["khoa"], true);
                         </div>
 
                         <div class="form-group ">
-                        <select name="MaCN" id="Macn" class="form-control" aria-label="Default select example" required>
+                            <select name="MaCN" id="Macn" class="form-control" aria-label="Default select example" required>
                                 <option selected disabled hidden value="">Chọn Sách Khoa Chuyên Ngành</option>
                                 <?php foreach ($cn as $value3) { ?>
                                     <option value="<?php echo $value3['MaKhoaCN'] ?>"><?php echo $value3['TenCN'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        
+
 
                         <div class="form-group ">
                             <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0">

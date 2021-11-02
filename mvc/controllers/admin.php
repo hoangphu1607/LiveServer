@@ -157,7 +157,7 @@ class admin extends controllers{
                 }
                 else if(empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name'])){
                       //update ảnh đại diện
-                      $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
+                      $anhdaidien = $admin->show_sach_sua($masach);
                       $this->view("trangchu",[
                         "page"=>"ThemSach",
                         "kq_suasach"=> $admin->sua_anhdd($masach),
@@ -167,9 +167,9 @@ class admin extends controllers{
                         "tacgia"=>$this->sach->tacgia(),
                         "khoa"=>$admin->khoacn(),
                         "suasach"=>1,
+                        "xoahinh_old"=>$anhdaidien
                     ]);
-                    unlink($anhdaidien[0]['AnhDaiDien']);
-
+                  
                 }
                 else if(empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0])){
                       //update nội dung
@@ -197,6 +197,7 @@ class admin extends controllers{
                         "suasach"=>1,
                       
                     ]);
+                    
                     unlink($anhdaidien[0]['AnhDaiDien']);
                 }
                 
@@ -204,18 +205,18 @@ class admin extends controllers{
   
                 
         }
+    }else {
+        $this->view("trangchu",[
+            "page"=>"ThemSach",
+            "show_suasach"=>$admin->show_sach_sua($masach),
+            "ha_ct"=>$admin->show_anh_ct_sua($masach),
+            "phanloai"=>$this->sach->loaisach(),
+            "tacgia"=>$this->sach->tacgia(),
+            "khoa"=>$admin->khoacn(),
+            "suasach"=>1,
+        ]);
     }
 
-    $this->view("trangchu",[
-        "page"=>"ThemSach",
-        "show_suasach"=>$admin->show_sach_sua($masach),
-        "ha_ct"=>$admin->show_anh_ct_sua($masach),
-        "phanloai"=>$this->sach->loaisach(),
-        "tacgia"=>$this->sach->tacgia(),
-        "khoa"=>$admin->khoacn(),
-        "suasach"=>1,
-    ]);
-  
     }
     public function ql_ls(){
         $this->view("trangchu",[

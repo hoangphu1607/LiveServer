@@ -32,12 +32,15 @@ class M_admin extends db
     public function sua_anhdd($masach)
     {   
            $duongdan = $this->chon_1_anh();
-           $anh = $duongdan['duongdan'];
-            $kq = false;     
+           $kq = false; 
+           if($duongdan['check'] == 0){
+            $anh = $duongdan['duongdan'];
             $qr4 = "UPDATE `sach` SET `AnhDaiDien`= '$anh' WHERE `MaSach`='$masach'";
             if (mysqli_query($this->conn, $qr4)) {
                 $kq = true;       
             }
+           }
+          
         return json_encode($kq);
     }
     public function sua_noidung($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia,$makhoacn)
@@ -72,6 +75,7 @@ class M_admin extends db
         } else { //không phải ảnh
             $kq = false;
             $mang = array("kq" => $kq, "anh" => $duongdan ,"nhieuanh"=> $nhieu_anh);
+            
             unlink($duongdan['duongdan']);
         }
         return json_encode($mang);
