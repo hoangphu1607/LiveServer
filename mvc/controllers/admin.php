@@ -185,7 +185,7 @@ class admin extends controllers{
                     ]);
                 }
                 else {
-                    $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
+                    $anhdaidien = $admin->show_sach_sua($masach);
                     $this->view("trangchu",[
                         "page"=>"ThemSach",
                         "kq_suasach"=> $admin->suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia,$makhoacn),
@@ -195,15 +195,9 @@ class admin extends controllers{
                         "tacgia"=>$this->sach->tacgia(),
                         "khoa"=>$admin->khoacn(),
                         "suasach"=>1,
-                      
+                        "xoahinh_old"=>$anhdaidien
                     ]);
-                    
-                    unlink($anhdaidien[0]['AnhDaiDien']);
-                }
-                
-                
-  
-                
+                }                                       
         }
     }else {
         $this->view("trangchu",[

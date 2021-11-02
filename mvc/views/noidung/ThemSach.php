@@ -50,7 +50,7 @@ $cn = json_decode($data["khoa"], true);
 ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>thông báo: </strong> <?php
-                                        if (isset($kq_sua['anh']['check']) && $kq_sua['nhieuanh']['check2']) {
+                                        if (isset($kq_sua['anh']['check']) && isset($kq_sua['nhieuanh']['check2'])) {
                                             if ($kq_sua['kq'] == 1) {
                                                 echo "sửa thành công";
                                             } else {
