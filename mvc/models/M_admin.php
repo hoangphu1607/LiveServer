@@ -15,6 +15,40 @@ class M_admin extends db
         }
         return $check;
     }
+    public function sua_anhct($masach)
+    {   
+           $kq = false;    
+           $nhieu_anh = $this->chon_nhieu_anh();
+           $cout_anh = $nhieu_anh["so_hinh_luu"];
+           for ($i = 0; $i <  $cout_anh; $i++) {
+               $dd_nhieu_anh = $nhieu_anh["duongdan"][$i];
+               $qr5 = "INSERT INTO `anhchitiet` (`MaSach`, `id`, `Link`) VALUES ('$masach', NULL, '$dd_nhieu_anh')";
+               if (mysqli_query($this->conn, $qr5)) {
+                   $kq = true;
+               }
+           }
+        return json_encode($kq);
+    }
+    public function sua_anhdd($masach)
+    {   
+           $duongdan = $this->chon_1_anh();
+           $anh = $duongdan['duongdan'];
+            $kq = false;     
+            $qr4 = "UPDATE `sach` SET `AnhDaiDien`= '$anh' WHERE `MaSach`='$masach'";
+            if (mysqli_query($this->conn, $qr4)) {
+                $kq = true;       
+            }
+        return json_encode($kq);
+    }
+    public function sua_noidung($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia,$makhoacn)
+    {
+            $kq = false;     
+            $qr4 = "UPDATE `sach` SET `TenSach`='$tensach',`Noidungngan`='$noidungngan',`SoLuong`='$soluong',`NgayNhap`='$ngaynhap',`Gia`='$gia',`MaLoaiSach`='$maloaisach',`MaTacGia`='$matacgia',`MakhoaCN`=$makhoacn WHERE `MaSach`='$masach'";
+            if (mysqli_query($this->conn, $qr4)) {
+                $kq = true;       
+            }
+        return json_encode($kq);
+    }
     public function suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia,$makhoacn)
     {
         $duongdan = $this->chon_1_anh();

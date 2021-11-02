@@ -142,17 +142,47 @@ class admin extends controllers{
                 $makhoacn = $_POST["MaCN"];
 
                 if(empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0])){
-                    echo "chưa có anh dt";
                     //update ảnh chi tiết
+                    $this->view("trangchu",[
+                        "page"=>"ThemSach",
+                        "kq_suasach"=> $admin->sua_anhct($masach),
+                        "show_suasach"=>$admin->show_sach_sua($masach),
+                        "ha_ct"=>$admin->show_anh_ct_sua($masach),
+                        "phanloai"=>$this->sach->loaisach(),
+                        "tacgia"=>$this->sach->tacgia(),
+                        "khoa"=>$admin->khoacn(),
+                        "suasach"=>1,
+                    ]);
+                  
                 }
                 else if(empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name'])){
-                    echo "chưa có anh ct";
                       //update ảnh đại diện
+                      $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
+                      $this->view("trangchu",[
+                        "page"=>"ThemSach",
+                        "kq_suasach"=> $admin->sua_anhdd($masach),
+                        "show_suasach"=>$admin->show_sach_sua($masach),
+                        "ha_ct"=>$admin->show_anh_ct_sua($masach),
+                        "phanloai"=>$this->sach->loaisach(),
+                        "tacgia"=>$this->sach->tacgia(),
+                        "khoa"=>$admin->khoacn(),
+                        "suasach"=>1,
+                    ]);
+                    unlink($anhdaidien[0]['AnhDaiDien']);
+
                 }
                 else if(empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0])){
-                    echo "cả 2 đều không có";
                       //update nội dung
-
+                      $this->view("trangchu",[
+                        "page"=>"ThemSach",
+                        "kq_suasach"=> $admin->sua_noidung($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach,$matacgia,$makhoacn),
+                        "show_suasach"=>$admin->show_sach_sua($masach),
+                        "ha_ct"=>$admin->show_anh_ct_sua($masach),
+                        "phanloai"=>$this->sach->loaisach(),
+                        "tacgia"=>$this->sach->tacgia(),
+                        "khoa"=>$admin->khoacn(),
+                        "suasach"=>1,
+                    ]);
                 }
                 else {
                     $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
