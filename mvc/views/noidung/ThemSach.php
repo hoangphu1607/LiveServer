@@ -2,6 +2,7 @@
 <?php date_default_timezone_set('Asia/Ho_Chi_Minh');
 $loaisach = json_decode($data["phanloai"], true);
 $tacgia = json_decode($data["tacgia"], true);
+$cn = json_decode($data["khoa"], true);
 ?>
 <!--  -->
 <?php if (isset($data["thongbao_themsach"])) {
@@ -63,7 +64,7 @@ $tacgia = json_decode($data["tacgia"], true);
 
                             <div class="form-group ">
                                 <select name="MaLoaiSach" id="MaLoaiSach" class="form-control" aria-label="Default select example" required>
-                                    <option selected value="<?php echo $show[0]['MaLoaiSach'] ?>"> <?php echo $show[0]['TenLoaiSach'] ?> </option>
+                                    <option selected value="<?php echo $show[0]['MaLoaiSach'] ?>">Loại sách đã chọn: <?php echo $show[0]['TenLoaiSach'] ?> </option>
                                     <?php foreach ($loaisach as $value) { ?>
                                         <option value="<?php echo $value['MaLoaiSach'] ?>"><?php echo $value['TenLoaiSach'] ?></option>
                                     <?php } ?>
@@ -72,9 +73,18 @@ $tacgia = json_decode($data["tacgia"], true);
 
                             <div class="form-group ">
                                 <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
-                                    <option selected value="<?php echo $show[0]['MaTG'] ?>"><?php echo $show[0]['TenTG'] ?></option>
+                                    <option selected value="<?php echo $show[0]['MaTG'] ?>">Tác giả đã chọn: <?php echo $show[0]['TenTG'] ?></option>
                                     <?php foreach ($tacgia as $value2) { ?>
                                         <option value="<?php echo $value2['MaTG'] ?>"><?php echo $value2['TenTG'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <select name="MaCN" id="Macn" class="form-control" aria-label="Default select example" required>
+                                    <option selected value="<?php echo $show[0]['MaKhoaCN'] ?>">Khoa chuyên ngành đã chọn: <?php echo $show[0]['TenCN'] ?></option>
+                                    <?php foreach ($cn as $value3) { ?>
+                                        <option value="<?php echo $value3['MaKhoaCN'] ?>"><?php echo $value3['TenCN'] ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -111,10 +121,11 @@ $tacgia = json_decode($data["tacgia"], true);
                                 <div id="images">
                                     <?php
                                     $num = 0;
-                                    foreach ($hinh_ct as $link) { ?>
+                                    foreach ($hinh_ct as $link) { 
+                                        $tenanhcanxoa = pathinfo($link['Link'])['basename'] ?>
                                         <figure id="ah<?php echo $num ?>">
                                             <img src="<?php echo $link['Link'] ?>">
-                                            <figcaption> <button id="<?php echo  $link['id'] ?>" value="<?php echo $num ?>" type="button" class="btn btn-danger xoa_anhct" style="zoom:80%">Xóa Hình: <?php echo pathinfo($link['Link'])['basename']; ?></button></figcaption>
+                                            <figcaption> <button id="<?php echo  $link['id'] ?>" value="<?php echo $num ?>" type="button" class="btn btn-danger xoa_anhct" style="zoom:80%">Xóa Hình: <?php echo substr($tenanhcanxoa,0, 15)."...."; ?></button></figcaption>
                                         </figure>
                                     <?php $num++;
                                     } ?>
@@ -162,6 +173,16 @@ $tacgia = json_decode($data["tacgia"], true);
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <div class="form-group ">
+                        <select name="MaCN" id="Macn" class="form-control" aria-label="Default select example" required>
+                                <option selected disabled hidden value="">Chọn Sách Khoa Chuyên Ngành</option>
+                                <?php foreach ($cn as $value3) { ?>
+                                    <option value="<?php echo $value3['MaKhoaCN'] ?>"><?php echo $value3['TenCN'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
 
                         <div class="form-group ">
                             <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0">

@@ -15,14 +15,14 @@ class M_admin extends db
         }
         return $check;
     }
-    public function suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia)
+    public function suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia,$makhoacn)
     {
         $duongdan = $this->chon_1_anh();
         $nhieu_anh = $this->chon_nhieu_anh();
         $kq = false;
         if ($duongdan['check'] == 0 && $nhieu_anh['check2'] == 0) {
             $anh =  $duongdan['duongdan'];
-            $qr4 = "UPDATE `sach` SET `TenSach`='$tensach',`Noidungngan`='$noidungngan',`SoLuong`='$soluong',`NgayNhap`='$ngaynhap',`AnhDaiDien`='$anh',`Gia`='$gia',`MaLoaiSach`='$maloaisach',`MaTacGia`='$matacgia' WHERE `MaSach`='$masach'";
+            $qr4 = "UPDATE `sach` SET `TenSach`='$tensach',`Noidungngan`='$noidungngan',`SoLuong`='$soluong',`NgayNhap`='$ngaynhap',`AnhDaiDien`='$anh',`Gia`='$gia',`MaLoaiSach`='$maloaisach',`MaTacGia`='$matacgia',`MakhoaCN`=$makhoacn WHERE `MaSach`='$masach'";
             if (mysqli_query($this->conn, $qr4)) {
                 $kq = true;
                 $cout_anh = $nhieu_anh["so_hinh_luu"];
@@ -45,7 +45,7 @@ class M_admin extends db
 
     public function ad_thongtinsach()
     {
-        $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG ORDER BY `MaSach` DESC";
+        $qr4 = "SELECT * FROM `sach`,tacgia,loaisach,khoachuyennganh WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG and sach.MakhoaCN = khoachuyennganh.MaKhoaCN ORDER BY `MaSach` DESC";
         $row2 = mysqli_query($this->conn, $qr4);
         $mang = array();
         while ($kq = mysqli_fetch_array($row2)) {
@@ -53,14 +53,24 @@ class M_admin extends db
         }
         return json_encode($mang);
     }
-    public function themsach($tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia)
+    public function khoacn()
+    {
+        $qr4 = "SELECT * FROM `khoachuyennganh`";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function themsach($tensach, $noidungngan, $soluong, $ngaynhap/*,$anh*/, $gia, $maloaisach, $matacgia,$makhoacn)
     {
         $duongdan = $this->chon_1_anh();
         $nhieu_anh = $this->chon_nhieu_anh();
         $kq = false;
         if ($duongdan['check'] == 0 && $nhieu_anh['check2'] == 0) {
             $anh =  $duongdan['duongdan'];
-            $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', ' $anh', '$gia', '$maloaisach', '$matacgia')";
+            $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', ' $anh', '$gia', '$maloaisach', '$matacgia','$makhoacn')";
             if (mysqli_query($this->conn, $qr4)) {
                 $kq = true;
                 $cout_anh = $nhieu_anh["so_hinh_luu"];
@@ -83,7 +93,7 @@ class M_admin extends db
         return json_encode($mang);
     }
     public function show_sach_sua($masach){
-        $qr4 = "SELECT * FROM `sach`,tacgia,loaisach WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG AND sach.MaSach= $masach";
+        $qr4 = "SELECT * FROM `sach`,tacgia,loaisach,khoachuyennganh WHERE sach.Maloaisach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG AND sach.MakhoaCN = khoachuyennganh.MaKhoaCN AND sach.MaSach= $masach";
         $row2 = mysqli_query($this->conn, $qr4);
         $mang = array();
         while ($kq = mysqli_fetch_array($row2)) {

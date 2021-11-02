@@ -23,6 +23,7 @@
                             <th>Ngày nhập</th>
                             <th>Loại sách</th>
                             <th>Tác giả</th>
+                            <th>Khoa chuyên ngành</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
@@ -39,6 +40,7 @@
                             <th>Ngày nhập</th>
                             <th>Loại sách</th>
                             <th>Tác giả</th>
+                            <th>Khoa chuyên ngành</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
@@ -57,6 +59,7 @@
                             <td><?php echo $sach["NgayNhap"] ?></td>
                             <td><?php echo $sach["TenLoaiSach"] ?></td>
                             <td><?php echo $sach["TenTG"] ?></td>
+                            <td><?php echo $sach["TenCN"] ?></td>
                             <td><a  type="button" class="btn btn-success" href="admin/suasach/<?php  echo $sach["MaSach"] ?>">Sửa</a></td>
                             <td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>
                         </tr>

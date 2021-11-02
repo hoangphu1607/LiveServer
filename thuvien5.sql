@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 13, 2021 lúc 08:11 PM
+-- Thời gian đã tạo: Th10 02, 2021 lúc 02:01 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.10
 
@@ -38,12 +38,9 @@ CREATE TABLE `anhchitiet` (
 --
 
 INSERT INTO `anhchitiet` (`MaSach`, `id`, `Link`) VALUES
-(1, 1, 'chưa có'),
-(2, 2, 'chưa có'),
-(3, 3, 'chưa có'),
-(4, 4, 'chưa có'),
-(2, 5, 'chưa có'),
-(1, 6, 'chưa có');
+(77, 116, 'public/anhchitiet_sach/243313652_547357042993912_8195810026000670955_n.jpg'),
+(77, 117, 'public/anhchitiet_sach/244216975_1942924902533365_300119187628338110_n.jpg'),
+(77, 118, 'public/anhchitiet_sach/243123372_400041901739903_8727708160448005195_n.png');
 
 -- --------------------------------------------------------
 
@@ -142,6 +139,8 @@ CREATE TABLE `nhanvien` (
   `MaNV` int(11) NOT NULL,
   `TenNV` text COLLATE utf8_unicode_ci NOT NULL,
   `GioiTinh` text COLLATE utf8_unicode_ci NOT NULL,
+  `Cmnd_gv` int(11) NOT NULL,
+  `Matkhau_gv` text COLLATE utf8_unicode_ci NOT NULL,
   `MaQuyen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -149,8 +148,9 @@ CREATE TABLE `nhanvien` (
 -- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `GioiTinh`, `MaQuyen`) VALUES
-(0, 'Nguyễn Sang', 'Nam', 1);
+INSERT INTO `nhanvien` (`MaNV`, `TenNV`, `GioiTinh`, `Cmnd_gv`, `Matkhau_gv`, `MaQuyen`) VALUES
+(1, 'giao vien 1', 'nam', 123456789, '$2y$10$57sKPZ/PIug8mukiKmSCpeGXu0zfCe9JyHbjvH2/oOF.b5jBO6ExG', 1),
+(2, 'giao vien 2', 'nu', 1234, '$2y$10$CcfPaNQ7qvbOTWoUYpD05eZGKA.ovb7HMvVbYL1SJkUdRnPPKYYL.', 2);
 
 -- --------------------------------------------------------
 
@@ -219,69 +219,78 @@ CREATE TABLE `sach` (
   `MaSach` int(11) NOT NULL,
   `TenSach` text COLLATE utf8_unicode_ci NOT NULL,
   `Noidungngan` text COLLATE utf8_unicode_ci NOT NULL,
-  `Chuong` text COLLATE utf8_unicode_ci NOT NULL,
   `SoLuong` int(11) NOT NULL,
   `NgayNhap` date NOT NULL,
   `AnhDaiDien` text COLLATE utf8_unicode_ci NOT NULL,
   `Gia` text COLLATE utf8_unicode_ci NOT NULL,
   `MaLoaiSach` int(11) NOT NULL,
-  `MaTacGia` int(11) NOT NULL
+  `MaTacGia` int(11) NOT NULL,
+  `MakhoaCN` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `sach`
 --
 
-INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `Chuong`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`) VALUES
-(1, 'Lập trình căn bản', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd\r\n', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......\r\n', 10, '2012-09-12', 'public/anhsach/sach_lt_java.jpg', '200000', 4, 1),
-(2, 'AV chuyên ngành', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 100, '2013-09-18', 'public/anhsach/sach_lt_java.jpg', '120000', 4, 1),
-(3, 'Tư tưởng HCM', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 50, '2016-08-10', 'public/anhsach/sach_lt_java.jpg', '300000', 2, 3),
-(4, 'Toán CC A3', 'abcdefghijklmnopqrstuvwxyz', 'Chương 1:.......\r\nChương 2:.......\r\nChương 3:.......\r\nChương 4:.......\r\nChương 5:.......', 120, '2014-09-18', 'public/anhsach/sach_lt_java.jpg', '125000', 4, 1),
-(6, 'sach1', 'dhaspfncaspjfasfasfamaslfasfmasasasdasf', 'Chương 1: .....\r\nChương 2: .....\r\nChương 3: .....\r\nChương 4: .....\r\nChương 5: .....', 100, '2014-10-17', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1),
-(7, 'sach2', 'japsljasfjafasnfaslfasnfaslnfaslnfasnflasnflasnflknas', 'Chương 1:', 5, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '60', 1, 1),
-(8, 'sach3', 'gao ồ gao ồ gaooooooooooooo', 'Chương trình', 50, '2016-10-10', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1),
-(9, 'sach4', 'nsfànlầnlf', 'Chương 2:', 15, '2015-10-17', 'public/anhsach/sach_lt_java.jpg', '30', 1, 1),
-(10, 'sach5', 'aaaaa', 'Chương 3', 30, '2016-10-19', 'public/anhsach/sach_lt_java.jpg', '40', 1, 1),
-(11, 'sach6', 'bbbbbbbbbbbbbbbb', 'Chương 3:', 40, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '55', 2, 1),
-(12, 'sach7', 'ccccccccccccccc', '1', 21, '2016-10-18', 'public/anhsach/sach_lt_java.jpg', '30', 2, 1),
-(13, 'sach8', 'ddddddddddddddddd', '2', 22, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2),
-(14, 'sach9', 'eeeeeeeeeeee', '3', 100, '2014-10-15', 'public/anhsach/sach_lt_java.jpg', '22', 2, 2),
-(15, 'sach10', 'âđssâsađasssssaa', '4', 0, '0000-00-00', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2),
-(16, 'sach11', 'ádnalsálflấlfn', '5', 10, '2021-10-13', 'public/anhsach/sach_lt_java.jpg', '50', 2, 2),
-(17, 'sach11', 'ádnálalsfá', '4', 20, '2019-10-16', 'public/anhsach/sach_lt_java.jpg', '20', 3, 2),
-(18, 'sach12', 'áđâsđasadầ', '4', 30, '2014-10-07', 'public/anhsach/sach_lt_java.jpg', '55', 3, 3),
-(19, 'sach12', 'asfalskfalskfnaslnf', '6', 25, '2015-10-21', 'public/anhsach/sach_lt_java.jpg', '35', 3, 3),
-(20, 'sach13', 'asbdlasflasf', '7', 30, '2016-10-25', 'public/anhsach/sach_lt_java.jpg', '10', 3, 3),
-(21, 'sach14', 'asggfasdasd', '5', 20, '2015-10-23', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3),
-(22, 'sach15', 'asflasflasfna;sfn', '7', 21, '2014-10-20', 'public/anhsach/sach_lt_java.jpg', '80', 3, 3),
-(23, 'sach16', 'alsklfasnfansfjasfjas;f', '9', 22, '2017-10-18', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3),
-(24, 'sach17', 'asasfasnfas,fmasfasf', '10', 100, '2012-10-16', 'public/anhsach/sach_lt_java.jpg', '40', 3, 3),
-(25, 'sach18', 'asasgfasfasdasd', '11', 26, '2018-10-15', 'public/anhsach/sach_lt_java.jpg', '90', 4, 3),
-(26, 'sach19', 'asfassafafas', '12', 60, '2018-10-02', 'public/anhsach/sach_lt_java.jpg', '600', 4, 3),
-(27, 'sachhh', 'asasfasfasfasf', '13', 60, '2017-10-11', 'public/anhsach/sach_lt_java.jpg', '20', 4, 2),
-(28, 'sach211', 'asasfasfsa', '14', 50, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '12', 4, 2),
-(29, 'sach113', 'asasfasfjasfbjaksbf', '15', 40, '2014-10-18', 'public/anhsach/sach_lt_java.jpg', '45', 2, 2),
-(30, 'sach34', 'asfasfasfs', '12345', 78, '2016-10-27', 'public/anhsach/sach_lt_java.jpg', '6000', 4, 2),
-(31, 'sach35', 'asdasfasfas', '12345', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2),
-(32, 'sachaa', 'asbfasbflsfblasf', '12345', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3),
-(33, 'sachss', 'asasfasfasfas', '12345', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3),
-(34, 'sacht', 'âfagagagága', '12345', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1),
-(35, 'sachj', 'asasfasgagas', '12345', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2),
-(36, 'sachck', 'asffafasfagfa', '12345', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3),
-(37, 'sachcuoi', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(38, 'sachcuoi loai 4/1', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(39, 'sachcuoi loai 4/2', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(40, 'sach35 ', 'asdasfasfas', '12345', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2),
-(41, 'sachaa 4/3', 'asbfasbflsfblasf', '12345', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3),
-(42, 'sachss 4/4', 'asasfasfasfas', '12345', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3),
-(43, 'sacht 4/6', 'âfagagagága', '12345', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1),
-(44, 'sachj 4/7', 'asasfasgagas', '12345', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2),
-(45, 'sachck 4/8', 'asffafasfagfa', '12345', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3),
-(46, 'sachcuoi 4/9', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(47, 'sachcuoi loai 4/10', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(48, 'sachcuoi loai 4/11', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(49, 'sachcuoi loai 4/12', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2),
-(50, 'sachcuoi loai 4/13', 'asfhalsbasjgba', '12345', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2);
+INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`, `MakhoaCN`) VALUES
+(1, 'Lập trình căn bản', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd\r\n', 10, '2012-09-12', 'public/anhsach/sach_lt_java.jpg', '200000', 4, 1, 4),
+(2, 'AV chuyên ngành', 'abcdefghijklmnopqrstuvwxyzasdasdasdas asdasd asdasda sdasd asd asdas dasd\r\nasd asdasdasdas adasdasdasdasdsa das dasd', 100, '2013-09-18', 'public/anhsach/sach_lt_java.jpg', '120000', 4, 1, 4),
+(3, 'Tư tưởng HCM', 'abcdefghijklmnopqrstuvwxyz', 50, '2016-08-10', 'public/anhsach/sach_lt_java.jpg', '300000', 2, 3, 4),
+(4, 'Toán CC A3', 'abcdefghijklmnopqrstuvwxyz', 120, '2014-09-18', 'public/anhsach/sach_lt_java.jpg', '125000', 4, 1, 4),
+(6, 'sach1', 'dhaspfncaspjfasfasfamaslfasfmasasasdasf', 100, '2014-10-17', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1, 4),
+(7, 'sach2', 'japsljasfjafasnfaslfasnfaslnfaslnfasnflasnflasnflknas', 5, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '60', 1, 1, 4),
+(8, 'sach3', 'gao ồ gao ồ gaooooooooooooo', 50, '2016-10-10', 'public/anhsach/sach_lt_java.jpg', '20', 1, 1, 4),
+(9, 'sach4', 'nsfànlầnlf', 15, '2015-10-17', 'public/anhsach/sach_lt_java.jpg', '30', 1, 1, 4),
+(10, 'sach5', 'aaaaa', 30, '2016-10-19', 'public/anhsach/sach_lt_java.jpg', '40', 1, 1, 4),
+(11, 'sach6', 'bbbbbbbbbbbbbbbb', 40, '2015-10-13', 'public/anhsach/sach_lt_java.jpg', '55', 2, 1, 4),
+(12, 'sach7', 'ccccccccccccccc', 21, '2016-10-18', 'public/anhsach/sach_lt_java.jpg', '30', 2, 1, 4),
+(13, 'sach8', 'ddddddddddddddddd', 22, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2, 4),
+(14, 'sach9', 'eeeeeeeeeeee', 100, '2014-10-15', 'public/anhsach/sach_lt_java.jpg', '22', 2, 2, 4),
+(15, 'sach10', 'âđssâsađasssssaa', 0, '0000-00-00', 'public/anhsach/sach_lt_java.jpg', '33', 2, 2, 4),
+(16, 'sach11', 'ádnalsálflấlfn', 10, '2021-10-13', 'public/anhsach/sach_lt_java.jpg', '50', 2, 2, 4),
+(17, 'sach11', 'ádnálalsfá', 20, '2019-10-16', 'public/anhsach/sach_lt_java.jpg', '20', 3, 2, 4),
+(18, 'sach12', 'áđâsđasadầ', 30, '2014-10-07', 'public/anhsach/sach_lt_java.jpg', '55', 3, 3, 4),
+(19, 'sach12', 'asfalskfalskfnaslnf', 25, '2015-10-21', 'public/anhsach/sach_lt_java.jpg', '35', 3, 3, 4),
+(20, 'sach13', 'asbdlasflasf', 30, '2016-10-25', 'public/anhsach/sach_lt_java.jpg', '10', 3, 3, 4),
+(21, 'sach14', 'asggfasdasd', 20, '2015-10-23', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3, 4),
+(22, 'sach15', 'asflasflasfna;sfn', 21, '2014-10-20', 'public/anhsach/sach_lt_java.jpg', '80', 3, 3, 4),
+(23, 'sach16', 'alsklfasnfansfjasfjas;f', 22, '2017-10-18', 'public/anhsach/sach_lt_java.jpg', '60', 3, 3, 4),
+(24, 'sach17', 'asasfasnfas,fmasfasf', 100, '2012-10-16', 'public/anhsach/sach_lt_java.jpg', '40', 3, 3, 4),
+(25, 'sach18', 'asasgfasfasdasd', 26, '2018-10-15', 'public/anhsach/sach_lt_java.jpg', '90', 4, 3, 4),
+(26, 'sach19', 'asfassafafas', 60, '2018-10-02', 'public/anhsach/sach_lt_java.jpg', '600', 4, 3, 4),
+(27, 'sachhh', 'asasfasfasfasf', 60, '2017-10-11', 'public/anhsach/sach_lt_java.jpg', '20', 4, 2, 4),
+(28, 'sach211', 'asasfasfsa', 50, '2015-10-19', 'public/anhsach/sach_lt_java.jpg', '12', 4, 2, 4),
+(29, 'sach113', 'asasfasfjasfbjaksbf', 40, '2014-10-18', 'public/anhsach/sach_lt_java.jpg', '45', 2, 2, 4),
+(30, 'sach34', 'asfasfasfs', 78, '2016-10-27', 'public/anhsach/sach_lt_java.jpg', '6000', 4, 2, 4),
+(31, 'sach35', 'asdasfasfas', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2, 4),
+(32, 'sachaa', 'asbfasbflsfblasf', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3, 4),
+(33, 'sachss', 'asasfasfasfas', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3, 4),
+(34, 'sacht', 'âfagagagága', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1, 4),
+(35, 'sachj', 'asasfasgagas', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2, 4),
+(36, 'sachck', 'asffafasfagfa', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3, 4),
+(37, 'sachcuoi', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(38, 'sachcuoi loai 4/1', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(39, 'sachcuoi loai 4/2', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(40, 'sach35 ', 'asdasfasfas', 50, '2018-10-19', 'public/anhsach/sach_lt_java.jpg', '55', 4, 2, 4),
+(41, 'sachaa 4/3', 'asbfasbflsfblasf', 15, '2019-10-31', 'public/anhsach/sach_lt_java.jpg', '32', 4, 3, 4),
+(42, 'sachss 4/4', 'asasfasfasfas', 60, '2018-10-26', 'public/anhsach/sach_lt_java.jpg', '123', 4, 3, 4),
+(43, 'sacht 4/6', 'âfagagagága', 70, '2020-10-19', 'public/anhsach/sach_lt_java.jpg', '90', 4, 1, 4),
+(44, 'sachj 4/7', 'asasfasgagas', 55, '2020-10-20', 'public/anhsach/sach_lt_java.jpg', '30', 4, 2, 4),
+(45, 'sachck 4/8', 'asffafasfagfa', 22, '2017-10-26', 'public/anhsach/sach_lt_java.jpg', '45', 4, 3, 4),
+(46, 'sachcuoi 4/9', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(47, 'sachcuoi loai 4/10', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(48, 'sachcuoi loai 4/11', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(49, 'sachcuoi loai 4/12', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(50, 'sachcuoi loai 4/13', 'asfhalsbasjgba', 150, '2020-10-16', 'public/anhsach/sach_lt_java.jpg', '99', 4, 2, 4),
+(69, 'ajax4', '<p>1212</p>\r\n', 12, '2021-10-27', ' public/anhsach/1 (2).jpg', '12', 4, 3, 4),
+(70, 'nhatnam', '<p>1212</p>\r\n', 12, '2021-10-29', ' public/anhsach/anh cay 3.jpg', '12', 4, 1, 4),
+(71, 'hoangphu', '<p>123</p>\r\n', 123, '2021-10-29', ' public/anhsach/44.jpg', '123', 4, 1, 4),
+(72, 'nhatnam2', '<p>121</p>\r\n', 12, '2021-10-30', ' public/anhsach/1 (2)1.jpg', '12', 4, 3, 4),
+(73, 'nhatnam3', '<p>1212</p>\r\n', 2, '2021-10-30', ' public/anhsach/441.jpg', '121', 4, 3, 4),
+(74, 'nhatnam12', '<p>1212</p>\r\n', 1, '2021-10-30', ' public/anhsach/442.jpg', '1', 4, 1, 4),
+(75, 'nhatnam6', '<p>1212</p>\r\n', 2, '2021-10-30', ' public/anhsach/1 (2)2.jpg', '121', 4, 1, 4),
+(76, 'nhatnam13', '<p>1212</p>\r\n', 30, '2021-10-30', 'public/anhsach/anh cay 31.jpg', '50', 4, 3, 4),
+(77, 'nhatnam5', '<p>12121</p>\r\n', 12, '2021-11-02', 'public/anhsach/244466634_271914518271827_8219314495064344289_n.png', '12', 4, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -298,16 +307,15 @@ CREATE TABLE `sinhvien` (
   `MaKhoa` int(11) NOT NULL,
   `MaQuyen` int(11) NOT NULL DEFAULT 3,
   `MatKhau` text COLLATE utf8_unicode_ci NOT NULL,
-  `MaKhoaCN` int(11) NOT NULL,
-  CONSTRAINT KIEMTRA CHECK (MaQuyen != 1 AND MaQuyen !=2)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `MaKhoaCN` int(11) NOT NULL
+) ;
 
 --
 -- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`IDSV`, `MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) VALUES
-(1, 18004107, 'Nguyễn Lê Ngọc Seng', 331123321, 'Nam', 1, 3, '123465', 1),
+(1, 18004107, 'Nguyễn Lê Ngọc Seng', 331123321, 'nu', 1, 3, '$2y$10$P0AcSanj.vkfL9O1NcC2keVcJR0Uc5LZL2MiUV/8moLJY0E6iY8PO', 1),
 (2, 18004085, 'Mai Nhật Nem', 331456654, 'Nam', 1, 3, '$2y$10$HzBDIM8zanBWzAGvfPXWKOTSNktyIPygSb.vxnTHaHT0vVG6jMNAG', 1),
 (3, 18004099, 'Võ Hoàng Phúu', 331012210, 'Nam', 1, 3, '123', 1);
 
@@ -379,6 +387,7 @@ ALTER TABLE `loaisach`
 --
 ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`MaNV`),
+  ADD UNIQUE KEY `Cmnd_gv` (`Cmnd_gv`),
   ADD KEY `fk_PhanQuyenNhanVien` (`MaQuyen`);
 
 --
@@ -407,7 +416,8 @@ ALTER TABLE `phieutrasach`
 ALTER TABLE `sach`
   ADD PRIMARY KEY (`MaSach`),
   ADD KEY `fk_LoaiSach` (`MaLoaiSach`),
-  ADD KEY `fk_TG` (`MaTacGia`);
+  ADD KEY `fk_TG` (`MaTacGia`),
+  ADD KEY `MakhoaCN` (`MakhoaCN`);
 
 --
 -- Chỉ mục cho bảng `sinhvien`
@@ -433,7 +443,7 @@ ALTER TABLE `tacgia`
 -- AUTO_INCREMENT cho bảng `anhchitiet`
 --
 ALTER TABLE `anhchitiet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT cho bảng `khoachuyennganh`
@@ -454,6 +464,12 @@ ALTER TABLE `loaisach`
   MODIFY `MaLoaiSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT cho bảng `nhanvien`
+--
+ALTER TABLE `nhanvien`
+  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT cho bảng `phanquyen`
 --
 ALTER TABLE `phanquyen`
@@ -469,13 +485,13 @@ ALTER TABLE `phieumuon`
 -- AUTO_INCREMENT cho bảng `sach`
 --
 ALTER TABLE `sach`
-  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `MaSach` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
-  MODIFY `IDSV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IDSV` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tacgia`
@@ -530,7 +546,8 @@ ALTER TABLE `phieutrasach`
 --
 ALTER TABLE `sach`
   ADD CONSTRAINT `fk_LoaiSach` FOREIGN KEY (`MaLoaiSach`) REFERENCES `loaisach` (`MaLoaiSach`),
-  ADD CONSTRAINT `fk_TG` FOREIGN KEY (`MaTacGia`) REFERENCES `tacgia` (`MaTG`);
+  ADD CONSTRAINT `fk_TG` FOREIGN KEY (`MaTacGia`) REFERENCES `tacgia` (`MaTG`),
+  ADD CONSTRAINT `sach_ibfk_1` FOREIGN KEY (`MakhoaCN`) REFERENCES `khoachuyennganh` (`MaKhoaCN`);
 
 --
 -- Các ràng buộc cho bảng `sinhvien`

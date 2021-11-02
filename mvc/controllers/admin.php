@@ -86,14 +86,16 @@ class admin extends controllers{
     }
     public function themsach(){
         //&& isset($_POST['tensach']) && isset($_POST['MaLoaiSach']) && isset($_POST['MaTacGia']) && isset($_POST['Gia']) && isset($_POST['SoLuong']) &&  isset($_FILES['anh'])  && isset($_FILES['n_anh']) && isset($_POST['time']) && isset($_POST['noidungngan']) 
+        $nam = $this->model('M_admin');
         if(isset($_POST['gui'])){
             if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
-            && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"])){
+            && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"])){
                 $tensach = $_POST["tensach"];
                 $maloaisach = $_POST["MaLoaiSach"];
                 $matacgia = $_POST["MaTacGia"];
                 $gia =$_POST["Gia"];
                 $soluong = $_POST["SoLuong"];
+                $makhoacn = $_POST["MaCN"];
                 //
                 /*
                 $anh = $_FILES["anh"];
@@ -102,12 +104,12 @@ class admin extends controllers{
                 //
                 $thoigian = $_POST["time"] ;
                 $noidungngan = $_POST["noidungngan"];
-                $nam = $this->model('M_admin');
                 $this->view("trangchu",[
                     "page"=>"ThemSach",
                     "phanloai"=>$this->sach->loaisach(),
-                    "thongbao_themsach"=>$nam->themsach($tensach,$noidungngan,$soluong,$thoigian/*,$anh*/,$gia,$maloaisach,$matacgia),
+                    "thongbao_themsach"=>$nam->themsach($tensach,$noidungngan,$soluong,$thoigian/*,$anh*/,$gia,$maloaisach,$matacgia,$makhoacn),
                     "tacgia"=>$this->sach->tacgia(),
+                    "khoa"=>$nam->khoacn()
                 ]);
                 
             }
@@ -120,17 +122,16 @@ class admin extends controllers{
             "page"=>"ThemSach",
             "phanloai"=>$this->sach->loaisach(),
             "tacgia"=>$this->sach->tacgia(),
+            "khoa"=>$nam->khoacn()
         ]);
         }
         
     }
     public function suasach($masach){
         $admin = $this->model('M_admin');
-
-       
         if(isset($_POST['gui'])){
             if(!empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
-            && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) ){
+            && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"]) ){
                 $tensach = $_POST["tensach"];
                 $maloaisach = $_POST["MaLoaiSach"];
                 $matacgia = $_POST["MaTacGia"];
@@ -138,6 +139,7 @@ class admin extends controllers{
                 $soluong = $_POST["SoLuong"];
                 $ngaynhap = $_POST["time"] ;
                 $noidungngan = $_POST["noidungngan"];
+                $makhoacn = $_POST["MaCN"];
 
                 if(empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0])){
                     echo "chưa có anh dt";
@@ -156,11 +158,12 @@ class admin extends controllers{
                     $anhdaidien = json_decode($admin->show_sach_sua($masach),true);
                     $this->view("trangchu",[
                         "page"=>"ThemSach",
-                        "kq_suasach"=> $admin->suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia),
+                        "kq_suasach"=> $admin->suasach($masach,$tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia,$makhoacn),
                         "show_suasach"=>$admin->show_sach_sua($masach),
                         "ha_ct"=>$admin->show_anh_ct_sua($masach),
                         "phanloai"=>$this->sach->loaisach(),
                         "tacgia"=>$this->sach->tacgia(),
+                        "khoa"=>$admin->khoacn(),
                         "suasach"=>1,
                       
                     ]);
@@ -179,6 +182,7 @@ class admin extends controllers{
         "ha_ct"=>$admin->show_anh_ct_sua($masach),
         "phanloai"=>$this->sach->loaisach(),
         "tacgia"=>$this->sach->tacgia(),
+        "khoa"=>$admin->khoacn(),
         "suasach"=>1,
     ]);
   
