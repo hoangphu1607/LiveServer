@@ -61,7 +61,7 @@ function show() {
       var id_hinh = this.value;
       var test = { 'hinh': id_hinh };
       var anh = $(this).closest('figure').attr('id');
-      $.post("ajax/xoa_hinhct",test,function(data){
+      $.post("ajax/xoa_hinhct",test, function(data){
        data = JSON.parse(data);
         if(data == true){ 
             thongbao();
@@ -72,7 +72,6 @@ function show() {
             $("#"+anh).remove();
            },3000);
            // location.reload();
-
         }
       });
 
