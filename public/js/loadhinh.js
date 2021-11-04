@@ -55,7 +55,8 @@ function preview1() {
 }
 
 
-function show() {
+
+
   $(document).ready(function () {
     $(".xoahct").click(function () {
       var id_hinh = this.value;
@@ -79,25 +80,53 @@ function show() {
   });
 
 
-  // $(document).ready(function () {
-  //   $(".xoa_anhct").click(function () {
-  //     var id_hinh = $(this).attr("value");
-  //     var formĐata = new FormData();
-  //     formĐata.append('hinh', id_hinh);
-  //     var ajax = new XMLHttpRequest();
-  //     ajax.onreadystatechange = function () {
-  //       if (ajax.status == 200 && ajax.readyState == 4) {
-  //         var imgPath = ajax.responseText;
-  //         $('#test').attr('src', imgPath);
-  //       }
-  //     }
-  //     ajax.open("POST", 'ajax/xoa_hinhct', true);
-  //     ajax.send(formĐata);
-  //   });
-  // });
+//xoa
+
+ $(document).ready(function () {
+  $(".xoattsach").click(function () {
+    var tr = $(this).closest('tr').attr('id');
+    var tr2 = $(this).closest('tr')
+    var data = {
+      'id_sach_xoa': tr,
+  };
+    Swal.fire({
+      title: 'Bạn có chắc muốn xóa sách này không ?',
+      text: "Dữ liệu sách này sẽ mất không thể khôi phục ",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText:'Không đồng ý',
+      confirmButtonText: 'Đồng ý xóa'
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "ajax/xoasach",
+          method: 'POST',
+          data: data,
+          success: function(data) {
+             data = JSON.parse(data);
+              if(data == true){
+                thongbao_xoathanhcong();
+                 tr2.prop('hidden', true);;
+              }
+              else{
+                thongbao_thatbai();
+              }
+          }
+      });
+      }
+    })
+
+    
+    // console.log(tr);
+  });
+});
 
 
-}
+
+
 function thongbao() {
   Swal.fire({
     position: 'center',
@@ -109,4 +138,24 @@ function thongbao() {
 
 }
 
+function thongbao_thatbai() {
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'Xóa thất bại vui lòng kiểm tra lại dữ liệu trước đó',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
+function thongbao_xoathanhcong() {
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Xóa sách thành công',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
 

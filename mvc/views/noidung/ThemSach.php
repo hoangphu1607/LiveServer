@@ -100,7 +100,7 @@ $cn = json_decode($data["khoa"], true);
 
                         <?php if (isset($data['kq_suasach'])) {
                                     $kq_suasach = json_decode($data["kq_suasach"], true);
-                                    echo "cap nhật tất cả thành công";
+                                  
                                 }
                         ?>
 

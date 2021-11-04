@@ -41,7 +41,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
                     <?php if(isset($_SESSION["dangnhap"][2])){?>
-                        <a class="btn btn-primary" href="./admin/dangxuat">Đăng xuất</a>
+                        <a class="btn btn-primary" href="./quantri/dangxuat">Đăng xuất</a>
                     <?php } else {?>
                         <a class="btn btn-primary" href="./dangnhap/dangxuat">Đăng xuất</a>
                         <?php } ?>

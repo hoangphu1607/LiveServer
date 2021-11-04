@@ -410,5 +410,18 @@ class M_admin extends db
             $i++;
         }
     }
+
+    public function xoasach($id){
+        $result = false;
+        try{
+        $qr = "DELETE FROM `sach` WHERE `MaSach`=$id";
+        if (mysqli_query($this->conn, $qr)) {
+            $result = true;       
+        }
+    }catch (Exception $e) {
+        $result = false; 
+    }
+        return json_encode($result);
+    }
         
 }

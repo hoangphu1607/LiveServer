@@ -1,6 +1,7 @@
 <?php
 class dangnhap extends controllers{
-    public $Location = "Location: http://localhost:8080/liveserver/";
+   // public $Location = "Location: http://localhost:8080/liveserver/";
+   public $Location = "Location: http://localhost/LiveServer";
     public function __construct()
     {   
         

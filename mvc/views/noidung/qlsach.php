@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Stt</th>
@@ -44,11 +44,11 @@
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
-                    </tfoot>
-                    <tbody>
+                    </tfoot>            
+                    <tbody id="test">
                         <?php $i=1 ; ?>
                         <?php foreach ($kq_sach as $sach) { ?> 
-                        <tr>
+                        <tr id="<?php echo $sach["MaSach"] ?>">
                             <td><?php echo $i ?></td>
                             <td><?php echo $sach["TenSach"] ?></td>
                             <td><?php echo $sach["Noidungngan"] ?></td>
@@ -61,7 +61,7 @@
                             <td><?php echo $sach["TenTG"] ?></td>
                             <td><?php echo $sach["TenCN"] ?></td>
                             <td><a  type="button" class="btn btn-success" href="admin/suasach/<?php  echo $sach["MaSach"] ?>">Sửa</a></td>
-                            <td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>
+                            <td><button type="button"  class="btn btn-danger xoattsach" >Xóa</button></td>
                         </tr>
                         <?php $i++; } ?>
                     </tbody>

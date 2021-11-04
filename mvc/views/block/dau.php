@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <!-- <base href="http://localhost:8080/liveserver/"> -->
-    <base href="http://localhost/LiveServer/"> 
+    <base href="http://localhost/LiveServer/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -24,10 +24,10 @@
     <link rel="stylesheet" href="hoangphu.css">
     <link href="public/css/admin.css" rel="stylesheet">
     <link href="public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script type= "text/javascript" src="public/jquery/jquery-3.6.0.min.js" > </script>
-    <script type= "text/javascript" src="public/js/loadhinh.js"> </script>
+    <script type="text/javascript" src="public/jquery/jquery-3.6.0.min.js"> </script>
+    <script type="text/javascript" src="public/js/loadhinh.js"> </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 </head>
 
 <body id="page-top">
@@ -105,53 +105,53 @@
 
             <!-- Heading -->
             <!-- dau qt-->
-            <?php if(isset($_SESSION["dangnhap"]) && isset($_SESSION["dangnhap"][2])) { ?>
-            <div class="sidebar-heading">
-                Quản trị
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Quản lý</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thư viện:</h6>
-                        <a class="collapse-item" href="admin/qls">Quản lý sách</a>
-                        <a class="collapse-item" href="admin/ql_ls">Quản lý loại sách</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Tài khoản:</h6>
-                        <?php if($_SESSION["dangnhap"][2] == 2) {?>
-                        <a class="collapse-item" href="404.html">Tài khoản giáo viên</a>
-                        <?php } ?>
-                        <a class="collapse-item" href="blank.html">Tài khoản sinh viên</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Thông tin khác:</h6>
-                        <a class="collapse-item" href="404.html">Khóa học</a>
-                        <a class="collapse-item" href="blank.html">Khoa chuyên ngành</a>
-                    </div>
+            <?php if (isset($_SESSION["dangnhap"]) && isset($_SESSION["dangnhap"][2])) { ?>
+                <div class="sidebar-heading">
+                    Quản trị
                 </div>
-            </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Thống kê</span></a>
-            </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Quản lý</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Thư viện:</h6>
+                            <a class="collapse-item" href="admin/">Quản lý sách</a>
+                            <a class="collapse-item" href="admin/ql_ls">Quản lý loại sách</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Tài khoản:</h6>
+                            <?php if ($_SESSION["dangnhap"][2] == 2) { ?>
+                                <a class="collapse-item" href="404.html">Tài khoản giáo viên</a>
+                            <?php } ?>
+                            <a class="collapse-item" href="blank.html">Tài khoản sinh viên</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Thông tin khác:</h6>
+                            <a class="collapse-item" href="404.html">Khóa học</a>
+                            <a class="collapse-item" href="blank.html">Khoa chuyên ngành</a>
+                        </div>
+                    </div>
+                </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Mượn trả</span></a>
-            </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="charts.html">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống kê</span></a>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-            <?php }?>
+                <!-- Nav Item - Tables -->
+                <li class="nav-item">
+                    <a class="nav-link" href="tables.html">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Mượn trả</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            <?php } ?>
             <!-- cuoi qt-->
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -163,23 +163,22 @@
 
         </ul>
         <!-- End of Sidebar -->
-        <?php 
-            if(isset($data["thongbao"])){
-               echo "<script>
+        <?php
+        if (isset($data["thongbao"])) {
+            echo "<script>
             
                  alert('vui long nhập tên sách cần tìm');
     
                </>";
-              
-            } ?>                      
+        } ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-         
+
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
                 <?php
-                if (isset($data["hiden"]) ==false) { ?>
+                if (isset($data["hiden"]) == false) { ?>
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
@@ -193,7 +192,7 @@
                                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="q">
                                 <!-- <input type="hidden" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="p" value="timkiem" > -->
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" >
+                                    <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>

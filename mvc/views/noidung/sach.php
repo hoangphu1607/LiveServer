@@ -1,3 +1,15 @@
+<?php
+                if(isset($_SESSION["thongbao"])){ ?>
+                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>thông báo!</strong> <?php echo $_SESSION["thongbao"] ?> .
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php
+                  unset($_SESSION["thongbao"]);
+                }
+ ?>
 
 <div class="container-fluid">
 <div class="d-sm-flex align-items-center justify-content-between mb-4">

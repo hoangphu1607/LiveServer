@@ -36,7 +36,7 @@
                                     <?php } ?>
                             </div>
                             <?php if(isset($data["phanquyen"])){?>
-                                <form class="user" action="./admin/xldn" method="POST">
+                                <form class="user" action="./quantri/xldn" method="POST">
                             <?php } else {?>
                                 <form class="user" action="./dangnhap/xldn" method="POST">
                             <?php } ?>
