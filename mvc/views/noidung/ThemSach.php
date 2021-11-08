@@ -280,7 +280,6 @@ $cn = json_decode($data["khoa"], true);
     var src = document.getElementById("idAnh");
     var target = document.getElementById("duongdan");
     showImage(src, target);
-    show();
 </script>
 
 <script>

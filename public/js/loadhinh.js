@@ -57,38 +57,38 @@ function preview1() {
 
 
 
-  $(document).ready(function () {
-    $(".xoahct").click(function () {
-      var id_hinh = this.value;
-      var test = { 'hinh': id_hinh };
-      var anh = $(this).closest('figure').attr('id');
-      $.post("ajax/xoa_hinhct",test, function(data){
-       data = JSON.parse(data);
-        if(data == true){ 
-            thongbao();
-           setTimeout(function() {
-            $("#"+anh).slideUp();
-           },2000);
-           setTimeout(function() {
-            $("#"+anh).remove();
-           },3000);
-           // location.reload();
-        }
-      });
-
+$(document).ready(function () {
+  $(".xoahct").click(function () {
+    var id_hinh = this.value;
+    var test = { 'hinh': id_hinh };
+    var anh = $(this).closest('figure').attr('id');
+    $.post("ajax/xoa_hinhct", test, function (data) {
+      data = JSON.parse(data);
+      if (data == true) {
+        thongbao();
+        setTimeout(function () {
+          $("#" + anh).slideUp();
+        }, 2000);
+        setTimeout(function () {
+          $("#" + anh).remove();
+        }, 3000);
+        // location.reload();
+      }
     });
+
   });
+});
 
 
 //xoa
 
- $(document).ready(function () {
+$(document).ready(function () {
   $(".xoattsach").click(function () {
     var tr = $(this).closest('tr').attr('id');
     var tr2 = $(this).closest('tr')
     var data = {
       'id_sach_xoa': tr,
-  };
+    };
     Swal.fire({
       title: 'Bạn có chắc muốn xóa sách này không ?',
       text: "Dữ liệu sách này sẽ mất không thể khôi phục ",
@@ -96,7 +96,7 @@ function preview1() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      cancelButtonText:'Không đồng ý',
+      cancelButtonText: 'Không đồng ý',
       confirmButtonText: 'Đồng ý xóa'
 
     }).then((result) => {
@@ -105,33 +105,201 @@ function preview1() {
           url: "ajax/xoasach",
           method: 'POST',
           data: data,
-          success: function(data) {
-             data = JSON.parse(data);
-              if(data == true){
-                thongbao_xoathanhcong();
-                 tr2.prop('hidden', true);;
-              }
-              else{
-                thongbao_thatbai();
-              }
+          success: function (data) {
+            data = JSON.parse(data);
+            if (data == true) {
+              thongbao_xoathanhcong();
+              tr2.prop('hidden', true);
+            }
+            else {
+              thongbao_thatbai();
+            }
           }
-      });
+        });
       }
     })
 
-    
+
     // console.log(tr);
   });
 });
 
+// them loai sach
+$(document).ready(function () {
+  $('#themloaisach').on('submit', function (event) {
+    event.preventDefault();
+    var tensach = $("#tenls").val();
+    var data = { themloaisach: 'gui', tensach: tensach }
+    $.ajax({
+      url: "ajax/them_ls",
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          thongbao_thenloaisachtc();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          thongbao_thatbai();
+        }
+      }
+    });
+
+  });
+});
+// lay id sua loai sach
+
+$(document).ready(function () {
+  $(".sualoaisach").click(function () {
+    var maloaisach = $(this).val();
+    var data = { maloaisach: maloaisach };
+    $.ajax({
+      url: "ajax/showsachsua",
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == false) {
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          $('#tenls_cansua').val(data[0].TenLoaiSach);
+          $('#xong_suasach').prop('value', data[0].MaLoaiSach);
+        }
+
+      }
+    });
 
 
+  });
+});
+
+//sua sach can sua
+
+$(document).ready(function () {
+  $('#sualoaisach').on('submit', function (event) {
+    event.preventDefault();
+
+    var tensach_cs = $('#tenls_cansua').val();
+    var maloaisach = $('#xong_suasach').val();
+    var data = { tensach:tensach_cs,maloaisach:maloaisach };
+    $.ajax({
+      url: "ajax/suasach",
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        data = JSON.parse(data);
+        console.log(data);
+        if(data == true){
+          thongbao_sualoaisach_tc();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else{
+          thongbao_sualoaisach_tb();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+
+      }
+    });
+
+
+  });
+});
+
+
+// xoa loai sach
+
+$(document).ready(function () {
+  $(".xoaloaisach").click(function () {
+      var mals = $(this).val();
+      var data = {maloaisach:mals};
+      var tr2 = $(this).closest('tr')
+      $.ajax({
+        url: "ajax/xoaloaisach",
+        method: 'POST',
+        data: data,
+        success: function (data) {
+          data = JSON.parse(data);
+          console.log(data);
+          if(data == true){
+            thongbao_xoaloaisach_tc();
+            tr2.prop('hidden', true);
+          }
+          else{
+            thongbao_xoaloaisach_tb();
+            setTimeout(function () {
+              location.reload();
+            }, 2000);
+          }
+        }
+      });
+
+  });
+});
 
 function thongbao() {
   Swal.fire({
     position: 'center',
     icon: 'success',
     title: 'Xóa hình thành công',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
+function thongbao_xoaloaisach_tc() {
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Xóa loại sách thành công',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
+function thongbao_xoaloaisach_tb() {
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'Xóa loại sách thất bại',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
+
+function thongbao_sualoaisach_tc() {
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'sửa loại sách thành công',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}
+
+function thongbao_sualoaisach_tb() {
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'sửa loại sách thất bại',
     showConfirmButton: false,
     timer: 2000
   })
@@ -158,4 +326,24 @@ function thongbao_xoathanhcong() {
   })
 
 }
+function thongbao_thenloaisachtc() {
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Thêm loại sách thành công',
+    showConfirmButton: false,
+    timer: 2000
+  })
 
+}
+
+function thongbao_loi() {
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: 'Đã có lỗi sãy ra vui lòng kiểm tra lại',
+    showConfirmButton: false,
+    timer: 2000
+  })
+
+}

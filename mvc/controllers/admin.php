@@ -148,13 +148,15 @@ class admin extends controllers
     }
     public function ql_ls()
     {
-
+        $admin = $this->model('M_admin');
         $this->view("trangchu", [
             "page" => "loaisach",
             "phanloai" => $this->sach->loaisach(),
-
+            "thongtinloaisach" => $admin->showloaisach(),
         ]);
+
     }
+
     public function giaovien()
     {
         echo "day la quan ly giao vien";
