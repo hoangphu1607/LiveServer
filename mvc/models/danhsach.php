@@ -38,7 +38,7 @@ class danhsach extends db
 
     public function chitiet_sach($id)
     {
-        $qr3 = "SELECT * FROM `sach`,loaisach,tacgia WHERE sach.MaLoaiSach = loaisach.MaLoaiSach and sach.MaTacGia =tacgia.MaTG AND `MaSach`=$id ";
+        $qr3 = "SELECT * FROM `sach`,loaisach,tacgia,khoachuyennganh WHERE sach.MaLoaiSach = loaisach.MaLoaiSach and sach.MaTacGia =tacgia.MaTG and sach.MaKhoaCN =khoachuyennganh.MaKhoaCN AND `MaSach`=$id ";
         $row = mysqli_query($this->conn, $qr3);
         $mang = array();
         while ($kq = mysqli_fetch_array($row)) {
@@ -97,5 +97,47 @@ class danhsach extends db
         }
      
     }
-    
+
+    public function Khoacn()
+    {
+        $qr4 = "SELECT * FROM `khoachuyennganh` ";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
+    public function sotrang_theokhoacn($id){
+        $qr3 = "SELECT MaSach FROM `sach` WHERE MakhoaCN=$id";
+        $row = mysqli_query($this->conn, $qr3);
+        $tong_so_sp = $row->num_rows;
+        return ceil($tong_so_sp / $this->sotin1trang);
+        
+    }
+    public function thongtinsach_theokhoacn($id,$trang)
+    {
+        $tranghientai = ($trang - 1) * $this->sotin1trang;
+        $qr4 = "SELECT * FROM `sach`  WHERE `MaKhoaCN`=$id ORDER BY `MaSach` DESC LIMIT  $tranghientai,$this->sotin1trang";
+        $row2 = mysqli_query($this->conn, $qr4);
+
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return  json_encode($mang);
+    }
+
+    public function anhlienquan($id)
+    {
+        $qr4 = "SELECT * FROM sach WHERE MakhoaCN = $id ORDER BY RAND() LIMIT 4 ";
+        $row2 = mysqli_query($this->conn, $qr4);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row2)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
 }

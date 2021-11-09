@@ -16,6 +16,7 @@ class dangnhap extends controllers{
         $this->view("trangchu",[
             "page"=>"v_dangnhap",
             "phanloai"=>$this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
             "hiden"=>1,
         ]);
     }  
@@ -31,6 +32,7 @@ class dangnhap extends controllers{
                 $this->view("trangchu",[
                     "page"=>"v_dangnhap",
                     "phanloai"=>$this->sach->loaisach(),
+                    "khoacn" => $this->sach->Khoacn(),
                     "hiden"=>1,
                     "dangnhap"=> $this->mk->ktdn($mssv,$matkhau)
                 ]);
@@ -45,6 +47,7 @@ class dangnhap extends controllers{
                 $this->view("trangchu",[
                     "page"=>"v_dangnhap",
                     "phanloai"=>$this->sach->loaisach(),
+                    "khoacn" => $this->sach->Khoacn(),
                     "hiden"=>1,
                     "dangnhap"=>json_encode("Không bỏ tróng dữ liệu")
                     
@@ -55,6 +58,7 @@ class dangnhap extends controllers{
             $this->view("trangchu",[
                 "page"=>"v_dangnhap",
                 "phanloai"=>$this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),
                 "hiden"=>1,
                 "dangnhap"=>json_encode("Vui lòng đăng nhập")
             ]);

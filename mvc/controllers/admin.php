@@ -7,6 +7,7 @@ class admin extends controllers
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
+
         if (isset($_SESSION["dangnhap"][2]) == false) {
             $_SESSION['thongbao'] ="vui lòng nhập đúng với mã quyền của bạn";
             header($this->Location2);
@@ -20,6 +21,7 @@ class admin extends controllers
             "page" => "qlsach",
             "phanloai" => $this->sach->loaisach(),
             "thongtinsach" => $thongtinsach->ad_thongtinsach(),
+            "khoacn" => $this->sach->Khoacn(),
         ]);
     }
     public function themsach()

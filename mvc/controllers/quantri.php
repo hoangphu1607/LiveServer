@@ -18,6 +18,7 @@ class quantri extends controllers
         $this->view("trangchu", [
             "page" => "v_dangnhap",
             "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
             "hiden" => 1,
             "phanquyen" => 1
         ]);
@@ -34,6 +35,7 @@ class quantri extends controllers
                     $this->view("trangchu", [
                         "page" => "v_dangnhap",
                         "phanloai" => $this->sach->loaisach(),
+                        "khoacn" => $this->sach->Khoacn(),
                         "hiden" => 1,
                         "dangnhap" => $this->mk->ktdn_gv($mssv, $matkhau),
                         "phanquyen" => 1
@@ -48,6 +50,7 @@ class quantri extends controllers
                     $this->view("trangchu", [
                         "page" => "v_dangnhap",
                         "phanloai" => $this->sach->loaisach(),
+                        "khoacn" => $this->sach->Khoacn(),
                         "hiden" => 1,
                         "dangnhap" => json_encode("Không bỏ tróng dữ liệu"),
                         "phanquyen" => 1
@@ -58,6 +61,7 @@ class quantri extends controllers
                 $this->view("trangchu", [
                     "page" => "v_dangnhap",
                     "phanloai" => $this->sach->loaisach(),
+                    "khoacn" => $this->sach->Khoacn(),
                     "hiden" => 1,
                     "dangnhap" => json_encode("Vui lòng đăng nhập"),
                     "phanquyen" => 1

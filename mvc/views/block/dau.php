@@ -99,6 +99,27 @@
                     </div>
                 </div>
             </li>
+        
+            <li class="nav-item">
+                <a class="nav-link collapsed"  data-toggle="collapse" data-target="#CN" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-book"></i>
+                    <span>Khoa Chuyên Ngành </span>
+                </a>
+                <div id="CN" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Sách chuyên ngành:</h6>
+                        <?php
+                        $kqcn = json_decode($data["khoacn"], true);
+                        foreach ($kqcn as $valuecn) { ?>
+                            <a class="collapse-item" href="./home/chi_tiet_khoacn/<?php echo $valuecn["MaKhoaCN"] ?> "> <?php echo $valuecn["TenCN"] ?></a>
+                        <?php
+                        }
+                        ?>
+
+
+                    </div>
+                </div>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

@@ -28,6 +28,10 @@
     if ($data['check'] == 2) {
         $tensach = $data['tensach'];
     }
+    if ($data['check'] == 3) {
+        $id = $data['id'];
+    }
+
     if($kq_sach == 0) { ?>
 <div class="container-fluid">
 <div class="text-center">

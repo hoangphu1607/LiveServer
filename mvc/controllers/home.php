@@ -22,6 +22,7 @@ class home extends controllers
             $this->view("trangchu", [
                 "page" => "sach",
                 "phanloai" => $this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),
                 "thongtinsach" => $this->sach->phantrang_sach($trang),
                 "sotrang" => $this->sach->sotrang(),
                 "check" => 0,
@@ -33,6 +34,7 @@ class home extends controllers
             die();
         }
     }
+
     public function chi_tiet_loaisach($id = 1, $trang = 1)
     {
         settype($trang, "integer");
@@ -49,6 +51,7 @@ class home extends controllers
             $this->view("trangchu", [
                 "page" => "sach",
                 "phanloai" => $this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),
                 "thongtinsach" => $this->sach->thongtinsach_theoloai($id, $trang),
                 "sotrang" => $this->sach->sotrang_theoloai($id),
                 "check" => 1,
@@ -61,13 +64,49 @@ class home extends controllers
             die();
         }
     }
+
+    ///////////
+    public function chi_tiet_khoacn($id=1, $trang = 1)
+    {
+        settype($trang, "integer");
+        settype($id, "integer");
+        $this->get_url = $this->sach->sotrang_theokhoacn($id);
+        try {
+            if ($id <= 0 || $trang == 0) {
+                $id = 1;
+                $trang = 1;
+            } else if ($trang > $this->get_url) {
+                $id = 1;
+                $trang = 1;
+            }
+            $this->view("trangchu", [
+                "page" => "sach",
+                "phanloai" => $this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),
+                "thongtinsach" => $this->sach->thongtinsach_theokhoacn($id, $trang),
+                "sotrang" => $this->sach->sotrang_theokhoacn($id),
+                "check" => 3,
+                "id" => $id,
+                "trang" => $trang,
+            ]);
+        } catch (Exception $ex) {
+            http_response_code(404);
+            $this->view("404", []);
+            die();
+        }
+    }
+    ///////////
+
     public function thongtinsach($id)
     {
     try {
+        $makhoacn = json_decode( $this->sach->chitiet_sach($id), true); 
         $this->view("trangchu", [
             "page" => "chitiet_sach",
             "phanloai" => $this->sach->loaisach(),
             "ctsach" => $this->sach->chitiet_sach($id),
+            "khoacn" => $this->sach->Khoacn(),
+            "anhlq"  => $this->sach->anhlienquan($makhoacn[0]['MaKhoaCN']),
         ]);
     } catch (\Exception $ex) {
         http_response_code(404);
@@ -91,6 +130,7 @@ class home extends controllers
                     $this->view("trangchu", [
                         "page" => "sach",
                         "phanloai" => $this->sach->loaisach(),
+                        "khoacn" => $this->sach->Khoacn(),
                         "thongtinsach" => $this->sach->timkiemtensach($trang, $tensach),
                         "sotrang" => $this->sach->sotrang_theotimkiem($tensach),
                         "check" => 2,
@@ -101,7 +141,9 @@ class home extends controllers
             $this->view("trangchu", [
                 "page" => "sach",
                 "phanloai" => $this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),
                 "thongtinsach" => $this->sach->phantrang_sach($trang),
+                "khoacn" => $this->sach->Khoacn(),
                 "sotrang" => $this->sach->sotrang(),
                 "check" => 0,
                 "trang" => $trang,
