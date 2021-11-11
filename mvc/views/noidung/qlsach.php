@@ -5,7 +5,7 @@
     <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary ">Quản lý sách</h6>    
-             <a type="button"  class="btn btn-success ">Thêm file excel</a>
+             <a type="button" href="admin/themfile_excel"  class="btn btn-success ">Thêm file excel</a>
              <a type="button" class="btn btn-success " href="admin/themsach">Thêm Sách</a>
         </div>
         <div class="card-body">

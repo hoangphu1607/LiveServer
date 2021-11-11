@@ -133,7 +133,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Quản lý</span>
                     </a>
@@ -187,10 +187,8 @@
         <?php
         if (isset($data["thongbao"])) {
             echo "<script>
-            
                  alert('vui long nhập tên sách cần tìm');
-    
-               </>";
+               </script>";
         } ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

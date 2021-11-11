@@ -1,10 +1,4 @@
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-<script src="public/js/modal/modal.js"></script>
 <link rel="stylesheet" href="public/css/hoangphu.css">
 <div class="container-fluid">
 
@@ -18,22 +12,17 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Chọn File</h1>
                         </div>
-                        <form class="user" method="POST" enctype="multipart/form-data">
-                            <div class="form-group ">
+                        <form  method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
                                 <label for="file">Chọn File Excel</label>
-                                <input type="file" id="fileExecl" accept="file_extension" name="fileExecl">                                
+                                <input  type="file" id="fileExecl" accept="file_extension" name="fileExecl" required>                                
                             </div>
                             <div class="form-group ">
-                                <input type="submit" name="submit" value="Gửi" class="btn btn-success">
+                                <input type="submit" name="submit" value="Lưu" class="btn btn-success">
                             </div>
                         </form>
-                        <hr>
-                        <!-- <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div> -->
-                        <!-- <div class="text-center">
-                            <a class="small" href="login.html">Already have an account? Login!</a>
-                        </div> -->
+    
+  
                     </div>
                 </div>
             </div>
@@ -42,15 +31,7 @@
 
 </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
 
 
 

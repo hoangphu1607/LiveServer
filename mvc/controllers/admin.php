@@ -370,4 +370,13 @@ class admin extends controllers
     {
         echo "day la muon tra";
     }
+    public function themfile_excel()
+    {
+        $thongtinsach =  $this->model("M_admin");
+        $this->view("trangchu", [
+            "page"=>'themfileExcel',
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
 }

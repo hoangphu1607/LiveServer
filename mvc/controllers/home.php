@@ -101,6 +101,11 @@ class home extends controllers
     {
     try {
         $makhoacn = json_decode( $this->sach->chitiet_sach($id), true); 
+        if(empty($makhoacn)){
+            http_response_code(404);
+            $this->view("404", []);
+            die();
+        }
         $this->view("trangchu", [
             "page" => "chitiet_sach",
             "phanloai" => $this->sach->loaisach(),
@@ -112,6 +117,7 @@ class home extends controllers
         http_response_code(404);
         $this->view("404", []);
         die();
+    
     }
     }
 

@@ -55,8 +55,7 @@ function preview1() {
 }
 
 
-
-
+//xoa hinh ct
 $(document).ready(function () {
   $(".xoahct").click(function () {
     var id_hinh = this.value;
