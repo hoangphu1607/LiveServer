@@ -20,7 +20,6 @@
                             <th>Ngày nhập</th>
                             <th>Hình ảnh</th>
                             <th>Giá</th>
-                            <th>Ngày nhập</th>
                             <th>Loại sách</th>
                             <th>Tác giả</th>
                             <th>Khoa chuyên ngành</th>
@@ -37,7 +36,6 @@
                             <th>Ngày nhập</th>
                             <th>Hình ảnh</th>
                             <th>Giá</th>
-                            <th>Ngày nhập</th>
                             <th>Loại sách</th>
                             <th>Tác giả</th>
                             <th>Khoa chuyên ngành</th>
@@ -56,7 +54,6 @@
                             <td><?php echo $sach["NgayNhap"] ?></td>
                             <td><?php echo $sach["AnhDaiDien"] ?></td>
                             <td><?php echo $sach["Gia"] ?></td>
-                            <td><?php echo $sach["NgayNhap"] ?></td>
                             <td><?php echo $sach["TenLoaiSach"] ?></td>
                             <td><?php echo $sach["TenTG"] ?></td>
                             <td><?php echo $sach["TenCN"] ?></td>

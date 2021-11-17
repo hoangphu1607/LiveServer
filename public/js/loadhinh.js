@@ -193,7 +193,7 @@ $(document).ready(function () {
 
     var tensach_cs = $('#tenls_cansua').val();
     var maloaisach = $('#xong_suasach').val();
-    var data = { tensach:tensach_cs,maloaisach:maloaisach };
+    var data = { tensach: tensach_cs, maloaisach: maloaisach };
     $.ajax({
       url: "ajax/suasach",
       method: 'POST',
@@ -201,13 +201,13 @@ $(document).ready(function () {
       success: function (data) {
         data = JSON.parse(data);
         console.log(data);
-        if(data == true){
+        if (data == true) {
           thongbao_sualoaisach_tc();
           setTimeout(function () {
             location.reload();
           }, 2000);
         }
-        else{
+        else {
           thongbao_sualoaisach_tb();
           setTimeout(function () {
             location.reload();
@@ -226,30 +226,129 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $(".xoaloaisach").click(function () {
-      var mals = $(this).val();
-      var data = {maloaisach:mals};
-      var tr2 = $(this).closest('tr')
-      $.ajax({
-        url: "ajax/xoaloaisach",
-        method: 'POST',
-        data: data,
-        success: function (data) {
-          data = JSON.parse(data);
-          console.log(data);
-          if(data == true){
-            thongbao_xoaloaisach_tc();
-            tr2.prop('hidden', true);
-          }
-          else{
-            thongbao_xoaloaisach_tb();
-            setTimeout(function () {
-              location.reload();
-            }, 2000);
-          }
+    var mals = $(this).val();
+    var data = { maloaisach: mals };
+    var tr2 = $(this).closest('tr')
+    $.ajax({
+      url: "ajax/xoaloaisach",
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          thongbao_xoaloaisach_tc();
+          tr2.prop('hidden', true);
         }
-      });
+        else {
+          thongbao_xoaloaisach_tb();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
 
   });
+});
+
+//xem file excel
+$(document).ready(function () {
+  $('#xemfile').on('submit', function (event) {
+    var file_ex =  new FormData(this);
+    event.preventDefault();
+    $.ajax({
+      url: "ajax/xemfile",
+      method: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend:function(){
+        Swal.fire({
+          title: 'Đảng tải...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+    },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data.check == true) {
+          var kt_op = $('#sheet').children('option').length;
+          if (kt_op >= 2) {
+            $('#sheet').find('option').remove();
+            $("#sheet").append(new Option("Chọn Sheet", 0, true));
+          }
+          for (var i = 0; i < data.kq.length; i++) {
+            $("#sheet").append(new Option(data.kq[i], data.kq[i]));
+          }
+          swal.close();
+        }
+         else {
+          swal.close();
+          Swal.fire({
+            icon: 'warning',
+            title: 'Không có file',
+            text: data.kq,
+          })
+        }
+      }
+    });
+  });
+});
+//load dl vao table
+$(document).ready(function () {
+$('#sheet').on('change', function () {
+  var myForm = document.getElementById('xemfile');
+  $.ajax({ 
+    url: "ajax/dulieu_trongfile",
+    method: 'POST',
+    data:new FormData(myForm),
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend:function(){
+      Swal.fire({
+        title: 'Đảng tải...',
+        html: 'Vui lòng chờ đợi...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      });
+  },
+    success: function (data2) {
+      data2 = JSON.parse(data2);
+      console.log(data2); 
+      console.log(data2.length); 
+      console.log(data2[0].tensach); 
+      for (var i = 0; i < data2.length; i++) {
+        var bangsv = `
+        <tr>
+            <th scope="row">${data2[i].stt}</th>
+            <td>${data2[i].tensach}</td>
+            <td>${data2[i].ndn_ex}</td>
+            <td>${data2[i].sl_ex}</td>
+            <td>${data2[i].ngaynhap_ex}</td>
+            <td>${data2[i].ha_ex}</td>
+            <td>${data2[i].gia_ex}</td>
+            <td>${data2[i].loaisach_ex}</td>
+            <td>${data2[i].tacgia_ex}</td>
+            <td>${data2[i].khoacn_ex}</td>
+        </tr>
+    `;
+    $("#tb1").append(bangsv);
+      }
+      swal.close();
+    }
+  });
+
+  
+});
 });
 
 function thongbao() {
@@ -344,5 +443,27 @@ function thongbao_loi() {
     showConfirmButton: false,
     timer: 2000
   })
+
+  function thongbao_khongchonfile() {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Không có file',
+      text: 'Vui lòng chọn file',
+      footer: '<a href="">Why do I have this issue?</a>'
+    })
+  }
+  function loading_dl(){
+    Swal.fire({
+      title: 'Đảng tải...',
+      html: 'Vui lòng chờ đợi...',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    });
+    //swal.close();//đống dữ liệu load
+  }
+
 
 }
