@@ -330,7 +330,7 @@ $('#sheet').on('change', function () {
         var bangsv = `
         <tr>
             <th scope="row">${data2[i].stt}</th>
-            <td>${data2[i].tensach}</td>
+            <td> <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach" value="${data2[i].tensach}" required></td>
             <td>${data2[i].ndn_ex}</td>
             <td>${data2[i].sl_ex}</td>
             <td>${data2[i].ngaynhap_ex}</td>
@@ -449,9 +449,9 @@ function thongbao_loi() {
       icon: 'warning',
       title: 'Không có file',
       text: 'Vui lòng chọn file',
-      footer: '<a href="">Why do I have this issue?</a>'
     })
   }
+
   function loading_dl(){
     Swal.fire({
       title: 'Đảng tải...',
@@ -464,6 +464,21 @@ function thongbao_loi() {
     });
     //swal.close();//đống dữ liệu load
   }
-
+  function tb(a,b) {  
+    if(a == 0){
+      a ="success";
+    }
+    else{
+      a ="error";
+    }
+    Swal.fire({
+      position: 'center',
+      icon: a,
+      title: b,
+      showConfirmButton: false,
+      timer: 2000
+    })
+  
+  }
 
 }

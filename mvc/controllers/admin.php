@@ -205,8 +205,12 @@ class admin extends controllers
     public function showSinhVien()
     {
         $kq_sv = $this->model("M_admin")->showSinhVien();
+        $thongtinsach =  $this->model("M_admin");
         $this->view("trangchu", [
             "page" => "showSV",
+            "phanloai" => $this->sach->loaisach(),
+            "thongtinsach" => $thongtinsach->ad_thongtinsach(),
+            "khoacn" => $this->sach->Khoacn(),
             "kq_sv" => $kq_sv
         ]);
     }
@@ -239,10 +243,6 @@ class admin extends controllers
             "page" => "showKhoaCN",
             "kq_khoaCN" => $kq_khoaCN
         ]);
-    }
-    public function khoa_hoc()
-    {
-        echo "day la quan ly khoa hoc";
     }
     public function tacgia()
     {

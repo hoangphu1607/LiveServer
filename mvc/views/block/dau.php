@@ -130,7 +130,6 @@
                 <div class="sidebar-heading">
                     Quản trị
                 </div>
-
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -142,16 +141,17 @@
                             <h6 class="collapse-header">Thư viện:</h6>
                             <a class="collapse-item" href="admin/">Quản lý sách</a>
                             <a class="collapse-item" href="admin/ql_ls">Quản lý loại sách</a>
+                            <a class="collapse-item" href="#">Quản lý tác giả</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Tài khoản:</h6>
                             <?php if ($_SESSION["dangnhap"][2] == 2) { ?>
                                 <a class="collapse-item" href="404.html">Tài khoản giáo viên</a>
                             <?php } ?>
-                            <a class="collapse-item" href="blank.html">Tài khoản sinh viên</a>
+                            <a class="collapse-item" href="admin/showSinhVien">Tài khoản sinh viên</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Thông tin khác:</h6>
-                            <a class="collapse-item" href="404.html">Khóa học</a>
-                            <a class="collapse-item" href="blank.html">Khoa chuyên ngành</a>
+                            <a class="collapse-item" href="admin/KhoaHoc">Khóa học</a>
+                            <a class="collapse-item" href="admin/showKhoaCN">Khoa chuyên ngành</a>
                         </div>
                     </div>
                 </li>
