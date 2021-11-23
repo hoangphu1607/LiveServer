@@ -108,10 +108,11 @@ class ajax extends controllers
                $mang[$dem]['sl_ex'] = $dl_ex[$i]['C'];
                $mang[$dem]['ngaynhap_ex'] = $dl_ex[$i]['D'];
                $mang[$dem]['ha_ex'] = $dl_ex[$i]['E'];
-               $mang[$dem]['gia_ex'] = $dl_ex[$i]['F'];
-               $mang[$dem]['loaisach_ex'] = $dl_ex[$i]['G'];
-               $mang[$dem]['tacgia_ex'] = $dl_ex[$i]['H'];
-               $mang[$dem]['khoacn_ex'] = $dl_ex[$i]['I'];
+               $mang[$dem]['ha_ct_ex'] = $dl_ex[$i]['F'];
+               $mang[$dem]['gia_ex'] = $dl_ex[$i]['G'];
+               $mang[$dem]['loaisach_ex'] = $dl_ex[$i]['H'];
+               $mang[$dem]['tacgia_ex'] = $dl_ex[$i]['I'];
+               $mang[$dem]['khoacn_ex'] = $dl_ex[$i]['J'];
                $mang[$dem]['stt'] =  $dem + 1;
                $dem++;
               
@@ -122,6 +123,12 @@ class ajax extends controllers
         }else{
 
         }
+    }
+
+    public function load_ls(){
+        $loadsach =  $this->model("M_admin");
+        $ex_load = $loadsach->ex_loaisach();
+        echo $ex_load;
     }
 
 }

@@ -27,6 +27,7 @@
     <script type="text/javascript" src="public/jquery/jquery-3.6.0.min.js"> </script>
     <script type="text/javascript" src="public/js/loadhinh.js"> </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="public/ckeditor/ckeditor.js"></script>
 
 </head>
 

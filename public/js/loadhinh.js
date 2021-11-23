@@ -326,31 +326,53 @@ $('#sheet').on('change', function () {
       console.log(data2); 
       console.log(data2.length); 
       console.log(data2[0].tensach); 
+      var cd = (new Date()).toISOString().split('T')[0];
       for (var i = 0; i < data2.length; i++) {
         var bangsv = `
         <tr>
             <th scope="row">${data2[i].stt}</th>
             <td> <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach" value="${data2[i].tensach}" required></td>
-            <td>${data2[i].ndn_ex}</td>
-            <td>${data2[i].sl_ex}</td>
-            <td>${data2[i].ngaynhap_ex}</td>
-            <td>${data2[i].ha_ex}</td>
-            <td>${data2[i].gia_ex}</td>
-            <td>${data2[i].loaisach_ex}</td>
+            <td> <textarea name="noidungngan" id="Noidungngan"  cols="30" rows="10" class="form-control ">${data2[i].ndn_ex}</textarea></td>
+            <td> <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0" value="${data2[i].sl_ex}"></td>
+            <td><input type="date" id="time" name="time" min="2000-01-02" max="${cd}" value="${data2[i].ngaynhap_ex}" required></td>
+            <td><div class="a"> <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh"></div></td>
+            <td><input type="file" name="n_anh[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg"></td>
+            <td><input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0" value="${data2[i].gia_ex}"></td>
+             <td>
+             <select name="MaCN" class="form-control ex_loaisach" aria-label="Default select example" required>
+             <option selected disabled hidden value="">Chọn Loại Sách</option>
+             </select></td>
             <td>${data2[i].tacgia_ex}</td>
-            <td>${data2[i].khoacn_ex}</td>
+            <td>${data2[i].khoacn_ex}</td>          
         </tr>
     `;
+     //  <td>${data2[i].loaisach_ex}</td>
     $("#tb1").append(bangsv);
       }
+
+      $.ajax({
+        url: "ajax/load_ls",
+        method: 'POST',
+        success: function (data) {
+         var data = JSON.parse(data);
+         data.forEach(value => {
+          $(".ex_loaisach").append(new Option(value.TenLoaiSach, value.MaLoaiSach));
+         });
+        }
+      });
       swal.close();
     }
   });
 
-  
+
+ 
 });
 });
 
+$(document).ready(function () {
+ 
+});
+/* thong bao */
 function thongbao() {
   Swal.fire({
     position: 'center',

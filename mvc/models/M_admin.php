@@ -494,4 +494,16 @@ class M_admin extends db
         }
         return json_encode($result);
     }
+
+    public function ex_loaisach()
+    {   
+        $qr3 = "SELECT * FROM `loaisach`";
+        $row = mysqli_query($this->conn, $qr3);
+        $mang = array();
+        while ($kq = mysqli_fetch_assoc($row)) {
+            $mang[] = $kq;
+          
+        }
+        return json_encode($mang);
+    }
 }

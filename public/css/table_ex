@@ -1,0 +1,11 @@
+textarea.form-control {
+    height: auto;
+    width: auto;
+}
+input.form-control {
+    height: auto;
+    width: auto;
+}
+.ex_loaisach{
+    width: auto;
+}
