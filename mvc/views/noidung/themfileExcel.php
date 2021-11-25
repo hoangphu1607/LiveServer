@@ -39,49 +39,65 @@
                 </div>
             </div>
         </div>
-        
+        <!-- <button class="btn btn-primary btn-user btn-block center" id="loadrt">load</button>
+        <div id="load">
+            <div id="load1">
+
+            </div>
+        </div> -->
+
+
         <div style="overflow-x: auto;">
-        <div id="tb" >
-        <table class="table table-hover table-responsive table_ex">
-                <thead>
-                    <tr class="table-info">
+            <div id="tb">
+            <form id="fomr_ex" method="POST" enctype="multipart/form-data">
+                <table class="table table-hover table-responsive table_ex">
+                    <thead>
+                        <tr class="table-info">
                             <th scope="col">Stt</th>
                             <th scope="col">Tên sách</th>
                             <th scope="col">Nội dung ngắn</th>
-                            <th scope="col" >Sô lượng</th>
+                            <th scope="col">Sô lượng</th>
                             <th scope="col">Ngày nhập</th>
-                            <th scope="col" >Hình ảnh</th>
-                            <th scope="col" >Hình ảnh chi tiết</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Hình ảnh chi tiết</th>
                             <th scope="col">Giá</th>
                             <th scope="col">Loại sách</th>
                             <th scope="col">Tác giả</th>
                             <th scope="col">Khoa chuyên ngành</th>
-                    </tr>
-                </thead>
-               <tfoot>
-               <tr class="table-info">
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="table-info">
                             <th scope="col">Stt</th>
                             <th scope="col">Tên sách</th>
                             <th scope="col">Nội dung ngắn</th>
-                            <th scope="col" >Sô lượng</th>
+                            <th scope="col">Sô lượng</th>
                             <th scope="col">Ngày nhập</th>
-                            <th scope="col" >Hình ảnh</th>
-                            <th scope="col" >Hình ảnh chi tiết</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Hình ảnh chi tiết</th>
                             <th scope="col">Giá</th>
                             <th scope="col">Loại sách</th>
                             <th scope="col">Tác giả</th>
                             <th scope="col">Khoa chuyên ngành</th>
-                    </tr>
-               </tfoot>
-                <tbody id="tb1">    
-                <!-- <td>
-             <select name="MaCN" id="ex_loaisach" class="form-control" aria-label="Default select example" required>
-             <option selected disabled hidden value="">Chọn Sách Khoa Chuyên Ngành</option>
-            </select></td> -->
-                </tbody>
-            </table>
+                        </tr>
+                    </tfoot>
+
+                  
+
+                        <tbody id="tb1">
+
+                        </tbody>
+
+                    
+
+                  </table>
+
+
+            </div>
+            <input type="submit" id="luu_ex" class="btn btn-primary btn-user btn-block center" name="gui" value="Lưu" style="width:20% ;" >
+                    </form>
         </div>
-        </div>
+
 
     </div>
 </div>

@@ -190,7 +190,6 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#sualoaisach').on('submit', function (event) {
     event.preventDefault();
-
     var tensach_cs = $('#tenls_cansua').val();
     var maloaisach = $('#xong_suasach').val();
     var data = { tensach: tensach_cs, maloaisach: maloaisach };
@@ -254,7 +253,6 @@ $(document).ready(function () {
 //xem file excel
 $(document).ready(function () {
   $('#xemfile').on('submit', function (event) {
-    var file_ex =  new FormData(this);
     event.preventDefault();
     $.ajax({
       url: "ajax/xemfile",
@@ -263,7 +261,7 @@ $(document).ready(function () {
       contentType: false,
       cache: false,
       processData: false,
-      beforeSend:function(){
+      beforeSend: function () {
         Swal.fire({
           title: 'Đảng tải...',
           html: 'Vui lòng chờ đợi...',
@@ -273,9 +271,9 @@ $(document).ready(function () {
             Swal.showLoading()
           }
         });
-    },
+      },
       success: function (data) {
-        data = JSON.parse(data);
+        data = JSON.parse(data);/* load combobox*/
         if (data.check == true) {
           var kt_op = $('#sheet').children('option').length;
           if (kt_op >= 2) {
@@ -287,7 +285,7 @@ $(document).ready(function () {
           }
           swal.close();
         }
-         else {
+        else {
           swal.close();
           Swal.fire({
             icon: 'warning',
@@ -301,77 +299,261 @@ $(document).ready(function () {
 });
 //load dl vao table
 $(document).ready(function () {
-$('#sheet').on('change', function () {
-  var myForm = document.getElementById('xemfile');
-  $.ajax({ 
-    url: "ajax/dulieu_trongfile",
-    method: 'POST',
-    data:new FormData(myForm),
-    contentType: false,
-    cache: false,
-    processData: false,
-    beforeSend:function(){
-      Swal.fire({
-        title: 'Đảng tải...',
-        html: 'Vui lòng chờ đợi...',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading()
+  $('#sheet').on('change', function () {
+    var kt_op =  $('#tb1').find('tr').length;
+    if(kt_op >= 1){
+      $('#tb1').find('tr').remove();
+    }
+    var myForm = document.getElementById('xemfile');
+    $.ajax({
+      url: "ajax/dulieu_trongfile",
+      method: 'POST',
+      data: new FormData(myForm),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng tải...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        try{
+        data2 = JSON.parse(data2);     //so sanh luon roi do ra 
+        var cd = (new Date()).toISOString().split('T')[0];
+        var mang = [];
+        var mang2 = [];
+        var mang3 = [];
+        for (var i = 0; i < data2.noidung.length; i++) {
+          mang.push(data2.noidung[i].loaisach_ex);
+          mang2.push(data2.noidung[i].tacgia_ex);
+          mang3.push(data2.noidung[i].khoacn_ex);
+        }   
+
+        var array3 = []; //load loại sách
+        var check = 0;
+        for (var i = 0; i < mang.length; i++) {
+          check = 0;
+          for (var j = 0; j < data2.loaisach.length; j++) {             
+            if (mang[i].toUpperCase() === data2.loaisach[j].TenLoaiSach.toUpperCase()) {
+              array3[i] = {
+                tenloaisach_new : data2.loaisach[j].TenLoaiSach,
+                maloaisach_new : data2.loaisach[j].MaLoaiSach
+            };
+              check = 1;
+            }           
+          }
+          if (check == 0) {
+            array3[i] = {
+              tenloaisach_new : "Chọn Loại Sách",
+              maloaisach_new : ""
+          };
+          }
         }
-      });
-  },
-    success: function (data2) {
-      data2 = JSON.parse(data2);
-      console.log(data2); 
-      console.log(data2.length); 
-      console.log(data2[0].tensach); 
-      var cd = (new Date()).toISOString().split('T')[0];
-      for (var i = 0; i < data2.length; i++) {
-        var bangsv = `
+
+        var tacgia = []; //load tác giả
+        var check1 = 0;
+        for (var i = 0; i < mang2.length; i++) {
+          check1 = 0;
+          for (var j = 0; j < data2.tacgia.length; j++) {             
+            if (mang2[i].toUpperCase() === data2.tacgia[j].TenTG.toUpperCase()) {
+              tacgia[i] = {
+                tentacgia_new : data2.tacgia[j].TenTG,
+                matacgia_new : data2.tacgia[j].MaTG
+            };
+              check1 = 1;
+            }           
+          }
+          if (check1 == 0) {
+            tacgia[i] = {
+              tentacgia_new : "Chọn Tác Gỉa",
+              matacgia_new : ""
+          };
+          }
+        }
+
+        var khoacn = []; //load khoa chuyên ngành
+        var check2 = 0;
+        for (var i = 0; i < mang3.length; i++) {
+          check2 = 0;
+          for (var j = 0; j < data2.khoacn.length; j++) {             
+            if (mang3[i].toUpperCase() === data2.khoacn[j].TenCN.toUpperCase()) {
+              khoacn[i] = {
+                tenkhoacn_new : data2.khoacn[j].TenCN,
+                makhoacn_new : data2.khoacn[j].MaKhoaCN
+            };
+              check2 = 1;
+            }           
+          }
+          if (check2 == 0) {
+            khoacn[i] = {
+              tenkhoacn_new : "Chọn Khoa Chuyên Ngành",
+              makhoacn_new : ""
+          };
+          }
+        }
+
+
+
+        for (var i = 0; i < data2.noidung.length; i++) {
+          var bangsv = `
         <tr>
-            <th scope="row">${data2[i].stt}</th>
-            <td> <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach" value="${data2[i].tensach}" required></td>
-            <td> <textarea name="noidungngan" id="Noidungngan"  cols="30" rows="10" class="form-control ">${data2[i].ndn_ex}</textarea></td>
-            <td> <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0" value="${data2[i].sl_ex}"></td>
-            <td><input type="date" id="time" name="time" min="2000-01-02" max="${cd}" value="${data2[i].ngaynhap_ex}" required></td>
-            <td><div class="a"> <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh"></div></td>
+            <th scope="row">${data2.noidung[i].stt}</th>
+            <td> <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach[]" value="${data2.noidung[i].tensach}" required></td>
+            <td> <textarea name="noidungngan[]" id="Noidungngan"  cols="30" rows="10" class="form-control ">${data2.noidung[i].ndn_ex}</textarea></td>
+            <td> <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong[]" required min="0" value="${data2.noidung[i].sl_ex}"></td>
+            <td><input type="date" id="time" name="time[]" min="2000-01-02" max="${cd}" value="${data2.noidung[i].ngaynhap_ex}" required></td>
+            <td><div class="a"> <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh[]"></div></td>
             <td><input type="file" name="n_anh[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg"></td>
-            <td><input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0" value="${data2[i].gia_ex}"></td>
+            <td><input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia[]" required min="0" value="${data2.noidung[i].gia_ex}"></td>
              <td>
-             <select name="MaCN" class="form-control ex_loaisach" aria-label="Default select example" required>
-             <option selected disabled hidden value="">Chọn Loại Sách</option>
-             </select></td>
-            <td>${data2[i].tacgia_ex}</td>
-            <td>${data2[i].khoacn_ex}</td>          
+             <select name="MaCN[]" class="form-control ex_loaisach" aria-label="Default select example" required>
+             <option selected  hidden value="${array3[i].maloaisach_new}">${array3[i].tenloaisach_new}</option>
+             </select>
+             </td>
+            <td>
+            <select name="MaTacGia[]"  class="form-control ex_tacgia" aria-label="Default select example" required>
+             <option selected  hidden value="${tacgia[i].matacgia_new}">${tacgia[i].tentacgia_new}</option>
+             </select>
+            </td>
+            <td>
+            <select name="Makhoacn[]" class="form-control ex_khoacn" aria-label="Default select example" required>
+            <option selected  hidden value="${khoacn[i].makhoacn_new}">${khoacn[i].tenkhoacn_new}</option>
+            </select>
+            </td>          
         </tr>
     `;
-     //  <td>${data2[i].loaisach_ex}</td>
-    $("#tb1").append(bangsv);
-      }
 
-      $.ajax({
-        url: "ajax/load_ls",
-        method: 'POST',
-        success: function (data) {
-         var data = JSON.parse(data);
-         data.forEach(value => {
-          $(".ex_loaisach").append(new Option(value.TenLoaiSach, value.MaLoaiSach));
-         });
+          $("#tb1").append(bangsv);
         }
-      });
-      swal.close();
+        //loai sach
+        $.ajax({
+          url: "ajax/load_ls",
+          method: 'POST',
+          success: function (data) {
+            var data = JSON.parse(data);
+          data.forEach(value2 => {
+            $(".ex_loaisach").append(new Option(value2.TenLoaiSach, value2.MaLoaiSach));
+          });
+
+
+         
+          }
+
+
+        });
+        //tac gia
+        $.ajax({
+          url: "ajax/load_tacgia",
+          method: 'POST',
+          success: function (data_tg) {
+            var data_tg = JSON.parse(data_tg);
+
+
+            data_tg.forEach(value2 => {
+              $(".ex_tacgia").append(new Option(value2.TenTG, value2.MaTG));
+            });
+
+
+          }
+        });
+        //khoa chuyen nganh
+        $.ajax({
+          url: "ajax/load_khoacn",
+          method: 'POST',
+          success: function (data_khoacn) {
+            var data_khoacn = JSON.parse(data_khoacn);
+
+
+            data_khoacn.forEach(value2 => {
+              $(".ex_khoacn").append(new Option(value2.TenCN, value2.MaKhoaCN));
+            });
+
+
+          }
+        });
+        swal.close();
+      }catch(err) {
+        swal.close();
+        Swal.fire({
+          position: 'center',
+          icon: "warning",
+          title: "Không tìm thấy sheet của bạn",
+          showConfirmButton: false,
+          timer: 3000
+        })
+      
+      }
     }
+
+    });
+
+
+  
   });
-
-
- 
 });
-});
+
 
 $(document).ready(function () {
- 
+  $('#fomr_ex').on('submit', function (event) {
+    event.preventDefault();
+    var Form_ex = document.getElementById('fomr_ex');
+    $.ajax({
+      url: "ajax/luu_ex",
+      method: 'POST',
+      data: new FormData(Form_ex),
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function (data2) {
+        console.log(data2);
+      }
+  });
 });
+});
+function test(){
+  $(document).ready(function () {
+  console.log("hello timeout");
+var kt_op =  $('#tb1').find('tr').length;
+if(kt_op >= 1){
+  console.log(kt_op)
+  $('#luu_ex').prop('hidden', false);
+}else{
+  console.log(kt_op)
+  $('#luu_ex').prop( "hidden",true );
+}
+});
+}
+/* load liên tục website */
+// $(document).ready(function () { 
+// setInterval(function(){ test();},1000);
+// });
+
+
+/* load real_time*/
+$(document).ready(function () {
+  $("#loadrt").click(function () {
+ //   $("#load1").load('ajax/load_realtime'); /* load cách 1 */
+    $.ajax({/* load cách 2*/
+      url: "ajax/load_realtime",
+      method: 'POST',
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function (data2) {
+        $("#load1").html(data2);
+      }
+  });
+});
+});
+
+
 /* thong bao */
 function thongbao() {
   Swal.fire({
@@ -466,32 +648,14 @@ function thongbao_loi() {
     timer: 2000
   })
 
-  function thongbao_khongchonfile() {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Không có file',
-      text: 'Vui lòng chọn file',
-    })
-  }
-
-  function loading_dl(){
-    Swal.fire({
-      title: 'Đảng tải...',
-      html: 'Vui lòng chờ đợi...',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading()
-      }
-    });
-    //swal.close();//đống dữ liệu load
-  }
-  function tb(a,b) {  
-    if(a == 0){
-      a ="success";
+  
+  //swal.close();//đống dữ liệu load
+  function tb(a, b) {
+    if (a == 0) {
+      a = "success";
     }
-    else{
-      a ="error";
+    else {
+      a = "error";
     }
     Swal.fire({
       position: 'center',
@@ -500,7 +664,7 @@ function thongbao_loi() {
       showConfirmButton: false,
       timer: 2000
     })
-  
+
   }
 
 }

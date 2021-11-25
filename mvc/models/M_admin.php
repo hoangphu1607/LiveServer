@@ -504,6 +504,28 @@ class M_admin extends db
             $mang[] = $kq;
           
         }
-        return json_encode($mang);
+        return $mang;
+    }
+    public function ex_tacgia()
+    {   
+        $qr3 = "SELECT * FROM `tacgia`";
+        $row = mysqli_query($this->conn, $qr3);
+        $mang = array();
+        while ($kq = mysqli_fetch_assoc($row)) {
+            $mang[] = $kq;
+          
+        }
+        return $mang;
+    }
+    public function ex_khoacn()
+    {   
+        $qr3 = "SELECT * FROM `khoachuyennganh`";
+        $row = mysqli_query($this->conn, $qr3);
+        $mang = array();
+        while ($kq = mysqli_fetch_assoc($row)) {
+            $mang[] = $kq;
+          
+        }
+        return $mang;
     }
 }

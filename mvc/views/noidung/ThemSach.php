@@ -2,7 +2,7 @@
 <?php date_default_timezone_set('Asia/Ho_Chi_Minh');
 $loaisach = json_decode($data["phanloai"], true);
 $tacgia = json_decode($data["tacgia"], true);
-$cn = json_decode($data["khoa"], true);
+$cn = json_decode($data["khoacn"], true);
 ?>
 
 <?php 

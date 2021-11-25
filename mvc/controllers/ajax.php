@@ -117,7 +117,14 @@ class ajax extends controllers
                $dem++;
               
            }
-          echo json_encode($mang);
+           $loadsach =  $this->model("M_admin");
+           $ex_load = $loadsach->ex_loaisach();
+           $ex_load_tg = $loadsach->ex_tacgia();
+           $ex_load_khoacn = $loadsach->ex_khoacn();
+           $mang2 = array("loaisach"=>$ex_load,"noidung"=>$mang,"tacgia"=>$ex_load_tg,"khoacn"=>$ex_load_khoacn);
+           echo json_encode($mang2);
+         // echo $ex_load;
+          //echo json_encode($mang);
 
     
         }else{
@@ -128,7 +135,45 @@ class ajax extends controllers
     public function load_ls(){
         $loadsach =  $this->model("M_admin");
         $ex_load = $loadsach->ex_loaisach();
-        echo $ex_load;
+        echo json_encode($ex_load);
+    }
+    public function load_tacgia(){
+        $loadsach =  $this->model("M_admin");
+        $ex_load_tg = $loadsach->ex_tacgia();
+        echo json_encode($ex_load_tg);
+    }
+    public function load_khoacn(){
+        $loadsach =  $this->model("M_admin");
+        $ex_load_khoacn = $loadsach->ex_khoacn();
+        echo json_encode($ex_load_khoacn);
     }
 
+    public function luu_ex(){
+       print_r($_POST);
+    }
+
+    public function load_realtime(){
+        $admin = $this->model('M_admin');
+        $test = $admin->showloaisach();
+        $cn = json_decode($test, true);
+        $contents ="";
+        $contents .= '<table class="table table-hover">';
+        $contents .='<thead>';
+        $contents .= '<tr>';
+        $contents .='<th>mã loại sách</th>';
+        $contents .= '</tr>';
+        $contents .='</thead>';
+        $contents .='<tbody>';
+        foreach ($cn as $value3) {
+            $contents .= '<tr>';
+            $contents .= '<td>'.$value3['TenLoaiSach'].'</td>';
+            $contents .='</tr>';
+        }
+        $contents .='</tbody>';
+        $contents .='</table>';
+
+        print_r($contents);
+     }
 }
+
+?>

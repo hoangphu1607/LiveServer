@@ -52,7 +52,7 @@ class admin extends controllers
                     "phanloai" => $this->sach->loaisach(),
                     "thongbao_themsach" => $nam->themsach($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach, $matacgia, $makhoacn),
                     "tacgia" => $this->sach->tacgia(),
-                    "khoa" => $nam->khoacn()
+                    "khoacn" => $nam->khoacn()
                 ]);
             } else {
                 echo "nhap đủ thong tin"; //viet sau
@@ -62,7 +62,7 @@ class admin extends controllers
                 "page" => "ThemSach",
                 "phanloai" => $this->sach->loaisach(),
                 "tacgia" => $this->sach->tacgia(),
-                "khoa" => $nam->khoacn()
+                "khoacn" => $nam->khoacn()
             ]);
         }
     }
@@ -92,7 +92,7 @@ class admin extends controllers
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
                         "tacgia" => $this->sach->tacgia(),
-                        "khoa" => $admin->khoacn(),
+                        "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                     ]);
                 } else if (empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name'])) {
@@ -105,7 +105,7 @@ class admin extends controllers
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
                         "tacgia" => $this->sach->tacgia(),
-                        "khoa" => $admin->khoacn(),
+                        "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                         "xoahinh_old" => $anhdaidien
                     ]);
@@ -118,7 +118,7 @@ class admin extends controllers
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
                         "tacgia" => $this->sach->tacgia(),
-                        "khoa" => $admin->khoacn(),
+                        "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                     ]);
                 } else {
@@ -130,7 +130,7 @@ class admin extends controllers
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
                         "tacgia" => $this->sach->tacgia(),
-                        "khoa" => $admin->khoacn(),
+                        "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                         "xoahinh_old" => $anhdaidien
                     ]);
@@ -143,7 +143,7 @@ class admin extends controllers
                 "ha_ct" => $admin->show_anh_ct_sua($masach),
                 "phanloai" => $this->sach->loaisach(),
                 "tacgia" => $this->sach->tacgia(),
-                "khoa" => $admin->khoacn(),
+                "khoacn" => $admin->khoacn(),
                 "suasach" => 1,
             ]);
         }
@@ -155,6 +155,7 @@ class admin extends controllers
             "page" => "loaisach",
             "phanloai" => $this->sach->loaisach(),
             "thongtinloaisach" => $admin->showloaisach(),
+            "khoacn" => $admin->khoacn(),
         ]);
 
     }
