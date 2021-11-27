@@ -87,6 +87,7 @@ $(document).ready(function () {
     var tr2 = $(this).closest('tr')
     var data = {
       'id_sach_xoa': tr,
+      //'xoahinh':
     };
     Swal.fire({
       title: 'Bạn có chắc muốn xóa sách này không ?',
@@ -499,7 +500,7 @@ $(document).ready(function () {
   });
 });
 
-
+//thêm dl vào ex
 $(document).ready(function () {
   $('#fomr_ex').on('submit', function (event) {
     event.preventDefault();
@@ -511,12 +512,40 @@ $(document).ready(function () {
       contentType: false,
       cache: false,
       processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
       success: function (data2) {
-        console.log(data2);
+        var data_ex = JSON.parse(data2);
+        swal.close();
+        Swal.fire({
+          title: data_ex,
+          width: 600,
+          padding: '3em',
+          background: '#fff url(public/img/anh_thongbao.jpg)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("public/img/nyan-cat.gif")
+            left top
+            no-repeat
+          `
+        })
+
+
       }
   });
 });
 });
+
+
 function test(){
   $(document).ready(function () {
   console.log("hello timeout");
@@ -530,29 +559,6 @@ if(kt_op >= 1){
 }
 });
 }
-/* load liên tục website */
-// $(document).ready(function () { 
-// setInterval(function(){ test();},1000);
-// });
-
-
-/* load real_time*/
-$(document).ready(function () {
-  $("#loadrt").click(function () {
- //   $("#load1").load('ajax/load_realtime'); /* load cách 1 */
-    $.ajax({/* load cách 2*/
-      url: "ajax/load_realtime",
-      method: 'POST',
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function (data2) {
-        $("#load1").html(data2);
-      }
-  });
-});
-});
-
 
 /* thong bao */
 function thongbao() {
@@ -648,23 +654,29 @@ function thongbao_loi() {
     timer: 2000
   })
 
-  
-  //swal.close();//đống dữ liệu load
-  function tb(a, b) {
-    if (a == 0) {
-      a = "success";
-    }
-    else {
-      a = "error";
-    }
-    Swal.fire({
-      position: 'center',
-      icon: a,
-      title: b,
-      showConfirmButton: false,
-      timer: 2000
-    })
 
-  }
+  
+/* load liên tục website */
+// $(document).ready(function () { 
+// setInterval(function(){ test();},1000);
+// });
+
+/* load real_time*/
+$(document).ready(function () {
+  $("#loadrt").click(function () {
+ //   $("#load1").load('ajax/load_realtime'); /* load cách 1 */
+    $.ajax({/* load cách 2*/
+      url: "ajax/load_realtime",
+      method: 'POST',
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function (data2) {
+        $("#load1").html(data2);
+      }
+  });
+});
+});
+
 
 }

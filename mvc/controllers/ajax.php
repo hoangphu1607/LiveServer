@@ -153,6 +153,10 @@ class ajax extends controllers
 
     public function luu_ex()
     {
+        if(count($_POST) == 0){
+            echo json_encode("Không có file");
+            exit();
+        }
         $admin =  $this->model("M_admin");
         $hinhanh = array();
         $mang_kt = array();
@@ -164,7 +168,7 @@ class ajax extends controllers
             $cout_name = count($kq1["name"]);
             for ($i = 0; $i <  $cout_name; $i++) {
                 if ($kq1["name"][$i] == "") {
-                    echo "File không được bỏ trống";
+                    echo json_encode("File không được bỏ trống");
                     $check++;
                     exit();
                 }
@@ -191,7 +195,7 @@ class ajax extends controllers
                 $dem++;
             }
         } else {
-            echo "vui lòng kiểm tra lại file";
+            echo json_encode("vui lòng kiểm tra lại file");
             exit();
         }
 
@@ -256,8 +260,6 @@ class ajax extends controllers
                 && $cout_post_tensach ==  $cout_post_MaCN && $cout_post_tensach == $cout_post_anh
             ) {
                 //kiem tra file
-                $dem3 = count($hinhanh);
-                $dem_ha = 0;
                 for ($i = 0; $i < $cout_post_tensach; $i++) {
                     $mangex_them[$i]['tensach'] = $_POST["tensach"][$i];
                     $mangex_them[$i]['MaLoaiSach'] = $_POST["MaLoaiSach"][$i];
@@ -269,18 +271,28 @@ class ajax extends controllers
                     $mangex_them[$i]['MaCN'] = $_POST["MaCN"][$i];
                     $mangex_them[$i]["hinhanh"]["name"] = $hinhanh[0]["name"][$i];
                     $mangex_them[$i]["hinhanh"]["tmp_name"] = $hinhanh[0]["tmp_name"][$i];   
-                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i+1];
-                      
-                   // $admin->themsach($mangex_them[$i]['tensach'],$mangex_them[$i]['noidungngan'],$mangex_them[$i]['SoLuong'],$mangex_them[$i]['time']/*,$anh*/,$mangex_them[$i]['Gia'],$mangex_them[$i]['MaLoaiSach'],$mangex_them[$i]['MaTacGia'],$mangex_them[$i]['MaCN']); 
+                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i+1];        
                 }
-                
+                $kiemtra_query_thanhcong =0;
+                $kiemtra_query_thatbai =0;
+                for($i = 0;$i < count($mangex_them);$i++ ){                      
+                 $kq = $admin->themsach_ex($mangex_them[$i]['tensach'],$mangex_them[$i]['noidungngan'],$mangex_them[$i]['SoLuong'],$mangex_them[$i]['time'],$mangex_them[$i]["hinhanh"],$mangex_them[$i]["nhieu_hinh"],$mangex_them[$i]['Gia'],$mangex_them[$i]['MaLoaiSach'],$mangex_them[$i]['MaTacGia'],$mangex_them[$i]['MaCN']); 
+                 if($kq == false){
+                    $kiemtra_query_thatbai++;
+                 }
+                 else{
+                    $kiemtra_query_thanhcong++;
+                 }
+                }
+                $kq_khithem = "Số lần đã thêm thành công : ".$kiemtra_query_thanhcong." || Số lần thêm thất bại là: ".$kiemtra_query_thatbai."";
+                echo json_encode($kq_khithem);
             } else {
-                echo "Kiểm tra dữ liệu nhập";
+                echo json_encode("Kiểm tra dữ liệu nhập");
                 exit();
                
             }
         } else {
-            echo "Không bỏ trống dữ liệu";
+            echo json_encode("Không bỏ trống dữ liệu");
             exit();
         }
     }

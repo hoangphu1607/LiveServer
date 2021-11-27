@@ -236,13 +236,22 @@ $cn = json_decode($data["khoacn"], true);
                         </div>
 
 
-                        <div class="form-group ">
-                            <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0">
+                        <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">VNĐ</span>
+                                </div>
+                                <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0" >
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.000</span>
+                                </div>
                         </div>
 
-                        <div class="form-group ">
-                            <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0">
-                        </div>
+                        <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Số lượng</span>
+                                </div>
+                                <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0">
+                            </div>
 
                         <div class="form-group ">
                             <label for="Anh">Chọn Ảnh Đại Diện</label>
