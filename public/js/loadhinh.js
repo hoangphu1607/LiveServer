@@ -410,10 +410,10 @@ $(document).ready(function () {
             <td> <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong[]" required min="0" value="${data2.noidung[i].sl_ex}"></td>
             <td><input type="date" id="time" name="time[]" min="2000-01-02" max="${cd}" value="${data2.noidung[i].ngaynhap_ex}" required></td>
             <td><div class="a"> <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh[]"></div></td>
-            <td><input type="file" name="n_anh[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg"></td>
+            <td><input type="file" name="n_anh${data2.noidung[i].stt}[]" multiple="multiple" id="file-input" accept="image/png, image/jpeg"></td>
             <td><input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia[]" required min="0" value="${data2.noidung[i].gia_ex}"></td>
              <td>
-             <select name="MaCN[]" class="form-control ex_loaisach" aria-label="Default select example" required>
+             <select name="MaLoaiSach[]" class="form-control ex_loaisach" aria-label="Default select example" required>
              <option selected  hidden value="${array3[i].maloaisach_new}">${array3[i].tenloaisach_new}</option>
              </select>
              </td>
@@ -423,7 +423,7 @@ $(document).ready(function () {
              </select>
             </td>
             <td>
-            <select name="Makhoacn[]" class="form-control ex_khoacn" aria-label="Default select example" required>
+            <select name="MaCN[]" class="form-control ex_khoacn" aria-label="Default select example" required>
             <option selected  hidden value="${khoacn[i].makhoacn_new}">${khoacn[i].tenkhoacn_new}</option>
             </select>
             </td>          

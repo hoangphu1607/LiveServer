@@ -31,8 +31,8 @@ class admin extends controllers
         if (isset($_POST['gui'])) {
             if (
                 !empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
-                && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"])
-            ) {
+                && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"]))
+             {
                 $tensach = $_POST["tensach"];
                 $maloaisach = $_POST["MaLoaiSach"];
                 $matacgia = $_POST["MaTacGia"];
@@ -55,7 +55,7 @@ class admin extends controllers
                     "khoacn" => $nam->khoacn()
                 ]);
             } else {
-                echo "nhap đủ thong tin"; //viet sau
+                echo "nhập đủ thông tin"; //viet sau
             }
         } else {
             $this->view("trangchu", [

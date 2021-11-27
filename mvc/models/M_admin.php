@@ -528,4 +528,117 @@ class M_admin extends db
         }
         return $mang;
     }
+    public function chon_1_anh_ex($file_anh)
+    {
+        $hinhanh = $file_anh['name'];
+        $foder_luu = "public/anhsach/";
+        $duongdan = $foder_luu . basename($hinhanh);
+        $uploadOk = 0;
+        $duoifile = strtolower(pathinfo($duongdan, PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($file_anh["tmp_name"]);
+        if ($check === false) {
+            $uploadOk++;
+        }
+        // Check file size
+        if ($file_anh["size"] > 3 * 1024 * 1024) {
+            $uploadOk++;
+        }
+
+        // // Allow certain file formats
+        if (
+            $duoifile != "jpg" && $duoifile != "png" && $duoifile != "jpeg"
+            && $duoifile != "gif"
+        ) {
+            $uploadOk++;
+        }
+        return $uploadOk;
+    }
+
+    public function luu_anh_ex($file_anh)
+    {
+        $hinhanh = $file_anh['name'];
+        $foder_luu = "public/anhsach/";
+        $duongdan = $foder_luu . basename($hinhanh);
+        $thongbao = "";
+        $duoifile = strtolower(pathinfo($duongdan, PATHINFO_EXTENSION));
+        // Check if file already exists
+        if (file_exists($duongdan)) {
+            $dem = 0;
+            $ten = pathinfo($hinhanh, PATHINFO_FILENAME);
+            $tenhinh = $ten . '.' . $duoifile;
+            while (file_exists($foder_luu . $tenhinh)) {
+                $dem++;
+                $hinhanh = $ten . $dem . '.' . $duoifile;
+                $tenhinh = $hinhanh;
+            }
+            $duongdan = $foder_luu . basename($hinhanh);
+        }
+        move_uploaded_file($_FILES["anh"]["tmp_name"], $duongdan);
+        
+        return $duongdan;
+    }
+
+    public function chon_nhieu_anh_ex($file_anh)
+    {
+        $anh = $file_anh;
+        $dem_anh = count($anh["name"]);
+        $foder_luu = "public/anhchitiet_sach/";
+        $mangluu = array();      
+            for ($i = 0; $i < $dem_anh; $i++) {
+                $duongdan = $foder_luu . basename($anh["name"][$i]);
+                $duoifile = strtolower(pathinfo($duongdan, PATHINFO_EXTENSION));
+                $check = getimagesize($anh["tmp_name"][$i]);
+                //kiểm tra ảnh có tồn tại không
+                if (file_exists($duongdan)) {
+                    $dem = 0;
+                    $ten = pathinfo($anh["name"][$i], PATHINFO_FILENAME);
+                    $tenhinh = $ten . '.' . $duoifile;
+                    while (file_exists($foder_luu . $tenhinh)) {
+                        $dem++;
+                        $anh["name"][$i] = $ten . $dem . '.' . $duoifile;
+                        $tenhinh = $anh["name"][$i];
+                    }
+                    $duongdan = $foder_luu . basename($anh["name"][$i]);
+                }
+
+                //upload anh    
+                if (move_uploaded_file($anh["tmp_name"][$i], $duongdan)) {
+                    $mangluu[] = $duongdan;              
+                }
+            }
+        return $mangluu;
+    }
+
+
+
+    public function themsach_ex($tensach, $noidungngan, $soluong, $ngaynhap,$anh, $gia, $maloaisach, $matacgia, $makhoacn)
+    {
+        $duongdan = $this->chon_1_anh();
+        $nhieu_anh = $this->chon_nhieu_anh();
+        $kq = false;
+        if ($duongdan['check'] == 0 && $nhieu_anh['check2'] == 0) {
+            $anh =  $duongdan['duongdan'];
+            $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', ' $anh', '$gia', '$maloaisach', '$matacgia','$makhoacn')";
+            if (mysqli_query($this->conn, $qr4)) {
+                $kq = true;
+                $cout_anh = $nhieu_anh["so_hinh_luu"];
+                $masach = $this->conn->insert_id;
+                for ($i = 0; $i <  $cout_anh; $i++) {
+                    $dd_nhieu_anh = $nhieu_anh["duongdan"][$i];
+                    $qr5 = "INSERT INTO `anhchitiet` (`MaSach`, `id`, `Link`) VALUES ('$masach', NULL, '$dd_nhieu_anh')";
+                    if (mysqli_query($this->conn, $qr5)) {
+                        $kq = true;
+                    }
+                }
+            }
+            $mang = array("kq" => $kq, "anh" => $duongdan, "nhieuanh" => $nhieu_anh);
+        } else {
+            $kq = false;
+            $mang = array("kq" => $kq, "anh" => $duongdan, "nhieuanh" => $nhieu_anh);
+            unlink($duongdan['duongdan']);
+        }
+
+        return json_encode($mang);
+    }
 }
