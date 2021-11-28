@@ -296,6 +296,38 @@ class ajax extends controllers
             exit();
         }
     }
+    public function layid_tacgiacansua(){
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['matacgia']) && !empty($_POST['matacgia'])) {
+            $idtacgia = $_POST['matacgia'];
+            echo $admin->showtacgia_cansua($idtacgia);
+        } else {
+            echo json_encode(false);
+        }
+
+    }
+    public function suatacgia()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['matacgia']) && !empty($_POST['matacgia']) && isset($_POST['tentacgia']) && !empty($_POST['tentacgia'])) {
+            $idtacgia = $_POST['matacgia'];
+            $tentacgia = $_POST['tentacgia'];
+            echo $admin->suatacgia($idtacgia, $tentacgia);
+        } else {
+            echo json_encode(false);
+        }
+    }
+    public function xoatacgia()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['matacgia']) && !empty($_POST['matacgia'])) {
+            $matacgia = $_POST['matacgia'];
+            echo $admin->m_xoatacgia($matacgia);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
 
     public function load_realtime()
     {

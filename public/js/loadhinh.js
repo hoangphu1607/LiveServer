@@ -71,7 +71,6 @@ $(document).ready(function () {
         setTimeout(function () {
           $("#" + anh).remove();
         }, 3000);
-        // location.reload();
       }
     });
 
@@ -79,8 +78,7 @@ $(document).ready(function () {
 });
 
 
-//xoa
-
+//xoasach
 $(document).ready(function () {
   $(".xoattsach").click(function () {
     var tr = $(this).closest('tr').attr('id');
@@ -151,7 +149,6 @@ $(document).ready(function () {
   });
 });
 // lay id sua loai sach
-
 $(document).ready(function () {
   $(".sualoaisach").click(function () {
     var maloaisach = $(this).val();
@@ -187,7 +184,6 @@ $(document).ready(function () {
 });
 
 //sua sach can sua
-
 $(document).ready(function () {
   $('#sualoaisach').on('submit', function (event) {
     event.preventDefault();
@@ -301,8 +297,8 @@ $(document).ready(function () {
 //load dl vao table
 $(document).ready(function () {
   $('#sheet').on('change', function () {
-    var kt_op =  $('#tb1').find('tr').length;
-    if(kt_op >= 1){
+    var kt_op = $('#tb1').find('tr').length;
+    if (kt_op >= 1) {
       $('#tb1').find('tr').remove();
     }
     var myForm = document.getElementById('xemfile');
@@ -325,85 +321,85 @@ $(document).ready(function () {
         });
       },
       success: function (data2) {
-        try{
-        data2 = JSON.parse(data2);     //so sanh luon roi do ra 
-        var cd = (new Date()).toISOString().split('T')[0];
-        var mang = [];
-        var mang2 = [];
-        var mang3 = [];
-        for (var i = 0; i < data2.noidung.length; i++) {
-          mang.push(data2.noidung[i].loaisach_ex);
-          mang2.push(data2.noidung[i].tacgia_ex);
-          mang3.push(data2.noidung[i].khoacn_ex);
-        }   
+        try {
+          data2 = JSON.parse(data2);     //so sanh luon roi do ra 
+          var cd = (new Date()).toISOString().split('T')[0];
+          var mang = [];
+          var mang2 = [];
+          var mang3 = [];
+          for (var i = 0; i < data2.noidung.length; i++) {
+            mang.push(data2.noidung[i].loaisach_ex);
+            mang2.push(data2.noidung[i].tacgia_ex);
+            mang3.push(data2.noidung[i].khoacn_ex);
+          }
 
-        var array3 = []; //load loại sách
-        var check = 0;
-        for (var i = 0; i < mang.length; i++) {
-          check = 0;
-          for (var j = 0; j < data2.loaisach.length; j++) {             
-            if (mang[i].toUpperCase() === data2.loaisach[j].TenLoaiSach.toUpperCase()) {
+          var array3 = []; //load loại sách
+          var check = 0;
+          for (var i = 0; i < mang.length; i++) {
+            check = 0;
+            for (var j = 0; j < data2.loaisach.length; j++) {
+              if (mang[i].toUpperCase() === data2.loaisach[j].TenLoaiSach.toUpperCase()) {
+                array3[i] = {
+                  tenloaisach_new: data2.loaisach[j].TenLoaiSach,
+                  maloaisach_new: data2.loaisach[j].MaLoaiSach
+                };
+                check = 1;
+              }
+            }
+            if (check == 0) {
               array3[i] = {
-                tenloaisach_new : data2.loaisach[j].TenLoaiSach,
-                maloaisach_new : data2.loaisach[j].MaLoaiSach
-            };
-              check = 1;
-            }           
+                tenloaisach_new: "Chọn Loại Sách",
+                maloaisach_new: ""
+              };
+            }
           }
-          if (check == 0) {
-            array3[i] = {
-              tenloaisach_new : "Chọn Loại Sách",
-              maloaisach_new : ""
-          };
-          }
-        }
 
-        var tacgia = []; //load tác giả
-        var check1 = 0;
-        for (var i = 0; i < mang2.length; i++) {
-          check1 = 0;
-          for (var j = 0; j < data2.tacgia.length; j++) {             
-            if (mang2[i].toUpperCase() === data2.tacgia[j].TenTG.toUpperCase()) {
+          var tacgia = []; //load tác giả
+          var check1 = 0;
+          for (var i = 0; i < mang2.length; i++) {
+            check1 = 0;
+            for (var j = 0; j < data2.tacgia.length; j++) {
+              if (mang2[i].toUpperCase() === data2.tacgia[j].TenTG.toUpperCase()) {
+                tacgia[i] = {
+                  tentacgia_new: data2.tacgia[j].TenTG,
+                  matacgia_new: data2.tacgia[j].MaTG
+                };
+                check1 = 1;
+              }
+            }
+            if (check1 == 0) {
               tacgia[i] = {
-                tentacgia_new : data2.tacgia[j].TenTG,
-                matacgia_new : data2.tacgia[j].MaTG
-            };
-              check1 = 1;
-            }           
+                tentacgia_new: "Chọn Tác Gỉa",
+                matacgia_new: ""
+              };
+            }
           }
-          if (check1 == 0) {
-            tacgia[i] = {
-              tentacgia_new : "Chọn Tác Gỉa",
-              matacgia_new : ""
-          };
-          }
-        }
 
-        var khoacn = []; //load khoa chuyên ngành
-        var check2 = 0;
-        for (var i = 0; i < mang3.length; i++) {
-          check2 = 0;
-          for (var j = 0; j < data2.khoacn.length; j++) {             
-            if (mang3[i].toUpperCase() === data2.khoacn[j].TenCN.toUpperCase()) {
+          var khoacn = []; //load khoa chuyên ngành
+          var check2 = 0;
+          for (var i = 0; i < mang3.length; i++) {
+            check2 = 0;
+            for (var j = 0; j < data2.khoacn.length; j++) {
+              if (mang3[i].toUpperCase() === data2.khoacn[j].TenCN.toUpperCase()) {
+                khoacn[i] = {
+                  tenkhoacn_new: data2.khoacn[j].TenCN,
+                  makhoacn_new: data2.khoacn[j].MaKhoaCN
+                };
+                check2 = 1;
+              }
+            }
+            if (check2 == 0) {
               khoacn[i] = {
-                tenkhoacn_new : data2.khoacn[j].TenCN,
-                makhoacn_new : data2.khoacn[j].MaKhoaCN
-            };
-              check2 = 1;
-            }           
+                tenkhoacn_new: "Chọn Khoa Chuyên Ngành",
+                makhoacn_new: ""
+              };
+            }
           }
-          if (check2 == 0) {
-            khoacn[i] = {
-              tenkhoacn_new : "Chọn Khoa Chuyên Ngành",
-              makhoacn_new : ""
-          };
-          }
-        }
 
 
 
-        for (var i = 0; i < data2.noidung.length; i++) {
-          var bangsv = `
+          for (var i = 0; i < data2.noidung.length; i++) {
+            var bangsv = `
         <tr>
             <th scope="row">${data2.noidung[i].stt}</th>
             <td> <input type="text" class="form-control" id="txt" placeholder="tên sách" name="tensach[]" value="${data2.noidung[i].tensach}" required></td>
@@ -431,72 +427,72 @@ $(document).ready(function () {
         </tr>
     `;
 
-          $("#tb1").append(bangsv);
-        }
-        //loai sach
-        $.ajax({
-          url: "ajax/load_ls",
-          method: 'POST',
-          success: function (data) {
-            var data = JSON.parse(data);
-          data.forEach(value2 => {
-            $(".ex_loaisach").append(new Option(value2.TenLoaiSach, value2.MaLoaiSach));
+            $("#tb1").append(bangsv);
+          }
+          //loai sach
+          $.ajax({
+            url: "ajax/load_ls",
+            method: 'POST',
+            success: function (data) {
+              var data = JSON.parse(data);
+              data.forEach(value2 => {
+                $(".ex_loaisach").append(new Option(value2.TenLoaiSach, value2.MaLoaiSach));
+              });
+
+
+
+            }
+
+
           });
+          //tac gia
+          $.ajax({
+            url: "ajax/load_tacgia",
+            method: 'POST',
+            success: function (data_tg) {
+              var data_tg = JSON.parse(data_tg);
 
 
-         
-          }
+              data_tg.forEach(value2 => {
+                $(".ex_tacgia").append(new Option(value2.TenTG, value2.MaTG));
+              });
 
 
-        });
-        //tac gia
-        $.ajax({
-          url: "ajax/load_tacgia",
-          method: 'POST',
-          success: function (data_tg) {
-            var data_tg = JSON.parse(data_tg);
+            }
+          });
+          //khoa chuyen nganh
+          $.ajax({
+            url: "ajax/load_khoacn",
+            method: 'POST',
+            success: function (data_khoacn) {
+              var data_khoacn = JSON.parse(data_khoacn);
 
 
-            data_tg.forEach(value2 => {
-              $(".ex_tacgia").append(new Option(value2.TenTG, value2.MaTG));
-            });
+              data_khoacn.forEach(value2 => {
+                $(".ex_khoacn").append(new Option(value2.TenCN, value2.MaKhoaCN));
+              });
 
 
-          }
-        });
-        //khoa chuyen nganh
-        $.ajax({
-          url: "ajax/load_khoacn",
-          method: 'POST',
-          success: function (data_khoacn) {
-            var data_khoacn = JSON.parse(data_khoacn);
+            }
+          });
+          swal.close();
+        } catch (err) {
+          swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: "warning",
+            title: "Không tìm thấy sheet của bạn",
+            showConfirmButton: false,
+            timer: 3000
+          })
 
-
-            data_khoacn.forEach(value2 => {
-              $(".ex_khoacn").append(new Option(value2.TenCN, value2.MaKhoaCN));
-            });
-
-
-          }
-        });
-        swal.close();
-      }catch(err) {
-        swal.close();
-        Swal.fire({
-          position: 'center',
-          icon: "warning",
-          title: "Không tìm thấy sheet của bạn",
-          showConfirmButton: false,
-          timer: 3000
-        })
-      
+        }
       }
-    }
 
     });
 
 
-  
+
   });
 });
 
@@ -541,23 +537,249 @@ $(document).ready(function () {
 
 
       }
+    });
   });
 });
+
+//thêm tác giả
+$(document).ready(function () {
+  $('#form_themtacgia').on('submit', function (event) {
+    event.preventDefault();
+    var tentacgia = $("#tentacgia").val();
+    var sm_tg = $("#btn_themtg").val();
+    var data = {
+      tentacgia: tentacgia,
+      btn_themtg: sm_tg
+    };
+    $.ajax({
+      url: "admin/addTacGia",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        var data2 = JSON.parse(data2);
+        console.log(data2);
+        if (data2 == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thêm tác giả thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoatthemtacgia").on("click", function () {
+            location.reload();
+          });
+          $("#btn_thoatthemtg").on("click", function () {
+            location.reload();
+          });
+         
+        } else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thêm tác giả thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          location.reload();
+        }
+      }
+    });
+
+  });
+});
+
+//lấy id tác giả cần sửa
+$(document).ready(function () {
+  $(".suatacgia").click(function () {
+    var matacgia = $(this).val();
+    var data = { matacgia: matacgia };
+    $.ajax({
+      url: "ajax/layid_tacgiacansua",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          Swal.close();
+          $('#tentg_cansua').val(data[0].TenTG);
+          $('#btn_suatg').prop('value', data[0].MaTG);
+        }
+      }
+    });
+
+
+  });
+});
+
+//sửa tác giả
+$(document).ready(function () {
+  $('#form_suatacgia').on('submit', function (event) {
+    event.preventDefault();
+    var tentg_cs = $('#tentg_cansua').val();
+    var matg = $('#btn_suatg').val();
+    var data = { tentacgia: tentg_cs, matacgia: matg };
+    $.ajax({
+      url: "ajax/suatacgia",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Sửa tác giả thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoat_suatacgia").on("click", function () {
+            location.reload();
+          });
+          $("#cancel_tg").on("click", function () {
+            location.reload();
+          });
+         
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sửa tác giả thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+
+        }
+
+      }
+    });
+
+
+  });
+});
+
+//xóa tác giả
+$(document).ready(function () {
+  $(".xoatacgia").click(function () {
+    var matg = $(this).val();
+    var data = { matacgia: matg };
+    var tr2 = $(this).closest('tr');
+    $.ajax({
+      url: "ajax/xoatacgia",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa tác giả thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          tr2.prop('hidden', true);
+       
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa tác giả thất bại vui lòng kiểm tra dữ liệu trước đó',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
+
+  });
 });
 
 
-function test(){
+function test() {
   $(document).ready(function () {
-  console.log("hello timeout");
-var kt_op =  $('#tb1').find('tr').length;
-if(kt_op >= 1){
-  console.log(kt_op)
-  $('#luu_ex').prop('hidden', false);
-}else{
-  console.log(kt_op)
-  $('#luu_ex').prop( "hidden",true );
-}
-});
+    console.log("hello timeout");
+    var kt_op = $('#tb1').find('tr').length;
+    if (kt_op >= 1) {
+      console.log(kt_op)
+      $('#luu_ex').prop('hidden', false);
+    } else {
+      console.log(kt_op)
+      $('#luu_ex').prop("hidden", true);
+    }
+  });
 }
 
 /* thong bao */
@@ -655,28 +877,28 @@ function thongbao_loi() {
   })
 
 
-  
-/* load liên tục website */
-// $(document).ready(function () { 
-// setInterval(function(){ test();},1000);
-// });
 
-/* load real_time*/
-$(document).ready(function () {
-  $("#loadrt").click(function () {
- //   $("#load1").load('ajax/load_realtime'); /* load cách 1 */
-    $.ajax({/* load cách 2*/
-      url: "ajax/load_realtime",
-      method: 'POST',
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function (data2) {
-        $("#load1").html(data2);
-      }
+  /* load liên tục website */
+  // $(document).ready(function () { 
+  // setInterval(function(){ test();},1000);
+  // });
+
+  /* load real_time*/
+  $(document).ready(function () {
+    $("#loadrt").click(function () {
+      //   $("#load1").load('ajax/load_realtime'); /* load cách 1 */
+      $.ajax({/* load cách 2*/
+        url: "ajax/load_realtime",
+        method: 'POST',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data2) {
+          $("#load1").html(data2);
+        }
+      });
+    });
   });
-});
-});
 
 
 }

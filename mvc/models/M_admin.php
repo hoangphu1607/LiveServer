@@ -643,4 +643,56 @@ class M_admin extends db
           
         return $kq;
     }
+
+    public function suatacgia($id, $tentacgia)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `tacgia` SET `TenTG`='$tentacgia' WHERE `MaTG`=$id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+
+    public function showtacgia_cansua($id)
+    {
+        $result = false;
+        $mang = array();
+        try {
+            $sql = "SELECT * FROM `tacgia` WHERE `MaTG` =$id ";
+
+            $row = mysqli_query($this->conn, $sql);
+            if ($row->num_rows == 0) {
+                $result = false;
+            } else {
+                $result = true;
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        $mang['check'] = $result;
+        return json_encode($mang);
+    }
+
+    public function m_xoatacgia($id)
+    {
+        $result = false;
+        try {
+            $qr = "DELETE FROM `tacgia` WHERE `MaTG`= $id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+
 }

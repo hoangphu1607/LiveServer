@@ -142,7 +142,7 @@
                             <h6 class="collapse-header">Thư viện:</h6>
                             <a class="collapse-item" href="admin/">Quản lý sách</a>
                             <a class="collapse-item" href="admin/ql_ls">Quản lý loại sách</a>
-                            <a class="collapse-item" href="#">Quản lý tác giả</a>
+                            <a class="collapse-item" href="admin/showTacGia">Quản lý tác giả</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Tài khoản:</h6>
                             <?php if ($_SESSION["dangnhap"][2] == 2) { ?>

@@ -253,16 +253,15 @@ class admin extends controllers
     }
     public function addTacGia()
     {
-        if (isset($_POST['submit']) && isset($_POST['TenTacGia'])) {
-            if (!empty($_POST['TenTacGia'])) {
-                $TenTacGia = $_POST['TenTacGia'];
-
-                $kq = $this->model("M_admin")->addTacGia($TenTacGia);
-
-                $this->view("trangchu", [
-                    "page" => "TacGia",
-                    "result" => $kq
-                ]);
+        if (isset($_POST['btn_themtg']) && isset($_POST['tentacgia'])) {
+            if (!empty($_POST['tentacgia'])) {
+                $admin = $this->model("M_admin");
+                $TenTacGia = $_POST['tentacgia'];
+                $kq = $admin->addTacGia($TenTacGia);
+                echo json_encode($kq);
+            }
+            else{
+                echo json_encode(false);
             }
         }
     }

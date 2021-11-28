@@ -5,7 +5,6 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary ">Quản lý loại sách</h6>    
-             <a type="button" class="btn btn-success ">Thêm file ex</a>
              <div class="col-md-2">
                 <button class="btn btn-success" data-toggle="modal" data-target="#modalAdd" href="">Thêm Loại Sách</button>
                 <!-- modal -->
