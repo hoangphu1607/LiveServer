@@ -3,10 +3,10 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý</h1>
     <div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary ">Quản lý sách</h6>    
-             <a type="button" href="admin/themfile_excel"  class="btn btn-success ">Thêm file excel</a>
-             <a type="button" class="btn btn-success " href="admin/themsach">Thêm Sách</a>
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary ">Quản lý sách</h6>
+            <a type="button" href="admin/themfile_excel" class="btn btn-success ">Thêm file excel</a>
+            <a type="button" class="btn btn-success " href="admin/themsach">Thêm Sách</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -23,13 +23,14 @@
                             <th>Loại sách</th>
                             <th>Tác giả</th>
                             <th>Khoa chuyên ngành</th>
+                            <th>File Tài Liệu</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                             <th>Stt</th>
+                            <th>Stt</th>
                             <th>Tên sách</th>
                             <th>Nội dung ngắn</th>
                             <th>Sô lượng</th>
@@ -39,28 +40,35 @@
                             <th>Loại sách</th>
                             <th>Tác giả</th>
                             <th>Khoa chuyên ngành</th>
+                            <th>File Tài Liệu</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
-                    </tfoot>            
+                    </tfoot>
                     <tbody id="test">
-                        <?php $i=1 ; ?>
-                        <?php foreach ($kq_sach as $sach) { ?> 
-                        <tr id="<?php echo $sach["MaSach"] ?>">
-                            <td><?php echo $i ?></td>
-                            <td><?php echo $sach["TenSach"] ?></td>
-                            <td><?php echo $sach["Noidungngan"] ?></td>
-                            <td><?php echo $sach["SoLuong"] ?></td>
-                            <td><?php echo $sach["NgayNhap"] ?></td>
-                            <td><?php echo $sach["AnhDaiDien"] ?></td>
-                            <td><?php echo $sach["Gia"] ?></td>
-                            <td><?php echo $sach["TenLoaiSach"] ?></td>
-                            <td><?php echo $sach["TenTG"] ?></td>
-                            <td><?php echo $sach["TenCN"] ?></td>
-                            <td><a  type="button" class="btn btn-success" href="admin/suasach/<?php  echo $sach["MaSach"] ?>">Sửa</a></td>
-                            <td><button type="button"  class="btn btn-danger xoattsach" >Xóa</button></td>
-                        </tr>
-                        <?php $i++; } ?>
+                        <?php $i = 1; ?>
+                        <?php foreach ($kq_sach as $sach) { ?>
+                            <tr id="<?php echo $sach["MaSach"] ?>">
+                                <td><?php echo $i ?></td>
+                                <td><?php echo $sach["TenSach"] ?></td>
+                                <td><?php echo $sach["Noidungngan"] ?></td>
+                                <td><?php echo $sach["SoLuong"] ?></td>
+                                <td><?php echo $sach["NgayNhap"] ?></td>
+                                <td><?php echo $sach["AnhDaiDien"] ?></td>
+                                <td><?php echo $sach["Gia"] ?></td>
+                                <td><?php echo $sach["TenLoaiSach"] ?></td>
+                                <td><?php echo $sach["TenTG"] ?></td>
+                                <td><?php echo $sach["TenCN"] ?></td>
+                                <td><?php if (empty($sach["file"])) {
+                                        echo "Sách không có File";
+                                    } else {
+                                        echo $sach["file"];
+                                    }  ?></td>
+                                <td><a type="button" class="btn btn-success" href="admin/suasach/<?php echo $sach["MaSach"] ?>">Sửa</a></td>
+                                <td><button type="button" class="btn btn-danger xoattsach">Xóa</button></td>
+                            </tr>
+                        <?php $i++;
+                        } ?>
                     </tbody>
                 </table>
             </div>

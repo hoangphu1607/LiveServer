@@ -103,7 +103,7 @@
         
             <li class="nav-item">
                 <a class="nav-link collapsed"  data-toggle="collapse" data-target="#CN" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-swatchbook"></i>
                     <span>Khoa Chuyên Ngành </span>
                 </a>
                 <div id="CN" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">

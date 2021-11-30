@@ -5,16 +5,15 @@ $tacgia = json_decode($data["tacgia"], true);
 $cn = json_decode($data["khoacn"], true);
 ?>
 
-<?php 
-    if (isset($data["xoahinh_old"])) {
-        $xoahinh_old = json_decode($data["xoahinh_old"], true);
-        $kq_sua = json_decode($data["kq_suasach"], true);
-        if($kq_sua == true){
-            unlink($xoahinh_old[0]['AnhDaiDien']);
-        }
-
+<?php
+if (isset($data["xoahinh_old"])) {
+    $xoahinh_old = json_decode($data["xoahinh_old"], true);
+    $kq_sua = json_decode($data["kq_suasach"], true);
+    if ($kq_sua == true) {
+        unlink($xoahinh_old[0]['AnhDaiDien']);
     }
- 
+}
+
 ?>
 <!--  -->
 <?php if (isset($data["thongbao_themsach"])) {
@@ -100,7 +99,6 @@ $cn = json_decode($data["khoacn"], true);
 
                         <?php if (isset($data['kq_suasach'])) {
                                     $kq_suasach = json_decode($data["kq_suasach"], true);
-                                  
                                 }
                         ?>
 
@@ -115,13 +113,25 @@ $cn = json_decode($data["khoacn"], true);
 
                             <div class="form-group ">
                                 <select name="MaLoaiSach" id="MaLoaiSach" class="form-control" aria-label="Default select example" required>
-                                    <option selected value="<?php echo $show[0]['MaLoaiSach'] ?>">Loại sách đã chọn: <?php echo $show[0]['TenLoaiSach'] ?> </option>
-                                    <?php foreach ($loaisach as $value) { ?>
-                                        <option value="<?php echo $value['MaLoaiSach'] ?>"><?php echo $value['TenLoaiSach'] ?></option>
-                                    <?php } ?>
+                                    <option disabled selected value ="<?php echo $show[0]['MaLoaiSach'] ?>">Loại sách đã chọn: <?php echo $show[0]['TenLoaiSach'] ?>  </option>                      
                                 </select>
                             </div>
+                            <div class="form-group " id="themsach_file">
+                                
+                            </div>
 
+                            <?php
+                                if (!empty($show[0]['file'])) { ?>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">File PDf Cũ</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Tên file pdf" name="ten_file" required value="<?php echo $show[0]['file'] ?>" readonly>
+                                </div>
+                            <?php
+                                }
+                            ?>
+                            
                             <div class="form-group ">
                                 <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
                                     <option selected value="<?php echo $show[0]['MaTG'] ?>">Tác giả đã chọn: <?php echo $show[0]['TenTG'] ?></option>
@@ -159,6 +169,7 @@ $cn = json_decode($data["khoacn"], true);
 
                             <div class="form-group ">
                                 <label for="Anh">Chọn Ảnh Đại Diện</label>
+                                <input type="text" class="form-control" id="txt" placeholder="tên sách" name="hinhanh" value="<?php echo $show[0]['AnhDaiDien'] ?>" required hidden readonly>
                                 <input type="file" id="idAnh" accept="image/png, image/jpeg" name="anh">
                                 <div>
                                     <img id="duongdan" src="<?php echo $show[0]['AnhDaiDien'] ?>" alt="" class="img-rounded">
@@ -176,6 +187,7 @@ $cn = json_decode($data["khoacn"], true);
                                         $tenanhcanxoa = pathinfo($link['Link'])['basename'] ?>
                                         <figure id="ah<?php echo $num ?>">
                                             <img src="<?php echo $link['Link'] ?>">
+                                            <input type="text" name="n_anh[]" value="<?php echo $link['Link'] ?>" hidden readonly style="width: 0%; height: 0%;">
                                             <figcaption> <button value="<?php echo  $link['id'] ?>" type="button" class="btn btn-danger xoahct" style="zoom:80%">Xóa Hình: <?php echo substr($tenanhcanxoa, 0, 15); ?></button></figcaption>
                                         </figure>
                                     <?php $num++;
@@ -217,6 +229,10 @@ $cn = json_decode($data["khoacn"], true);
                             </select>
                         </div>
 
+                        <div class="form-group " id="themsach_file">
+
+                        </div>
+
                         <div class="form-group ">
                             <select name="MaTacGia" id="MaTacGia" class="form-control" aria-label="Default select example" required>
                                 <option selected disabled hidden value="">Chọn tác giả</option>
@@ -237,21 +253,21 @@ $cn = json_decode($data["khoacn"], true);
 
 
                         <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">VNĐ</span>
-                                </div>
-                                <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0" >
-                                <div class="input-group-append">
-                                    <span class="input-group-text">.000</span>
-                                </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">VNĐ</span>
+                            </div>
+                            <input type="number" class="form-control" id="Gia" placeholder="Giá Tiền" name="Gia" required min="0">
+                            <div class="input-group-append">
+                                <span class="input-group-text">.000</span>
+                            </div>
                         </div>
 
                         <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Số lượng</span>
-                                </div>
-                                <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Số lượng</span>
                             </div>
+                            <input type="number" class="form-control" id="SoLuong" placeholder="Số Lượng" name="SoLuong" required min="0">
+                        </div>
 
                         <div class="form-group ">
                             <label for="Anh">Chọn Ảnh Đại Diện</label>

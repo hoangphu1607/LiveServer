@@ -423,10 +423,10 @@ $(document).ready(function () {
             <select name="MaCN[]" class="form-control ex_khoacn" aria-label="Default select example" required>
             <option selected  hidden value="${khoacn[i].makhoacn_new}">${khoacn[i].tenkhoacn_new}</option>
             </select>
-            </td>          
-        </tr>
+            </td> 
+            <td><input type="file" name="file_sach[]" placeholder="Vui lòng chọn file pdf"  accept=".pdf" id="file_them"></td>        
+            </tr>
     `;
-
             $("#tb1").append(bangsv);
           }
           //loai sach
@@ -438,8 +438,6 @@ $(document).ready(function () {
               data.forEach(value2 => {
                 $(".ex_loaisach").append(new Option(value2.TenLoaiSach, value2.MaLoaiSach));
               });
-
-
 
             }
 
@@ -521,6 +519,7 @@ $(document).ready(function () {
       },
       success: function (data2) {
         var data_ex = JSON.parse(data2);
+        console.log(data_ex);
         swal.close();
         Swal.fire({
           title: data_ex,
@@ -763,6 +762,27 @@ $(document).ready(function () {
         }
       }
     });
+
+  });
+});
+
+//thêm file cho sách
+$(document).ready(function () {
+  $('#MaLoaiSach').on('change', function() {
+    var file_them = this.value;
+    var htlm_file = `
+  
+    <label id="tieude_file" for="Anh">Chọn File PDF Cho Sách</label>
+    <input type="file" name="file_sach" placeholder="Vui lòng chọn file pdf"  accept=".pdf" id="file_them"  required>   
+  
+    `;
+    if(file_them == 2){
+      $('#themsach_file').html(htlm_file);
+    }else if(file_them == 1){
+      $('#file_them').remove();
+      $('#tieude_file').remove();
+    }
+    
 
   });
 });

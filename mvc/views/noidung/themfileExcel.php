@@ -19,7 +19,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-7 ">
                                     <label for="file">Chọn File Excel</label>
-                                    <input type="file" id="fileExecl" accept="file_extension" name="fileExecl" required>
+                                    <input type="file" id="fileExecl" accept=".xlsx"  name="fileExecl" required>
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="file">Chọn Sheet</label>
@@ -64,6 +64,7 @@
                             <th scope="col">Loại sách</th>
                             <th scope="col">Tác giả</th>
                             <th scope="col">Khoa chuyên ngành</th>
+                            <th scope="col">File</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -79,13 +80,14 @@
                             <th scope="col">Loại sách</th>
                             <th scope="col">Tác giả</th>
                             <th scope="col">Khoa chuyên ngành</th>
+                            <th scope="col">File</th>
                         </tr>
                     </tfoot>
 
                   
 
                         <tbody id="tb1">
-
+    
                         </tbody>
 
                     

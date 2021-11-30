@@ -115,6 +115,7 @@ class ajax extends controllers
                 $mang[$dem]['loaisach_ex'] = $dl_ex[$i]['H'];
                 $mang[$dem]['tacgia_ex'] = $dl_ex[$i]['I'];
                 $mang[$dem]['khoacn_ex'] = $dl_ex[$i]['J'];
+                $mang[$dem]['file_ex'] = $dl_ex[$i]['K'];
                 $mang[$dem]['stt'] =  $dem + 1;
                 $dem++;
             }
@@ -160,9 +161,17 @@ class ajax extends controllers
         $admin =  $this->model("M_admin");
         $hinhanh = array();
         $mang_kt = array();
+        $mang_pdf = array();
         $dem = 0;
         $check = 0;
         $check_post = 0;
+        for ($i=0; $i < count($_FILES["file_sach"]["name"]); $i++) { 
+            $mang_pdf[$i]['name'] = $_FILES["file_sach"]["name"][$i];
+            $mang_pdf[$i]['tmp_name']= $_FILES["file_sach"]["tmp_name"][$i];
+            $mang_pdf[$i]['size'] =$_FILES["file_sach"]["size"][$i];
+
+        }   
+        unset($_FILES["file_sach"]);
         //kiểm tra file 
         foreach ($_FILES as $kq1) {
             $cout_name = count($kq1["name"]);
@@ -271,12 +280,27 @@ class ajax extends controllers
                     $mangex_them[$i]['MaCN'] = $_POST["MaCN"][$i];
                     $mangex_them[$i]["hinhanh"]["name"] = $hinhanh[0]["name"][$i];
                     $mangex_them[$i]["hinhanh"]["tmp_name"] = $hinhanh[0]["tmp_name"][$i];   
-                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i+1];        
+                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i+1];
+                    $mangex_them[$i]["file"] =$mang_pdf[$i];
+
                 }
                 $kiemtra_query_thanhcong =0;
                 $kiemtra_query_thatbai =0;
-                for($i = 0;$i < count($mangex_them);$i++ ){                      
-                 $kq = $admin->themsach_ex($mangex_them[$i]['tensach'],$mangex_them[$i]['noidungngan'],$mangex_them[$i]['SoLuong'],$mangex_them[$i]['time'],$mangex_them[$i]["hinhanh"],$mangex_them[$i]["nhieu_hinh"],$mangex_them[$i]['Gia'],$mangex_them[$i]['MaLoaiSach'],$mangex_them[$i]['MaTacGia'],$mangex_them[$i]['MaCN']); 
+                $check_pfd = 0;
+                for($i = 0;$i < count($mangex_them);$i++ ){  
+                    if($mangex_them[$i]['MaLoaiSach'] == 2 && empty($mangex_them[$i]["file"]["name"])){
+                        echo json_encode("Không có file khi loại sách là: Tài liệu");
+                        exit();
+                    }
+                    else if($mangex_them[$i]['MaLoaiSach'] == 2 && !empty($mangex_them[$i]["file"]["name"])){
+                        $check_pfd +=  $admin->kiemtra_pdf($mangex_them[$i]["file"]);
+                    }
+                }
+                //$kq = false;
+                if($check_pfd == 0){
+                for($i = 0;$i < count($mangex_them);$i++ ){                                                   
+                     $kq = $admin->themsach_ex($mangex_them[$i]['tensach'],$mangex_them[$i]['noidungngan'],$mangex_them[$i]['SoLuong'],$mangex_them[$i]['time'],$mangex_them[$i]["hinhanh"],$mangex_them[$i]["nhieu_hinh"],$mangex_them[$i]['Gia'],$mangex_them[$i]['MaLoaiSach'],$mangex_them[$i]['MaTacGia'],$mangex_them[$i]['MaCN'],$mangex_them[$i]['file']); 
+                   
                  if($kq == false){
                     $kiemtra_query_thatbai++;
                  }
@@ -286,6 +310,10 @@ class ajax extends controllers
                 }
                 $kq_khithem = "Số lần đã thêm thành công : ".$kiemtra_query_thanhcong." || Số lần thêm thất bại là: ".$kiemtra_query_thatbai."";
                 echo json_encode($kq_khithem);
+            }else{
+                echo json_encode("File PDF không hợp lệ");
+            }
+
             } else {
                 echo json_encode("Kiểm tra dữ liệu nhập");
                 exit();

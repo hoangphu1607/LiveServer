@@ -1,18 +1,17 @@
 <?php
 class admin extends controllers
 {
-   // public $Location = "Location: http://localhost:8080/LiveServer/";
-   // public $Location = "Location: http://localhost/LiveServer";
+    // public $Location = "Location: http://localhost:8080/LiveServer/";
+    // public $Location = "Location: http://localhost/LiveServer";
     public $Location2 = "Location: http://localhost/LiveServer/quantri";
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
 
         if (isset($_SESSION["dangnhap"][2]) == false) {
-            $_SESSION['thongbao'] ="vui lòng nhập đúng với mã quyền của bạn";
+            $_SESSION['thongbao'] = "vui lòng nhập đúng với mã quyền của bạn";
             header($this->Location2);
         }
-
     }
     public function sayhi()
     {
@@ -31,8 +30,8 @@ class admin extends controllers
         if (isset($_POST['gui'])) {
             if (
                 !empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
-                && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"]))
-             {
+                && !empty($_POST["SoLuong"]) && !empty($_FILES["anh"]) && !empty($_FILES["n_anh"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"])
+            ) {
                 $tensach = $_POST["tensach"];
                 $maloaisach = $_POST["MaLoaiSach"];
                 $matacgia = $_POST["MaTacGia"];
@@ -41,21 +40,33 @@ class admin extends controllers
                 $makhoacn = $_POST["MaCN"];
                 //
                 /*
-                $anh = $_FILES["anh"];
-                $n_anh = $_FILES["n_anh"];
-                */
+            $anh = $_FILES["anh"];
+            $n_anh = $_FILES["n_anh"];
+            */
                 //
                 $thoigian = $_POST["time"];
                 $noidungngan = $_POST["noidungngan"];
-                $this->view("trangchu", [
-                    "page" => "ThemSach",
-                    "phanloai" => $this->sach->loaisach(),
-                    "thongbao_themsach" => $nam->themsach($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach, $matacgia, $makhoacn),
-                    "tacgia" => $this->sach->tacgia(),
-                    "khoacn" => $nam->khoacn()
-                ]);
+                if (isset($_FILES["file_sach"]) && !empty($_FILES["file_sach"]['name'])) {
+                    $file_tailieu = $_FILES["file_sach"];
+                    $this->view("trangchu", [
+                        "page" => "ThemSach",
+                        "phanloai" => $this->sach->loaisach(),
+                        "thongbao_themsach" => $nam->themsach_tailieu($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach,$matacgia,$makhoacn,$file_tailieu),
+                        "tacgia" => $this->sach->tacgia(),
+                        "khoacn" => $nam->khoacn()
+                    ]);
+
+                } else {
+                    $this->view("trangchu", [
+                        "page" => "ThemSach",
+                        "phanloai" => $this->sach->loaisach(),
+                        "thongbao_themsach" => $nam->themsach($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach, $matacgia, $makhoacn),
+                        "tacgia" => $this->sach->tacgia(),
+                        "khoacn" => $nam->khoacn()
+                    ]);
+                }
             } else {
-                echo "nhập đủ thông tin"; //viet sau
+                echo "nhập đủ thông tin"; 
             }
         } else {
             $this->view("trangchu", [
@@ -71,19 +82,17 @@ class admin extends controllers
         $admin = $this->model('M_admin');
         if (isset($_POST['gui'])) {
             if (
-                !empty($_POST["tensach"]) && !empty($_POST["MaLoaiSach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
+                !empty($_POST["tensach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
                 && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"])
             ) {
-                $tensach = $_POST["tensach"];
-                $maloaisach = $_POST["MaLoaiSach"];
+                $tensach = $_POST["tensach"];               
                 $matacgia = $_POST["MaTacGia"];
                 $gia = $_POST["Gia"];
                 $soluong = $_POST["SoLuong"];
                 $ngaynhap = $_POST["time"];
                 $noidungngan = $_POST["noidungngan"];
                 $makhoacn = $_POST["MaCN"];
-
-                if (empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0])) {
+                if (empty($_FILES['anh']['name'])  && !empty($_FILES['n_anh']['name'][0]) && empty($_FILES['file_sach']['name'])) {
                     //update ảnh chi tiết
                     $this->view("trangchu", [
                         "page" => "ThemSach",
@@ -95,7 +104,7 @@ class admin extends controllers
                         "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                     ]);
-                } else if (empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name'])) {
+                } else if (empty($_FILES['n_anh']['name'][0]) && !empty($_FILES['anh']['name']) && empty($_FILES['file_sach']['name'])) {
                     //update ảnh đại diện
                     $anhdaidien = $admin->show_sach_sua($masach);
                     $this->view("trangchu", [
@@ -109,11 +118,12 @@ class admin extends controllers
                         "suasach" => 1,
                         "xoahinh_old" => $anhdaidien
                     ]);
-                } else if (empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0])) {
+
+                } else if (empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0]) && empty($_FILES['file_sach']['name']) ) {
                     //update nội dung
                     $this->view("trangchu", [
                         "page" => "ThemSach",
-                        "kq_suasach" => $admin->sua_noidung($masach, $tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia, $makhoacn),
+                        "kq_suasach" => $admin->sua_noidung($masach, $tensach, $noidungngan, $soluong, $ngaynhap, $gia, $matacgia, $makhoacn),
                         "show_suasach" => $admin->show_sach_sua($masach),
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
@@ -121,11 +131,13 @@ class admin extends controllers
                         "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                     ]);
-                } else {
+                } 
+                
+                else {
                     $anhdaidien = $admin->show_sach_sua($masach);
                     $this->view("trangchu", [
                         "page" => "ThemSach",
-                        "kq_suasach" => $admin->suasach($masach, $tensach, $noidungngan, $soluong, $ngaynhap, $gia, $maloaisach, $matacgia, $makhoacn),
+                        "kq_suasach" => $admin->suasach($masach, $tensach, $noidungngan, $soluong, $ngaynhap, $gia, $matacgia, $makhoacn),
                         "show_suasach" => $admin->show_sach_sua($masach),
                         "ha_ct" => $admin->show_anh_ct_sua($masach),
                         "phanloai" => $this->sach->loaisach(),
@@ -157,7 +169,6 @@ class admin extends controllers
             "thongtinloaisach" => $admin->showloaisach(),
             "khoacn" => $admin->khoacn(),
         ]);
-
     }
 
     public function giaovien()
@@ -259,18 +270,21 @@ class admin extends controllers
                 $TenTacGia = $_POST['tentacgia'];
                 $kq = $admin->addTacGia($TenTacGia);
                 echo json_encode($kq);
-            }
-            else{
+            } else {
                 echo json_encode(false);
             }
         }
     }
     public function showTacGia()
     {
-        $kq_tg = $this->model("M_admin")->showTacGia();
+        $admin = $this->model('M_admin');
         $this->view("trangchu", [
             "page" => "showTacGia",
-            "kq_tg" => $kq_tg
+            "kq_tg" =>  $admin->showTacGia(),
+            "phanloai" => $this->sach->loaisach(),
+            "thongtinsach" => $admin->ad_thongtinsach(),
+            "khoacn" => $this->sach->Khoacn(),
+
         ]);
     }
     public function NhanVien()
@@ -374,7 +388,7 @@ class admin extends controllers
     {
         $thongtinsach =  $this->model("M_admin");
         $this->view("trangchu", [
-            "page"=>'themfileExcel',
+            "page" => 'themfileExcel',
             "phanloai" => $this->sach->loaisach(),
             "khoacn" => $this->sach->Khoacn(),
         ]);
