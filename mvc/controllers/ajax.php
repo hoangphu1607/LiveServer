@@ -154,7 +154,7 @@ class ajax extends controllers
 
     public function luu_ex()
     {
-        if(count($_POST) == 0){
+        if (count($_POST) == 0) {
             echo json_encode("Không có file");
             exit();
         }
@@ -165,12 +165,11 @@ class ajax extends controllers
         $dem = 0;
         $check = 0;
         $check_post = 0;
-        for ($i=0; $i < count($_FILES["file_sach"]["name"]); $i++) { 
+        for ($i = 0; $i < count($_FILES["file_sach"]["name"]); $i++) {
             $mang_pdf[$i]['name'] = $_FILES["file_sach"]["name"][$i];
-            $mang_pdf[$i]['tmp_name']= $_FILES["file_sach"]["tmp_name"][$i];
-            $mang_pdf[$i]['size'] =$_FILES["file_sach"]["size"][$i];
-
-        }   
+            $mang_pdf[$i]['tmp_name'] = $_FILES["file_sach"]["tmp_name"][$i];
+            $mang_pdf[$i]['size'] = $_FILES["file_sach"]["size"][$i];
+        }
         unset($_FILES["file_sach"]);
         //kiểm tra file 
         foreach ($_FILES as $kq1) {
@@ -210,7 +209,7 @@ class ajax extends controllers
 
         // kiểm tra tất cả post
         foreach ($_POST["tensach"] as $kq1) {
-            if (empty($kq1) || $kq1=="null") {
+            if (empty($kq1) || $kq1 == "null") {
                 $check_post++;
             }
         }
@@ -240,7 +239,7 @@ class ajax extends controllers
             }
         }
         foreach ($_POST["noidungngan"] as $kq1) {
-            if (empty($kq1) || $kq1=="null") {
+            if (empty($kq1) || $kq1 == "null") {
                 $check_post++;
             }
         }
@@ -279,52 +278,48 @@ class ajax extends controllers
                     $mangex_them[$i]['noidungngan'] = $_POST["noidungngan"][$i];
                     $mangex_them[$i]['MaCN'] = $_POST["MaCN"][$i];
                     $mangex_them[$i]["hinhanh"]["name"] = $hinhanh[0]["name"][$i];
-                    $mangex_them[$i]["hinhanh"]["tmp_name"] = $hinhanh[0]["tmp_name"][$i];   
-                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i+1];
-                    $mangex_them[$i]["file"] =$mang_pdf[$i];
-
+                    $mangex_them[$i]["hinhanh"]["tmp_name"] = $hinhanh[0]["tmp_name"][$i];
+                    $mangex_them[$i]["nhieu_hinh"] = $hinhanh[$i + 1];
+                    $mangex_them[$i]["file"] = $mang_pdf[$i];
                 }
-                $kiemtra_query_thanhcong =0;
-                $kiemtra_query_thatbai =0;
+                $kiemtra_query_thanhcong = 0;
+                $kiemtra_query_thatbai = 0;
                 $check_pfd = 0;
-                for($i = 0;$i < count($mangex_them);$i++ ){  
-                    if($mangex_them[$i]['MaLoaiSach'] == 2 && empty($mangex_them[$i]["file"]["name"])){
+                for ($i = 0; $i < count($mangex_them); $i++) {
+                    if ($mangex_them[$i]['MaLoaiSach'] == 2 && empty($mangex_them[$i]["file"]["name"])) {
                         echo json_encode("Không có file khi loại sách là: Tài liệu");
                         exit();
-                    }
-                    else if($mangex_them[$i]['MaLoaiSach'] == 2 && !empty($mangex_them[$i]["file"]["name"])){
+                    } else if ($mangex_them[$i]['MaLoaiSach'] == 2 && !empty($mangex_them[$i]["file"]["name"])) {
                         $check_pfd +=  $admin->kiemtra_pdf($mangex_them[$i]["file"]);
                     }
                 }
                 //$kq = false;
-                if($check_pfd == 0){
-                for($i = 0;$i < count($mangex_them);$i++ ){                                                   
-                     $kq = $admin->themsach_ex($mangex_them[$i]['tensach'],$mangex_them[$i]['noidungngan'],$mangex_them[$i]['SoLuong'],$mangex_them[$i]['time'],$mangex_them[$i]["hinhanh"],$mangex_them[$i]["nhieu_hinh"],$mangex_them[$i]['Gia'],$mangex_them[$i]['MaLoaiSach'],$mangex_them[$i]['MaTacGia'],$mangex_them[$i]['MaCN'],$mangex_them[$i]['file']); 
-                   
-                 if($kq == false){
-                    $kiemtra_query_thatbai++;
-                 }
-                 else{
-                    $kiemtra_query_thanhcong++;
-                 }
-                }
-                $kq_khithem = "Số lần đã thêm thành công : ".$kiemtra_query_thanhcong." || Số lần thêm thất bại là: ".$kiemtra_query_thatbai."";
-                echo json_encode($kq_khithem);
-            }else{
-                echo json_encode("File PDF không hợp lệ");
-            }
+                if ($check_pfd == 0) {
+                    for ($i = 0; $i < count($mangex_them); $i++) {
+                        $kq = $admin->themsach_ex($mangex_them[$i]['tensach'], $mangex_them[$i]['noidungngan'], $mangex_them[$i]['SoLuong'], $mangex_them[$i]['time'], $mangex_them[$i]["hinhanh"], $mangex_them[$i]["nhieu_hinh"], $mangex_them[$i]['Gia'], $mangex_them[$i]['MaLoaiSach'], $mangex_them[$i]['MaTacGia'], $mangex_them[$i]['MaCN'], $mangex_them[$i]['file']);
 
+                        if ($kq == false) {
+                            $kiemtra_query_thatbai++;
+                        } else {
+                            $kiemtra_query_thanhcong++;
+                        }
+                    }
+                    $kq_khithem = "Số lần đã thêm thành công : " . $kiemtra_query_thanhcong . " || Số lần thêm thất bại là: " . $kiemtra_query_thatbai . "";
+                    echo json_encode($kq_khithem);
+                } else {
+                    echo json_encode("File PDF không hợp lệ");
+                }
             } else {
                 echo json_encode("Kiểm tra dữ liệu nhập");
                 exit();
-               
             }
         } else {
             echo json_encode("Không bỏ trống dữ liệu");
             exit();
         }
     }
-    public function layid_tacgiacansua(){
+    public function layid_tacgiacansua()
+    {
         $admin =  $this->model("M_admin");
         if (isset($_POST['matacgia']) && !empty($_POST['matacgia'])) {
             $idtacgia = $_POST['matacgia'];
@@ -332,7 +327,6 @@ class ajax extends controllers
         } else {
             echo json_encode(false);
         }
-
     }
     public function suatacgia()
     {
@@ -379,5 +373,114 @@ class ajax extends controllers
         $contents .= '</table>';
 
         print_r($contents);
+    }
+
+    public function layid_khoahoccansua()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['makhoahoc']) && !empty($_POST['makhoahoc'])) {
+            $idmakhoahoc = $_POST['makhoahoc'];
+            echo $admin->showkhoahoc_cansua($idmakhoahoc);
+        } else {
+            echo json_encode(false);
+        }
+    }
+    public function suakhoahoc()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['tenkhoahoc']) && !empty($_POST['tenkhoahoc']) && isset($_POST['nam']) && !empty($_POST['nam']) && isset($_POST['makhoahoc']) && !empty($_POST['makhoahoc'])) {
+            $idkhoahoc = $_POST['makhoahoc'];
+            $tenkhoahoc = $_POST['tenkhoahoc'];
+            $nam = $_POST['nam'];
+            echo $admin->suakhoahoc($idkhoahoc, $tenkhoahoc, $nam);
+        } else {
+            echo json_encode(false);
+        }
+    }
+    public function xoakhoahoc()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['makhoahoc']) && !empty($_POST['makhoahoc'])) {
+            $makhoahoc = $_POST['makhoahoc'];
+            echo $admin->m_xoakhoahoc($makhoahoc);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
+    public function layid_khoacncansua()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['makhoacn']) && !empty($_POST['makhoacn'])) {
+            $idmakhoacn = $_POST['makhoacn'];
+            echo $admin->showkhoacn_cansua($idmakhoacn);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
+    public function suakhoacn()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['tenkcn_cs']) && !empty($_POST['tenkcn_cs']) && isset($_POST['makcn']) && !empty($_POST['makcn'])) {
+            $idkhoacn = $_POST['makcn'];
+            $tenkhoacn = $_POST['tenkcn_cs'];
+            echo $admin->suakhoacn($idkhoacn, $tenkhoacn);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
+    public function xoakhoacn()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['macn']) && !empty($_POST['macn'])) {
+            $makhoacn = $_POST['macn'];
+            echo $admin->m_xoakhoacn($makhoacn);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
+    public function layid_svcansua()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['masv']) && !empty($_POST['masv'])) {
+            $idsv = $_POST['masv'];
+            echo $admin->showsv_cansua($idsv);
+        } else {
+            echo json_encode(false);
+        }
+    }
+    public function suasinhvien()
+    {
+        $kq =  $this->model("M_admin");
+        if (
+            !empty($_POST['TenSv']) && !empty($_POST['CMND']) && !empty($_POST['GioiTinh'])
+            && !empty($_POST['KhoaHoc']) && !empty($_POST['KhoaCN'] && !empty($_POST['idsv']))
+        ) {
+            $id = $_POST['idsv'];
+            $TenSv = $_POST['TenSv'];
+            $CMND = $_POST['CMND'];
+            $GioiTinh = $_POST['GioiTinh'];
+            $KhoaHoc = $_POST['KhoaHoc'];
+            $KhoaCN = $_POST['KhoaCN'];
+
+            $suasv = $kq->sua_SinhVien($id, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $KhoaCN);
+            echo json_encode($suasv);
+        } else {
+            echo json_encode(4);
+        }
+    }
+
+    public function xoasv()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['masv']) && !empty($_POST['masv'])) {
+            $masv = $_POST['masv'];
+            echo $admin->m_xoasv($masv);
+        } else {
+            echo json_encode(false);
+        }
     }
 }

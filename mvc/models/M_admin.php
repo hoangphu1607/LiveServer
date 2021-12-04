@@ -310,12 +310,6 @@ class M_admin extends db
         }
         return json_encode($mang);
     }
-    public function getLastRow()
-    {
-        $tv = mysqli_query($this->conn, "SELECT MaLoaiSach FROM loaisach WHERE MaLoaiSach=(SELECT max(MaLoaiSach) FROM loaisach)");
-        $kq = mysqli_fetch_assoc($tv);
-        return json_encode($kq);
-    }
     public function showloaisach()
     {
         $sql = "SELECT * FROM loaisach ORDER BY `MaLoaiSach` DESC";
@@ -408,15 +402,6 @@ class M_admin extends db
         }
         return json_encode($mang);
     }
-    public function addKhoa($TenKhoa)
-    {
-        $result = false;
-        $qr = "INSERT INTO khoachuyennganh(TenCN) VALUE ('$TenKhoa')";
-        if (mysqli_query($this->conn, $qr)) {
-            $result = true;
-        }
-        return $result;
-    }
     public function addTacGia($TenTacGia)
     {
         $result = false;
@@ -441,10 +426,17 @@ class M_admin extends db
     public function newSinhVien($MSSV, $TenSV, $CMND, $GioiTinh, $MaKhoa, $MatKhau, $KhoaCN)
     {
         $result = false;
-        $qr = "INSERT INTO sinhvien(`MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) 
+        try {
+            $qr = "INSERT INTO sinhvien(`MSSV`, `HoTen`, `CMND`, `GioiTinh`, `MaKhoa`, `MaQuyen`, `MatKhau`, `MaKhoaCN`) 
         VALUE ('$MSSV','$TenSV','$CMND','$GioiTinh','$MaKhoa','3','$MatKhau','$KhoaCN')";
-        if (mysqli_query($this->conn, $qr)) {
-            $result = true;
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+            else{
+                $result = false;
+            }
+        } catch (Exception $e) {
+            $result = false;
         }
         return $result;
     }
@@ -475,9 +467,13 @@ class M_admin extends db
     public function addKhoaHoc($TenKhoaHoc, $NamBatDau)
     {
         $result = false;
-        $qr = "INSERT INTO khoahoc(TenKhoaHoc,NamBatDau) VALUE ('$TenKhoaHoc','$NamBatDau')";
-        if (mysqli_query($this->conn, $qr)) {
-            $result = true;
+        try {
+            $qr = "INSERT INTO khoahoc(TenKhoaHoc,NamBatDau) VALUE ('$TenKhoaHoc','$NamBatDau')";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
         }
         return $result;
     }
@@ -659,16 +655,16 @@ class M_admin extends db
 
     public function themsach_ex($tensach, $noidungngan, $soluong, $ngaynhap, $anh_mot, $n_anh, $gia, $maloaisach, $matacgia, $makhoacn, $file_sach)
     {
-        try { 
-        $anh = $this->luu_anh_ex($anh_mot);
-        $nhieu_anh = $this->luu_nhieu_anh_ex($n_anh);       
-        if ($maloaisach == 1) {
-            $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', '$anh', '$gia', '$maloaisach', '$matacgia','$makhoacn')";
-        } else if ($maloaisach == 2) {
-            $dd_file_pdf = $this->chon_up_file_pdf($file_sach);
-            $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`,`file`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', '$anh', '$gia', '$maloaisach', '$matacgia','$makhoacn','$dd_file_pdf')";
-        }
-        $kq = false;              
+        try {
+            $anh = $this->luu_anh_ex($anh_mot);
+            $nhieu_anh = $this->luu_nhieu_anh_ex($n_anh);
+            if ($maloaisach == 1) {
+                $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', '$anh', '$gia', '$maloaisach', '$matacgia','$makhoacn')";
+            } else if ($maloaisach == 2) {
+                $dd_file_pdf = $this->chon_up_file_pdf($file_sach);
+                $qr4 = "INSERT INTO `sach` (`MaSach`, `TenSach`, `Noidungngan`, `SoLuong`, `NgayNhap`, `AnhDaiDien`, `Gia`, `MaLoaiSach`, `MaTacGia`,`MakhoaCN`,`file`) VALUES (NULL, '$tensach', '$noidungngan', '$soluong', '$ngaynhap', '$anh', '$gia', '$maloaisach', '$matacgia','$makhoacn','$dd_file_pdf')";
+            }
+            $kq = false;
             if (mysqli_query($this->conn, $qr4)) {
                 $kq = true;
                 $masach = $this->conn->insert_id;
@@ -822,5 +818,199 @@ class M_admin extends db
         // Check if $uploadOk is set to 0 by an error
         move_uploaded_file($file_sach["tmp_name"], $duongdan);
         return $duongdan;
+    }
+
+    public function check_tenkh($TenKhoa)
+    {
+        $qr3 = "SELECT * FROM `khoahoc` WHERE `TenKhoaHoc`='$TenKhoa'";
+        $row = mysqli_query($this->conn, $qr3);
+        $kq = $row->num_rows;
+        $rs = false;
+        if ($kq == 0) {
+            $rs = true;
+        } else {
+            $rs = false;
+        }
+        return $rs;
+    }
+
+    public function showkhoahoc_cansua($id)
+    {
+        $result = false;
+        $mang = array();
+        try {
+            $sql = "SELECT * FROM `khoahoc` WHERE `MaKhoaHoc` =$id ";
+
+            $row = mysqli_query($this->conn, $sql);
+            if ($row->num_rows == 0) {
+                $result = false;
+            } else {
+                $result = true;
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        $mang['check'] = $result;
+        return json_encode($mang);
+    }
+
+    public function suakhoahoc($id, $tenkhoahoc, $nam)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `khoahoc` SET `TenKhoaHoc`='$tenkhoahoc',`NamBatDau`='$nam' WHERE `MaKhoaHoc`= $id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+    public function m_xoakhoahoc($id)
+    {
+        $result = false;
+        try {
+            $qr = "DELETE FROM `khoahoc` WHERE `MaKhoaHoc`= $id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+
+    public function themkhoacn($tenkhoacn)
+    {
+        $result = false;
+        try {
+            $qr = "INSERT INTO `khoachuyennganh`(`TenCN`) VALUES ('$tenkhoacn')";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function showkhoacn_cansua($id)
+    {
+        $result = false;
+        $mang = array();
+        try {
+            $sql = "SELECT * FROM `khoachuyennganh` WHERE `MaKhoaCN` =$id ";
+
+            $row = mysqli_query($this->conn, $sql);
+            if ($row->num_rows == 0) {
+                $result = false;
+            } else {
+                $result = true;
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        $mang['check'] = $result;
+        return json_encode($mang);
+    }
+
+    public function suakhoacn($id, $tenkhoacn)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `khoachuyennganh` SET `TenCN`='$tenkhoacn' WHERE `MaKhoaCN`=$id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+
+    public function m_xoakhoacn($id)
+    {
+        $result = false;
+        try {
+            $qr = "DELETE FROM `khoachuyennganh` WHERE `MaKhoaCN`= $id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+    public function check_mssv($id)
+    {
+        $qr3 = "SELECT * FROM `sinhvien` WHERE `MSSV`='$id'";
+        $row = mysqli_query($this->conn, $qr3);
+        $kq = $row->num_rows;
+        $rs = false;
+        if ($kq == 0) {
+            $rs = true;
+        } else {
+            $rs = false;
+        }
+        return $rs;
+    }
+    public function showsv_cansua($id)
+    {
+        $result = false;
+        $mang = array();
+        try {
+            $sql = "SELECT * FROM sinhvien,khoachuyennganh,khoahoc WHERE sinhvien.MaKhoa = khoahoc.MaKhoaHoc AND sinhvien.MaKhoaCN = khoachuyennganh.MaKhoaCN AND IDSV=$id ";
+            $row = mysqli_query($this->conn, $sql);
+            if ($row->num_rows == 0) {
+                $result = false;
+            } else {
+                $result = true;
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        $mang['check'] = $result;
+        return json_encode($mang);
+    }
+
+    public function sua_SinhVien($id,$TenSV, $CMND, $GioiTinh, $MaKhoa, $KhoaCN)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `sinhvien` SET `HoTen`='$TenSV',`CMND`='$CMND',`GioiTinh`='$GioiTinh',`MaKhoa`='$MaKhoa',`MaKhoaCN`='$KhoaCN' WHERE `IDSV`=$id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+            else{
+                $result = false;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function m_xoasv($id)
+    {
+        $result = false;
+        try {
+            $qr = "DELETE FROM `sinhvien` WHERE `IDSV`= $id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
     }
 }

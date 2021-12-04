@@ -583,7 +583,7 @@ $(document).ready(function () {
           $("#btn_thoatthemtg").on("click", function () {
             location.reload();
           });
-         
+
         } else {
           Swal.close();
           Swal.fire({
@@ -688,7 +688,7 @@ $(document).ready(function () {
           $("#cancel_tg").on("click", function () {
             location.reload();
           });
-         
+
         }
         else {
           Swal.close();
@@ -745,7 +745,7 @@ $(document).ready(function () {
             timer: 2000
           })
           tr2.prop('hidden', true);
-       
+
         }
         else {
           Swal.close();
@@ -768,7 +768,7 @@ $(document).ready(function () {
 
 //thêm file cho sách
 $(document).ready(function () {
-  $('#MaLoaiSach').on('change', function() {
+  $('#MaLoaiSach').on('change', function () {
     var file_them = this.value;
     var htlm_file = `
   
@@ -776,13 +776,915 @@ $(document).ready(function () {
     <input type="file" name="file_sach" placeholder="Vui lòng chọn file pdf"  accept=".pdf" id="file_them"  required>   
   
     `;
-    if(file_them == 2){
+    if (file_them == 2) {
       $('#themsach_file').html(htlm_file);
-    }else if(file_them == 1){
+    } else if (file_them == 1) {
       $('#file_them').remove();
       $('#tieude_file').remove();
     }
+
+
+  });
+});
+
+//dowload
+$(document).ready(function () {
+  $("#btn_dowload").click(function () {
+    var file = $('#tenfile').val();
+    var data = { 'file': file };
+    $.ajax({
+      url: "admin/dowload",
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == 0) {
+          toastr.error('File không tồn tại', 'Thông báo !');
+        }
+        else if (data == 1) {
+          toastr.error('Tên file không được rỗng', 'Thông báo !');
+        }
+      }
+    });
+  });
+});
+
+
+
+
+$(document).ready(function () {
+  $(".NamBatDau").val(1990);
+  $(".NamBatDau").keyup(function () {
+    var nam = new Date().getFullYear();
+    if($(this).val().length == 4){
+        if( parseInt($(this).val()) < 1990){
+          $(this).val(1990);
+        }
+        else if(parseInt($(this).val()) > nam){
+          $(this).val(nam);
+        }
+      }
+      else if ($(this).val().length > 4){ 
+        $(this).val(nam);
+      }
     
+  });
+
+
+});
+
+//kiểm tra tên khóa học
+$(document).ready(function () {
+  $(".TenKhoaHoc").keyup(function () {
+    if($("#TenKH").val().length != 0){
+      var ten = $("#TenKH").val();
+      var data = {'tenkhoahoc': ten};
+      $.ajax({
+        url: "admin/check_tenkhoahoc",
+        method: 'POST',
+        data: data,
+        success: function (data2) {
+          var data2 = JSON.parse(data2);
+          if(data2 == true){
+            $(".check_tenkhoahoc").text("");
+            $('#btnthem_khoahoc').prop("hidden", false);
+          }
+          else{
+            if($("#TenKH").val().length == 0){
+              $(".check_tenkhoahoc").text("");
+              $('#btnthem_khoahoc').prop("hidden", true);
+
+            }
+            else{
+              $(".check_tenkhoahoc").text("Tên khóa học tồn tại !");
+              $('#btnthem_khoahoc').prop("hidden", true);
+            }
+          }
+          
+        }
+    });
+    }
+    else{
+      $(".check_tenkhoahoc").text("");
+      $('#btnthem_khoahoc').prop("hidden", true);
+    }
+    
+});
+});
+
+////kiểm tra tên khóa học khi sửa
+$(document).ready(function () {
+  $(".TenKhoaHoc").keyup(function () {
+    if($("#TenKH_SUA").val().length != 0){
+      var ten = $("#TenKH_SUA").val();
+      var data = {'tenkhoahoc': ten};
+      $.ajax({
+        url: "admin/check_tenkhoahoc",
+        method: 'POST',
+        data: data,
+        success: function (data2) {
+          var data2 = JSON.parse(data2);
+          console.log(data2);
+          if(data2 == true){
+            $(".check_tenkhoahoc").text("");
+            $('#btnsua_khoahoc').prop("hidden", false);
+          }
+          else{
+            if($("#TenKH_SUA").val().length == 0){
+              $(".check_tenkhoahoc").text("");
+              $('#btnsua_khoahoc').prop("hidden", true);
+
+            }
+            else{
+              $(".check_tenkhoahoc").text("Tên khóa học tồn tại !");
+              $('#btnsua_khoahoc').prop("hidden", true);
+            }
+          }
+          
+        }
+    });
+    }
+    else{
+      $(".check_tenkhoahoc").text("");
+      $('#btnthem_khoahoc').prop("hidden", true);
+    }
+    
+});
+});
+
+
+//thêm khóa học
+$(document).ready(function () {
+  $('#form_themkhoacn').on('submit', function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: "admin/themkhoacn",
+      method: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        var data2 = JSON.parse(data2);
+        if (data2 == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thêm Khoa Chuyên Ngành Thành Công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoatthemkhoacn").on("click", function () {
+            location.reload();
+          });       
+        } else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thêm Khoa Chuyên Ngành Thất Bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          location.reload();
+        }
+      }
+    });
+
+  });
+});
+
+//lấy id khóa học cần sửa
+$(document).ready(function () {
+  $(".suakhoahoc").click(function () {
+    var makhoahoc = $(this).val();
+    var data = { makhoahoc: makhoahoc };
+    $.ajax({
+      url: "ajax/layid_khoahoccansua",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          Swal.close();
+          $('#TenKH_SUA').val(data[0].TenKhoaHoc);
+          $('#ipnam').val(data[0].NamBatDau);         
+          $('#btnsua_khoahoc').prop('value', data[0].MaKhoaHoc);
+        }
+      }
+    });
+
+
+  });
+});
+
+//sửa khóa học 
+$(document).ready(function () {
+  $('#form_suakhoahoc').on('submit', function (event) {
+    event.preventDefault();
+    var tenkh = $('#TenKH_SUA').val();
+    var nam = $('#ipnam').val();
+    var makh = $('#btnsua_khoahoc').val();
+    var data = { tenkhoahoc: tenkh, nam: nam ,makhoahoc:makh};
+    $.ajax({
+      url: "ajax/suakhoahoc",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Sửa khóa học thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoat_suakhoahoc").on("click", function () {
+            location.reload();
+          });
+          $("#cancel_kh").on("click", function () {
+            location.reload();
+          });
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sửa tác giả thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+
+        }
+
+      }
+    });
+
+
+  });
+});
+//xóa khóa học
+$(document).ready(function () {
+  $(".xoakhoahoc").click(function () {
+    var makh = $(this).val();
+    var data = { makhoahoc: makh };
+    var tr2 = $(this).closest('tr');
+    $.ajax({
+      url: "ajax/xoakhoahoc",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa khóa học thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          tr2.prop('hidden', true);
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa khóa học thất bại vui lòng kiểm tra dữ liệu trước đó',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
+
+  });
+});
+
+
+//thêm khoa chuyên ngành
+$(document).ready(function () {
+  $('#form_themkhoacn').on('submit', function (event) {
+    event.preventDefault();
+    var tenkhoacn = $("#tenkhoacn").val();
+    var data = {
+      tenkhoacn: tenkhoacn,
+    };
+    $.ajax({
+      url: "admin/addTacGia",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        var data2 = JSON.parse(data2);
+        console.log(data2);
+        if (data2 == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thêm tác giả thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoatthemtacgia").on("click", function () {
+            location.reload();
+          });
+          $("#btn_thoatthemtg").on("click", function () {
+            location.reload();
+          });
+
+        } else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thêm tác giả thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          location.reload();
+        }
+      }
+    });
+
+  });
+});
+
+//lấy id khoa cn cần sửa
+$(document).ready(function () {
+  $(".suakhoacn").click(function () {
+    var makhoacn = $(this).val();
+    var data = { makhoacn: makhoacn };
+    $.ajax({
+      url: "ajax/layid_khoacncansua",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          Swal.close();
+          $('#tenkhoacn_cansua').val(data[0].TenCN);        
+          $('#btn_suakhoacn').prop('value', data[0].MaKhoaCN);
+        }
+      }
+    });
+
+
+  });
+});
+
+//sửa khoa chuyên ngành
+$(document).ready(function () {
+  $('#form_suakhoacn').on('submit', function (event) {
+    event.preventDefault();
+    var tenkcn_cs = $('#tenkhoacn_cansua').val();
+    var makcn = $('#btn_suakhoacn').val();
+    var data = { tenkcn_cs: tenkcn_cs, makcn: makcn };
+    $.ajax({
+      url: "ajax/suakhoacn",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Sửa khoa chuyên ngành thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoat_suakhoacn").on("click", function () {
+            location.reload();
+          });
+          $("#cancel_cn").on("click", function () {
+            location.reload();
+          });
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sửa khoa chuyên ngành thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+
+        }
+
+      }
+    });
+
+
+  });
+});
+
+//xóa khoa chuyên ngành
+$(document).ready(function () {
+  $(".xoakhoacn").click(function () {
+    var macn = $(this).val();
+    var data = { macn: macn };
+    var tr2 = $(this).closest('tr');
+    $.ajax({
+      url: "ajax/xoakhoacn",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa khoa chuyên ngành thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          tr2.prop('hidden', true);
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa khoa chuyên ngành thất bại vui lòng kiểm tra dữ liệu trước đó',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
+
+  });
+});
+
+//check mssv thêm sách
+$(document).ready(function () {
+  $("#MSSV").keyup(function () {
+   var mssv = $("#MSSV").val();
+   var data = {mssv:mssv}
+    if($("#MSSV").val().length != 0){
+      $.ajax({
+        url: "admin/check_mssv",
+        method: 'POST',
+        data: data,
+        success: function (data2) {
+          var data2 = JSON.parse(data2);
+          console.log(data2);
+          if(data2 == true){
+            $("#check_mssv_them").text("");
+            $('#btn_themsv').prop("hidden", false);
+          }
+          else if(data2 == 3){
+            $("#check_mssv_them").text("");
+            $('#btn_themsv').prop("hidden", true);
+          }
+          else{
+            if($("#MSSV").val().length == 0){
+              $("#check_mssv_them").text("");
+              $('#btn_themsv').prop("hidden", true);
+
+            }
+            else{
+              $("#check_mssv_them").text("Mã số sinh viên tồn tại !");
+              $('#btn_themsv').prop("hidden", true);
+            }
+          }
+          
+        }
+    });
+    }
+    else{
+      $("#check_mssv_them").text("");
+      $('#btn_themsv').prop("hidden", true);
+    }
+    
+});
+});
+//check mssv sửa sách
+$(document).ready(function () {
+  $("#MSSV_sua").keyup(function () {
+   var mssv = $("#MSSV_sua").val();
+   var data = {mssv:mssv}
+    if($("#MSSV_sua").val().length != 0){
+      $.ajax({
+        url: "admin/check_mssv",
+        method: 'POST',
+        data: data,
+        success: function (data2) {
+          var data2 = JSON.parse(data2);     
+          if(data2 == true){
+            $("#check_suasv").text("");
+            $('#btn_suasv_sua').prop("hidden", false);
+          }
+          else if(data2 == 3){
+            $("#check_suasv").text("");
+            $('#btn_suasv_sua').prop("hidden", true);
+    
+          }
+          else if($("#MSSV_sua").val().length == 0){
+            $("#check_suasv").text("");
+            $('#btn_suasv_sua').prop("hidden", false);
+           
+          }
+          else if(data2 == false){         
+            $("#check_suasv").text("Mã số sinh viên tồn tại !"); 
+              $('#btn_suasv_sua').prop("hidden", true);
+            
+            
+          
+          }
+          
+        }
+    });
+    }
+    else{
+      $("#check_suasv").text("");
+      $('#btn_suasv_sua').prop("hidden", true);
+    }
+    
+});
+});
+
+
+//thêm sinh viên 
+$(document).ready(function () {
+  $('#form_themsv').on('submit', function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: "admin/addsinhvien",
+      method: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        var data2 = JSON.parse(data2);
+        if (data2 == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thêm sinh viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#thoatthemsv").on("click", function () {
+            location.reload();
+          });
+
+        } 
+        else if (data2 == 3){
+          Swal.close();
+          toastr.error('Mã số sinh viên đã tồn tại vui lòng kiểm tra lại', 'Gặp lỗi!')
+        }
+        else if (data2 == 4){
+          Swal.close();
+          toastr.error('Không bỏ trống dữ liệu', 'Gặp lỗi!')
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thêm sinh viên thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          location.reload();
+        }
+      }
+    });
+
+  });
+});
+
+//lấy id sinh viên cần sửa
+$(document).ready(function () {
+  $(".suasv").click(function () {
+    var masv = $(this).val();
+    var data = { masv: masv };
+    $.ajax({
+      url: "ajax/layid_svcansua",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        console.log(data);
+        if (data == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          Swal.close();
+          $('#MSSV_sua').val(data[0].MSSV);
+          $('#TenSv_sua').val(data[0].HoTen);
+          $('#CMND_sua').val(data[0].CMND);
+          $("#GioiTinh_sua").val(data[0].GioiTinh).change();
+          $("#Khoahoc_sua").val(data[0].MaKhoa).change();
+          $("#KhoaCN_sua").val(data[0].MaKhoaCN).change();
+          $('#btn_suasv_sua').prop('value', data[0].IDSV);         
+        }
+      }
+    });
+
+
+  });
+});
+
+
+//sửa sinh viên
+$(document).ready(function () {
+  $('#form_suasv').on('submit', function (event) {
+    event.preventDefault();
+    var id = $('#btn_suasv_sua').val();
+    var form_data = new FormData(this);
+    form_data.append('idsv',id);
+    $.ajax({
+      url: "ajax/suasinhvien",
+      method: 'POST',
+      data: form_data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Sửa sinh viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+
+          $("#thoatsuasv").on("click", function () {
+            location.reload();
+          });
+
+        }
+        else if(data == 4){
+          Swal.close();
+          toastr.error('Không được bỏ trống dữ liệu', 'Gặp lỗi!')
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sửa sinh viên thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+
+        }
+
+      }
+    });
+
+
+  });
+});
+
+//xóa tác giả
+$(document).ready(function () {
+  $(".xoasv").click(function () {
+    var masv = $(this).val();
+    var data = { masv: masv };
+    var tr2 = $(this).closest('tr');
+    $.ajax({
+      url: "ajax/xoasv",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa sinh viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          tr2.prop('hidden', true);
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa sinh viên thất bại vui lòng kiểm tra dữ liệu trước đó',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
 
   });
 });

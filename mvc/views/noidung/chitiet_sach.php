@@ -16,10 +16,19 @@
                     <div class="lead"> <?php echo $kq_ctsach[0]["Noidungngan"]; ?> </div>
                     <div class="d-flex">
                         <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <?php if(empty($kq_ctsach[0]["file"])){ ?>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
                             <i class="bi-cart-fill me-1"></i>
                             Đặt sách
                         </button>
+                        <?php } else { ?>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" id="btn_dowload">
+                            <i class="bi-cart-fill me-1"></i>
+                            Dowload
+                            </button>
+                            <input type="hidden" class="form-control" id="tenfile" placeholder="tên sách" value="<?php echo basename($kq_ctsach[0]["file"]) ?>" required>
+                       <?php } ?>
+
                     </div>
                 </div>
             </div>

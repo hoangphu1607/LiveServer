@@ -3,11 +3,10 @@
 <link rel="stylesheet" href="public/css/dangnhap.css">
 <div class="container-fluid">
 <?php 
-    if(isset($data["ketquaKhoa"]) && $data["ketquaCN"]){
+    if(isset($data["ketquaKhoa"]) && isset($data["ketquaCN"])){
         $kq_khoa = json_decode($data["ketquaKhoa"], true);                                    
         $kq_CN = json_decode($data["ketquaCN"],true);
     }    
-    // print_r($kq_CN);
 ?>
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -64,32 +63,15 @@
                                 <input type="password" class="form-control" id="MatKhau"
                                     placeholder="Mật Khẩu" name="MatKhau">
                             </div>
-                            <!-- <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Email Address">
-                            </div> -->
+                           
                             <div class="form-group ">
-                                <!-- <button class="btn btn-success">
-                                    <i class="fas fa-user-plus"></i>
-                                    <span>Thêm Sinh Viên</span> 
-                                </button> -->
+                                
                                 <input type="submit" id = "submit" name = "submit" class="btn btn-success fas fa-user-plus" value="Thêm Sinh Viên">
                             </div>
-                            <!-- <hr>
-                            <a href="index.html" class="btn btn-google btn-user btn-block">
-                                <i class="fab fa-google fa-fw"></i> Register with Google
-                            </a>
-                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                            </a> -->
+                           
                         </form>                     
                         <hr>
-                        <!-- <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div> -->
-                        <!-- <div class="text-center">
-                            <a class="small" href="login.html">Already have an account? Login!</a>
-                        </div> -->
+                        
                     </div>
                 </div>
             </div>

@@ -51,11 +51,10 @@ class admin extends controllers
                     $this->view("trangchu", [
                         "page" => "ThemSach",
                         "phanloai" => $this->sach->loaisach(),
-                        "thongbao_themsach" => $nam->themsach_tailieu($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach,$matacgia,$makhoacn,$file_tailieu),
+                        "thongbao_themsach" => $nam->themsach_tailieu($tensach, $noidungngan, $soluong, $thoigian/*,$anh*/, $gia, $maloaisach, $matacgia, $makhoacn, $file_tailieu),
                         "tacgia" => $this->sach->tacgia(),
                         "khoacn" => $nam->khoacn()
                     ]);
-
                 } else {
                     $this->view("trangchu", [
                         "page" => "ThemSach",
@@ -66,7 +65,7 @@ class admin extends controllers
                     ]);
                 }
             } else {
-                echo "nhập đủ thông tin"; 
+                echo "nhập đủ thông tin";
             }
         } else {
             $this->view("trangchu", [
@@ -85,7 +84,7 @@ class admin extends controllers
                 !empty($_POST["tensach"]) && !empty($_POST["MaTacGia"]) && !empty($_POST["Gia"])
                 && !empty($_POST["SoLuong"]) && !empty($_POST["time"]) && !empty($_POST["noidungngan"]) && !empty($_POST["MaCN"])
             ) {
-                $tensach = $_POST["tensach"];               
+                $tensach = $_POST["tensach"];
                 $matacgia = $_POST["MaTacGia"];
                 $gia = $_POST["Gia"];
                 $soluong = $_POST["SoLuong"];
@@ -118,8 +117,7 @@ class admin extends controllers
                         "suasach" => 1,
                         "xoahinh_old" => $anhdaidien
                     ]);
-
-                } else if (empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0]) && empty($_FILES['file_sach']['name']) ) {
+                } else if (empty($_FILES['anh']['name']) && empty($_FILES['n_anh']['name'][0]) && empty($_FILES['file_sach']['name'])) {
                     //update nội dung
                     $this->view("trangchu", [
                         "page" => "ThemSach",
@@ -131,9 +129,7 @@ class admin extends controllers
                         "khoacn" => $admin->khoacn(),
                         "suasach" => 1,
                     ]);
-                } 
-                
-                else {
+                } else {
                     $anhdaidien = $admin->show_sach_sua($masach);
                     $this->view("trangchu", [
                         "page" => "ThemSach",
@@ -175,64 +171,20 @@ class admin extends controllers
     {
         echo "day la quan ly giao vien";
     }
-    public function sinhvien()
-    {
-        $kq = $this->model("M_admin");
-        $this->view("trangchu", [
-            "page" => "ThemSV",
-            "ketquaKhoa" =>  $kq->showDSKhoa(),
-            "ketquaCN" => $kq->showKhoaCN()
-        ]);
-    }
-    public function addsinhvien()
-    {
-        $kq = $this->model("M_admin");
-        if (
-            isset($_POST['submit']) && isset($_POST['MSSV']) && isset($_POST['TenSv']) && isset($_POST['CMND']) && isset($_POST['GioiTinh'])
-            && isset($_POST['KhoaHoc']) && isset($_POST['KhoaCN']) && isset($_POST['MatKhau'])
-        ) {
-            $MSSV = $_POST['MSSV'];
-            $TenSv = $_POST['TenSv'];
-            $CMND = $_POST['CMND'];
-            $GioiTinh = $_POST['GioiTinh'];
-            $KhoaHoc = $_POST['KhoaHoc'];
-            $KhoaCN = $_POST['KhoaCN'];
-            $MatKhau = password_hash($_POST['MatKhau'], PASSWORD_DEFAULT);
-            $insert = $this->model("M_admin");
-            $this->view("trangchu", [
-                "page" => "ThemSV",
-                "ketquaKhoa" =>  $kq->showDSKhoa(),
-                "ketquaCN" => $kq->showKhoaCN(),
-                "insert" => $insert->newSinhVien($MSSV, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $MatKhau, $KhoaCN)
-            ]);
-        } else {
-
-            $this->view("trangchu", [
-                "page" => "ThemSV",
-                "ketquaKhoa" =>  $kq->showDSKhoa(),
-                "ketquaCN" => $kq->showKhoaCN()
-            ]);
-        }
-    }
+    //sinh viên
     public function showSinhVien()
     {
-        $kq_sv = $this->model("M_admin")->showSinhVien();
-        $thongtinsach =  $this->model("M_admin");
+        $kq = $this->model("M_admin");
         $this->view("trangchu", [
             "page" => "showSV",
             "phanloai" => $this->sach->loaisach(),
-            "thongtinsach" => $thongtinsach->ad_thongtinsach(),
             "khoacn" => $this->sach->Khoacn(),
-            "kq_sv" => $kq_sv
+            "ketquaKhoa" =>  $kq->showDSKhoa(),
+            "ketquaCN" => $kq->showKhoaCN(),
+            "kq_sv" => $kq->showSinhVien()
         ]);
     }
 
-    public function khoacn()
-    {
-        $this->view("trangchu", [
-            "page" => "Khoa"
-        ]);
-    }
     public function addkhoacn()
     {
         if (isset($_POST['submit']) && isset($_POST['TenKhoa'])) {
@@ -253,13 +205,9 @@ class admin extends controllers
         $kq_khoaCN = $this->model("M_admin")->showKhoaCN();
         $this->view("trangchu", [
             "page" => "showKhoaCN",
-            "kq_khoaCN" => $kq_khoaCN
-        ]);
-    }
-    public function tacgia()
-    {
-        $this->view("trangchu", [
-            "page" => "TacGia"
+            "kq_khoaCN" => $kq_khoaCN,
+            "khoacn" => $this->sach->Khoacn(),
+            "phanloai" => $this->sach->loaisach(),
         ]);
     }
     public function addTacGia()
@@ -284,15 +232,9 @@ class admin extends controllers
             "phanloai" => $this->sach->loaisach(),
             "thongtinsach" => $admin->ad_thongtinsach(),
             "khoacn" => $this->sach->Khoacn(),
-
         ]);
     }
-    public function NhanVien()
-    {
-        $this->view("trangchu", [
-            "page" => "NhanVien"
-        ]);
-    }
+    ///có thẻ xóa
     public function ShowNV()
     {
         $kq = $this->model("M_admin")->showNhanVien();
@@ -317,42 +259,38 @@ class admin extends controllers
             }
         }
     }
-    public function newNV()
-    {
-        if (isset($_POST['submit']) && isset($_POST['TenNhanVien']) && isset($_POST['GioiTinh']) && isset($_POST['pass']) && isset($_POST['CMND'])) {
-            if (!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])) {
-                $TenNhanVien = $_POST['TenNhanVien'];
-                $GioiTinh = $_POST['GioiTinh'];
-                $CMND = $_POST['CMND'];
-                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-                $kq = $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass);
-            }
-        }
-        $this->view("trangchu", [
-            "page" => "NhanVien",
-        ]);
-    }
+
     public function KhoaHoc()
     {
+        $admin = $this->model('M_admin');
         $this->view("trangchu", [
-            "page" => "KhoaHoc"
+            "page" => "showKhoaHoc",
+            "kq_KhoaHoc" =>  $admin->showKhoaHoc(),
+            "phanloai" => $this->sach->loaisach(),
+            "thongtinsach" => $admin->ad_thongtinsach(),
+            "khoacn" => $this->sach->Khoacn(),
         ]);
     }
     public function addKhoaHoc()
     {
-        if (isset($_POST['submit']) && isset($_POST['TenKhoaHoc']) && isset($_POST['NamBatDau'])) {
+        try{
             if (!empty($_POST['TenKhoaHoc']) && !empty($_POST['NamBatDau'])) {
+                $admin = $this->model("M_admin");
                 $TenKhoaHoc = $_POST['TenKhoaHoc'];
                 $NamBatDau = $_POST['NamBatDau'];
-                $kq = $this->model("M_admin")->addKhoaHoc($TenKhoaHoc, $NamBatDau);
-
-                $this->view("trangchu", [
-                    "page" => "KhoaHoc",
-                    "result" => $kq
-                ]);
+                $kq = $admin->addKhoaHoc($TenKhoaHoc, $NamBatDau);
+                echo json_encode($kq);
             }
+            else{
+                echo json_encode(false);
+            }
+        }  catch (Exception $e) {
+            echo json_encode(false);
         }
+
+
     }
+    
 
     public function showKhoaHoc()
     {
@@ -361,10 +299,6 @@ class admin extends controllers
             "page" => "showKhoaHoc",
             "kq_KhoaHoc" => $kq
         ]);
-    }
-    public function showTable()
-    {
-        $this->model("M_admin")->showTable_NV();
     }
     public function showTable1()
     {
@@ -393,4 +327,106 @@ class admin extends controllers
             "khoacn" => $this->sach->Khoacn(),
         ]);
     }
+    public function dowload()
+    {         
+        $filename = $_POST['file'];
+        if (!empty($filename)) {
+            $file = basename($filename);
+            $foder_luu = "public/file_sach/";
+            $duongdan = $foder_luu . basename($file);
+            if (file_exists($duongdan)) {                         
+                header('Content-Description: File Transfer');
+                header('Pragma: public');
+                header('Expires: 0');
+                header('Content-Type: application/octet-stream');
+                header('Cache-Control: must-revalidate');
+                header("Content-Disposition: attachment; filename=$file");
+                header('Content-Transfer-Emcoding: binary');                                     
+            } 
+            else{
+               
+                echo json_encode(0);
+            }
+
+        }
+        else{
+                       
+                echo json_encode(1);
+        } 
+
+    }
+
+    public function check_tenkhoahoc()
+    {
+        $admin =  $this->model("M_admin");
+        if(!empty($_POST['tenkhoahoc'])){
+            $tenkhoahoc = $_POST['tenkhoahoc'];
+            $kq = $admin->check_tenkh($tenkhoahoc);
+            echo  json_encode($kq);
+        }
+        else{
+            echo  json_encode(false);
+        }
+    }
+    public function themkhoacn()
+    {
+        try{
+            if (!empty($_POST['tenkhoacn'])) {
+                $admin = $this->model("M_admin");
+                $tenkhoacn = $_POST['tenkhoacn'];
+                $kq = $admin->themkhoacn($tenkhoacn);
+                echo json_encode($kq);
+            }
+            else{
+                echo json_encode(false);
+            }
+        }  catch (Exception $e) {
+            echo json_encode(false);
+        }
+
+
+    }
+
+    public function check_mssv()
+    {
+        $admin = $this->model("M_admin");
+        if(!empty($_POST['mssv'])){
+            $mssv = $_POST['mssv'];
+            $kq = $admin->check_mssv($mssv);
+            echo json_encode($kq);
+        }
+        else{
+            echo json_encode(3);
+        }
+       
+    }
+       public function addsinhvien()
+       {
+           $kq = $this->model("M_admin");
+           if (
+               !empty($_POST['MSSV']) && !empty($_POST['TenSv']) && !empty($_POST['CMND']) && !empty($_POST['GioiTinh'])
+               && !empty($_POST['KhoaHoc']) && !empty($_POST['KhoaCN']) && !empty($_POST['MatKhau'])
+           ) {
+               $MSSV = $_POST['MSSV'];
+               $TenSv = $_POST['TenSv'];
+               $CMND = $_POST['CMND'];
+               $GioiTinh = $_POST['GioiTinh'];
+               $KhoaHoc = $_POST['KhoaHoc'];
+               $KhoaCN = $_POST['KhoaCN'];
+               $MatKhau = password_hash($_POST['MatKhau'], PASSWORD_DEFAULT);
+                $check_mssv = $kq->check_mssv($MSSV);
+                if($check_mssv == true){
+                    $themsv = $kq->newSinhVien($MSSV, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $MatKhau, $KhoaCN);
+                    echo json_encode($themsv);
+
+                }else{
+                    echo json_encode(3);
+                }
+           } else {
+            echo json_encode(4);
+           }
+       }
+
+ 
+
 }
