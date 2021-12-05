@@ -381,20 +381,12 @@ class M_admin extends db
         }
         return json_encode($result);
     }
-    public function ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass)
-    {
-        $result = false;
-        $qr = "INSERT INTO nhanvien(TenNV,GioiTinh,MaQuyen,Cmnd_gv,Matkhau_gv) VALUE ('$TenNhanVien','$GioiTinh','1','$CMND','$pass')";
-        if (mysqli_query($this->conn, $qr)) {
-            $result = true;
-        }
-        return $result;
-    }
+
 
     public function showNhanVien()
     {
         $result = false;
-        $sql = "SELECT * FROM nhanvien";
+        $sql = "SELECT * FROM `nhanvien` WHERE `MaQuyen`=1";
         $row = mysqli_query($this->conn, $sql);
         $mang = array();
         while ($kq = mysqli_fetch_array($row)) {
@@ -431,8 +423,7 @@ class M_admin extends db
         VALUE ('$MSSV','$TenSV','$CMND','$GioiTinh','$MaKhoa','3','$MatKhau','$KhoaCN')";
             if (mysqli_query($this->conn, $qr)) {
                 $result = true;
-            }
-            else{
+            } else {
                 $result = false;
             }
         } catch (Exception $e) {
@@ -486,33 +477,6 @@ class M_admin extends db
             $mang[] = $kq;
         }
         return json_encode($mang);
-    }
-
-    public function showTable_NV()
-    {
-        $sql = "SELECT * FROM nhanvien";
-        $row = mysqli_query($this->conn, $sql);
-        $mang = array();
-        while ($kq = mysqli_fetch_array($row)) {
-            $mang[] = $kq;
-        }
-        $i = 1;
-
-        foreach ($mang as $nv) {
-            if ($i % 2 == 0) {
-                echo "<tr class='even'>";
-            } else {
-                echo "<tr class='odd'>";
-            }
-            echo '<td class="sorting_1"> ' . $i . '</td>';
-            echo '<td> ' . $nv["TenNV"] . '</td>';
-            echo '<td> ' . $nv["GioiTinh"] . '</td>';
-            echo '<td> ' . $nv["Cmnd_gv"] . '</td>';
-            echo '<td><a  type="button" class="btn btn-success" href="admin/suanhanvien/' . $nv["MaNV"] . '">Sửa</a></td>';
-            echo '<td><a  type="button" class="btn btn-danger" href="">Xóa</a></td>';
-            echo "</tr>";
-            $i++;
-        }
     }
 
     public function xoasach($id)
@@ -983,15 +947,14 @@ class M_admin extends db
         return json_encode($mang);
     }
 
-    public function sua_SinhVien($id,$TenSV, $CMND, $GioiTinh, $MaKhoa, $KhoaCN)
+    public function sua_SinhVien($id, $TenSV, $CMND, $GioiTinh, $MaKhoa, $KhoaCN)
     {
         $result = false;
         try {
             $qr = "UPDATE `sinhvien` SET `HoTen`='$TenSV',`CMND`='$CMND',`GioiTinh`='$GioiTinh',`MaKhoa`='$MaKhoa',`MaKhoaCN`='$KhoaCN' WHERE `IDSV`=$id";
             if (mysqli_query($this->conn, $qr)) {
                 $result = true;
-            }
-            else{
+            } else {
                 $result = false;
             }
         } catch (Exception $e) {
@@ -1012,5 +975,130 @@ class M_admin extends db
             $result = false;
         }
         return json_encode($result);
+    }
+    public function check_cnmd($id)
+    {
+        $qr3 = "SELECT * FROM `sinhvien` WHERE `CMND`='$id'";
+        $row = mysqli_query($this->conn, $qr3);
+        $kq = $row->num_rows;
+        $rs = false;
+        if ($kq == 0) {
+            $rs = true;
+        } else {
+            $rs = false;
+        }
+        return $rs;
+    }
+    public function check_cnmd_gv($id)
+    {
+        $qr3 = "SELECT * FROM `nhanvien` WHERE `Cmnd_gv`='$id'";
+        $row = mysqli_query($this->conn, $qr3);
+        $kq = $row->num_rows;
+        $rs = false;
+        if ($kq == 0) {
+            $rs = true;
+        } else {
+            $rs = false;
+        }
+        return $rs;
+    }
+    public function ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass)
+    {
+        try {
+            $result = false;
+            $qr = "INSERT INTO nhanvien(TenNV,GioiTinh,MaQuyen,Cmnd_gv,Matkhau_gv) VALUE ('$TenNhanVien','$GioiTinh','1','$CMND','$pass')";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            } else {
+                $result = false;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function shownv_cansua($id)
+    {
+        $result = false;
+        $mang = array();
+        try {
+            $sql = "SELECT * FROM `nhanvien` WHERE`MaNV`=$id";
+            $row = mysqli_query($this->conn, $sql);
+            if ($row->num_rows == 0) {
+                $result = false;
+            } else {
+                $result = true;
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        $mang['check'] = $result;
+        return json_encode($mang);
+    }
+
+    public function sua_nhanvien($id, $TenNV, $GioiTinh)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `nhanvien` SET `TenNV`='$TenNV',`GioiTinh`='$GioiTinh' WHERE `MaNV`='$id'";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            } else {
+                $result = false;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function m_xoanv($id)
+    {
+        $result = false;
+        try {
+            $qr = "DELETE FROM `nhanvien` WHERE `MaNV`=$id";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return json_encode($result);
+    }
+
+    public function kiemtra_taikhoan($id)
+    {
+        $qr = "SELECT * FROM `nhanvien` WHERE`MaNV`=$id";
+        $row = mysqli_query($this->conn, $qr);
+        $kq = mysqli_fetch_array($row);
+        return json_encode($kq);
+    }
+
+    public function kiemtra_taikhoan_sv($id)
+    {
+        $qr = "SELECT * FROM `sinhvien` WHERE `IDSV`=$id";
+        $row = mysqli_query($this->conn, $qr);
+        $kq = mysqli_fetch_array($row);
+        return json_encode($kq);
+    }
+
+    public function quenmatkhau($id,$matkhau)
+    {
+        $result = false;
+        try {
+            $qr = "UPDATE `sinhvien` SET `MatKhau`='$matkhau' WHERE `IDSV`='$id'";
+            if (mysqli_query($this->conn, $qr)) {
+                $result = true;
+            } else {
+                $result = false;
+            }
+        } catch (Exception $e) {
+            $result = false;
+        }
+        return $result;
     }
 }

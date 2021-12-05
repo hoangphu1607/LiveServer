@@ -26,7 +26,6 @@ class xl_dn extends db{
         return json_encode($kq);
         
     }
-    //  
     public function ktdn_gv($mssv,$matkhau){
         $qr = "SELECT * FROM `nhanvien` WHERE Cmnd_gv =$mssv "; // AND MatKhau='$matkhau' 
         $row = mysqli_query($this->conn, $qr);
@@ -38,7 +37,7 @@ class xl_dn extends db{
             if(password_verify($matkhau,$mk_hash) == true){
                 $_SESSION["dangnhap"][0]=$kq_tv["MaNV"];
                 $_SESSION["dangnhap"][1]=$kq_tv["TenNV"];
-                $_SESSION["dangnhap"][2]=$kq_tv["MaQuyen"];
+                $_SESSION["dangnhap"][2]=$kq_tv["MaQuyen"];            
                 $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
                 header('Location: http://localhost/LiveServer/');
                 

@@ -234,30 +234,19 @@ class admin extends controllers
             "khoacn" => $this->sach->Khoacn(),
         ]);
     }
-    ///có thẻ xóa
+    //nhân viên
     public function ShowNV()
     {
+        if($_SESSION["dangnhap"][2] != 2){
+            header('Location: http://localhost/LiveServer/');
+        }
         $kq = $this->model("M_admin")->showNhanVien();
         $this->view("trangchu", [
-            "page" => "shownv",
-            "result" => $kq
+            "page" => "showNV",
+            "result" => $kq,
+            "khoacn" => $this->sach->Khoacn(),
+            "phanloai" => $this->sach->loaisach(),
         ]);
-    }
-    public function addNV()
-    {
-        if (isset($_POST['submit']) && isset($_POST['TenNhanVien']) && isset($_POST['GioiTinh']) && isset($_POST['pass']) && isset($_POST['CMND'])) {
-            if (!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])) {
-                $TenNhanVien = $_POST['TenNhanVien'];
-                $GioiTinh = $_POST['GioiTinh'];
-                $CMND = $_POST['CMND'];
-                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-
-                $this->view("trangchu", [
-                    "page" => "NhanVien",
-                    "result" => $this->model("M_admin")->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass),
-                ]);
-            }
-        }
     }
 
     public function KhoaHoc()
@@ -400,6 +389,32 @@ class admin extends controllers
         }
        
     }
+    public function check_cmnd()
+    {
+        $admin = $this->model("M_admin");
+        if(!empty($_POST['cmnd'])){
+            $cmnd = $_POST['cmnd'];
+            $kq = $admin->check_cnmd($cmnd);
+            echo json_encode($kq);
+        }
+        else{
+            echo json_encode(3);
+        }
+       
+    }
+    public function check_cmnd_gv()
+    {
+        $admin = $this->model("M_admin");
+        if(!empty($_POST['CMND'])){
+            $cmnd = $_POST['CMND'];
+            $kq = $admin->check_cnmd_gv($cmnd);
+            echo json_encode($kq);
+        }
+        else{
+            echo json_encode(3);
+        }
+       
+    }
        public function addsinhvien()
        {
            $kq = $this->model("M_admin");
@@ -415,10 +430,10 @@ class admin extends controllers
                $KhoaCN = $_POST['KhoaCN'];
                $MatKhau = password_hash($_POST['MatKhau'], PASSWORD_DEFAULT);
                 $check_mssv = $kq->check_mssv($MSSV);
-                if($check_mssv == true){
+                $check_cnnd = $kq->check_cnmd($CMND);
+                if($check_mssv == true && $check_cnnd == true){
                     $themsv = $kq->newSinhVien($MSSV, $TenSv, $CMND, $GioiTinh, $KhoaHoc, $MatKhau, $KhoaCN);
                     echo json_encode($themsv);
-
                 }else{
                     echo json_encode(3);
                 }
@@ -426,7 +441,30 @@ class admin extends controllers
             echo json_encode(4);
            }
        }
+       public function addNV()
+    {
+        $admin = $this->model("M_admin");
+            if (!empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['CMND']) && !empty($_POST['pass'])) {
+                $TenNhanVien = $_POST['TenNhanVien'];
+                $GioiTinh = $_POST['GioiTinh'];
+                $CMND = $_POST['CMND'];
+                $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+                $check_cmnd = $admin->check_cnmd_gv($CMND);
+                if($check_cmnd == true){
+                    $kq= $admin->ThemNhanVien($TenNhanVien, $GioiTinh, $CMND, $pass);
+                    echo json_encode($kq);
+                }else {
+                    echo json_encode(3);
+                }
+                
+               
+            }else{
+                echo json_encode(4);
+            }
+        
+    }
 
+    
  
 
 }

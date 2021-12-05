@@ -121,7 +121,7 @@ if (isset($data["ketquaKhoa"]) && isset($data["ketquaCN"])) {
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit" id="btn_suasv" name="submit" class="btn btn-success fas fa-user-plus">Thêm Sinh Viên</button>
+                    <button type="submit" id="btn_themsv" name="submit" class="btn btn-success fas fa-user-plus">Thêm Sinh Viên</button>
                 </div>
 
             </form>
@@ -138,14 +138,14 @@ if (isset($data["ketquaKhoa"]) && isset($data["ketquaCN"])) {
             </div>
 
             <form id="form_suasv" method="POST">
-                <div class="form-group ">
-                    <span id="check_suasv" style="color:#8B0000;"></span>
+                <div class="form-group ">                 
                     <input type="text" class="form-control" id="MSSV_sua" placeholder="Mã Số Sinh Viên" name="MSSV" required readonly disabled>
                 </div>
                 <div class="form-group ">
                     <input type="text" class="form-control" id="TenSv_sua" placeholder="Tên Sinh Viên" name="TenSv" required>
                 </div>
                 <div class="form-group ">
+                <span id="check_suasv" style="color:#8B0000;"></span>
                     <input type="number" class="form-control" id="CMND_sua" placeholder="CMND" name="CMND"  required>
                 </div>
                 <div class="form-group ">
@@ -179,7 +179,6 @@ if (isset($data["ketquaKhoa"]) && isset($data["ketquaCN"])) {
                 <div class="form-group ">
                     <button type="submit" id="btn_suasv_sua" name="submit" class="btn btn-success fas fa-user-plus">Sửa Sinh Viên</button>
                 </div>
-
             </form>
         </div>
     </div>

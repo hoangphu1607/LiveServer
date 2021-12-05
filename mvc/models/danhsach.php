@@ -80,6 +80,7 @@ class danhsach extends db
         return ceil($tong_so_sp / $this->sotin1trang);
         
     }
+    //SELECT * FROM sach,loaisach,tacgia,khoachuyennganh WHERE sach.MaLoaiSach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG and sach.MakhoaCN = khoachuyennganh.MaKhoaCN AND sach.TenSach LIKE '%Giao trinh%'OR loaisach.TenLoaiSach LIKE '%Giao trinh%' OR tacgia.TenTG LIKE '%Giao trinh%' OR khoachuyennganh.TenCN LIKE '%Giao trinh%';
     public function timkiemtensach($trang,$tensach){
         $tranghientai = ($trang - 1) * $this->sotin1trang;
         $qr4 = "SELECT * FROM `sach` WHERE `TenSach` LIKE '%$tensach%' ORDER BY `MaSach` DESC LIMIT $tranghientai,$this->sotin1trang";
@@ -134,7 +135,7 @@ class danhsach extends db
         $qr4 = "SELECT * FROM sach WHERE MakhoaCN = $id ORDER BY RAND() LIMIT 4 ";
         $row2 = mysqli_query($this->conn, $qr4);
         $mang = array();
-        while ($kq = mysqli_fetch_array($row2)) {
+        while ($kq = mysqli_fetch_assoc($row2)) {
             $mang[] = $kq;
         }
         return json_encode($mang);

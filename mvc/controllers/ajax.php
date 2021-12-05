@@ -483,4 +483,68 @@ class ajax extends controllers
             echo json_encode(false);
         }
     }
+
+    public function layid_nvcansua()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['manv']) && !empty($_POST['manv'])) {
+            $idsv = $_POST['manv'];
+            echo $admin->shownv_cansua($idsv);
+        } else {
+            echo json_encode(false);
+        }
+    }
+
+    public function suanhanvien()
+    {
+        $kq =  $this->model("M_admin");
+        if (
+            !empty($_POST['TenNhanVien']) && !empty($_POST['GioiTinh']) && !empty($_POST['idnv'])
+        ) {
+            $id = $_POST['idnv'];
+            $Tennv = $_POST['TenNhanVien'];
+            $GioiTinh = $_POST['GioiTinh'];
+            $suanv = $kq->sua_nhanvien($id, $Tennv, $GioiTinh);
+            echo json_encode($suanv);
+        } else {
+            echo json_encode(4);
+        }
+    }
+
+    public function xoanv()
+    {
+        $admin =  $this->model("M_admin");
+        if (isset($_POST['manv']) && !empty($_POST['manv'])) {
+            $manv = $_POST['manv'];
+            echo $admin->m_xoanv($manv);
+        } else {
+            echo json_encode(false);
+        }
+    }
+    public function doimatkhau()
+    {
+        if (
+            !empty($_POST['matkhaucu']) && !empty($_POST['matkhaumoi'])
+        ) {
+        $admin =  $this->model("M_admin");
+        $matkhaucu = $_POST["matkhaucu"];
+        $matkhaumoi = $_POST["matkhaumoi"];
+        $matk = $_SESSION["dangnhap"][0];
+        $kq = $admin->kiemtra_taikhoan_sv($matk);
+        $thongtin_tk = json_decode($kq, true); 
+        if(password_verify($matkhaucu,$thongtin_tk["MatKhau"]) == true){
+            $MatKhau = password_hash($matkhaumoi, PASSWORD_DEFAULT);
+            $thongbao = $admin->quenmatkhau($matk,$MatKhau);
+            echo json_encode($thongbao);
+        }
+        else {
+            echo json_encode(2);
+        }
+
+       
+    }
+    else {
+        echo json_encode(3);
+    }
+}
 }

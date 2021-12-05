@@ -1357,7 +1357,7 @@ $(document).ready(function () {
   });
 });
 
-//check mssv thêm sách
+//check mssv sv
 $(document).ready(function () {
   $("#MSSV").keyup(function () {
    var mssv = $("#MSSV").val();
@@ -1402,12 +1402,12 @@ $(document).ready(function () {
 });
 //check mssv sửa sách
 $(document).ready(function () {
-  $("#MSSV_sua").keyup(function () {
-   var mssv = $("#MSSV_sua").val();
-   var data = {mssv:mssv}
-    if($("#MSSV_sua").val().length != 0){
+  $("#CMND_sua").keyup(function () {
+   var cmnd = $("#CMND_sua").val();
+   var data = {cmnd:cmnd}
+    if($("#CMND_sua").val().length != 0){
       $.ajax({
-        url: "admin/check_mssv",
+        url: "admin/check_cmnd",
         method: 'POST',
         data: data,
         success: function (data2) {
@@ -1421,16 +1421,14 @@ $(document).ready(function () {
             $('#btn_suasv_sua').prop("hidden", true);
     
           }
-          else if($("#MSSV_sua").val().length == 0){
+          else if($("#CMND_sua").val().length == 0){
             $("#check_suasv").text("");
             $('#btn_suasv_sua').prop("hidden", false);
            
           }
           else if(data2 == false){         
-            $("#check_suasv").text("Mã số sinh viên tồn tại !"); 
-              $('#btn_suasv_sua').prop("hidden", true);
-            
-            
+            $("#check_suasv").text("Đã tồn tại !"); 
+              $('#btn_suasv_sua').prop("hidden", true);          
           
           }
           
@@ -1486,7 +1484,7 @@ $(document).ready(function () {
         } 
         else if (data2 == 3){
           Swal.close();
-          toastr.error('Mã số sinh viên đã tồn tại vui lòng kiểm tra lại', 'Gặp lỗi!')
+          toastr.error('Mã số sinh viên hoặc CMND đã tồn tại vui lòng kiểm tra lại', 'Gặp lỗi!')
         }
         else if (data2 == 4){
           Swal.close();
@@ -1635,7 +1633,7 @@ $(document).ready(function () {
   });
 });
 
-//xóa tác giả
+//xóa sinh viên
 $(document).ready(function () {
   $(".xoasv").click(function () {
     var masv = $(this).val();
@@ -1688,6 +1686,393 @@ $(document).ready(function () {
 
   });
 });
+
+//check cmnd nv
+$(document).ready(function () {
+  $("#CMND").keyup(function () {
+   var CMND = $("#CMND").val();
+   var data = {CMND:CMND}
+    if($("#CMND").val().length != 0){
+      $.ajax({
+        url: "admin/check_cmnd_gv",
+        method: 'POST',
+        data: data,
+        success: function (data2) {
+          var data2 = JSON.parse(data2);
+          console.log(data2);
+          if(data2 == true){
+            $("#check_cmnd_nv").text("");
+            $('#button_insert').prop("hidden", false);
+          }
+          else if(data2 == 3){
+            $("#check_cmnd_nv").text("");
+            $('#button_insert').prop("hidden", true);
+          }
+          else{
+            if($("#CMND").val().length == 0){
+              $("#check_cmnd_nv").text("");
+              $('#button_insert').prop("hidden", true);
+
+            }
+            else{
+              $("#check_cmnd_nv").text("CMND giáo viên tồn tại !");
+              $('#button_insert').prop("hidden", true);
+            }
+          }
+          
+        }
+    });
+    }
+    else{
+      $("#check_cmnd_nv").text("");
+      $('#button_insert').prop("hidden", true);
+    }
+    
+});
+});
+
+//check cmnd nv khi sửa
+// $(document).ready(function () {
+//   $("#CMND_sua").keyup(function () {
+//    var CMND = $("#CMND_sua").val();
+//    var data = {CMND:CMND}
+//     if($("#CMND_sua").val().length != 0){
+//       $.ajax({
+//         url: "admin/check_cmnd_gv",
+//         method: 'POST',
+//         data: data,
+//         success: function (data2) {
+//           var data2 = JSON.parse(data2);
+//           console.log(data2);
+//           if(data2 == true){
+//             $("#check_cmnd_nv_sua").text("");
+//             $('#button_sua').prop("hidden", false);
+//           }
+//           else if(data2 == 3){
+//             $("#check_cmnd_nv_sua").text("");
+//             $('#button_sua').prop("hidden", true);
+//           }
+//           else{
+//             if($("#CMND_sua").val().length == 0){
+//               $("#check_cmnd_nv_sua").text("");
+//               $('#button_sua').prop("hidden", true);
+
+//             }
+//             else{
+//               $("#check_cmnd_nv_sua").text("CMND giáo viên tồn tại !");
+//               $('#button_sua').prop("hidden", true);
+//             }
+//           }
+          
+//         }
+//     });
+//     }
+//     else{
+//       $("#check_cmnd_nv_sua").text("");
+//       $('#button_inbutton_suasert').prop("hidden", true);
+//     }
+    
+// });
+// });
+
+//thêm NV 
+$(document).ready(function () {
+  $('#themnv').on('submit', function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: "admin/addNV",
+      method: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data2) {
+        var data2 = JSON.parse(data2);
+        if (data2 == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thêm nhân viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          $("#AddNV").on("click", function () {
+            location.reload();
+          });
+          $("#huynv").on("click", function () {
+            location.reload();
+          });
+
+        } 
+        else if (data2 == 3){
+          Swal.close();
+          toastr.error('CMND đã tồn tại vui lòng kiểm tra lại', 'Gặp lỗi!')
+        }
+        else if (data2 == 4){
+          Swal.close();
+          toastr.error('Không bỏ trống dữ liệu', 'Gặp lỗi!')
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Thêm nhân viên thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          location.reload();
+        }
+      }
+    });
+
+  });
+});
+
+
+//lấy id nhân viên cần sửa
+$(document).ready(function () {
+  $(".suanv").click(function () {
+    var manv = $(this).val();
+    var data = { manv: manv };
+    $.ajax({
+      url: "ajax/layid_nvcansua",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else if (data.check == false) {
+          Swal.close();
+          thongbao_loi();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        else {
+          Swal.close();
+          $('#TenNhanVien_sua').val(data[0].TenNV);
+          $('#CMND_sua').val(data[0].Cmnd_gv);
+          $("#gt_sua").val(data[0].GioiTinh).change();
+          $('#button_sua').prop('value', data[0].MaNV);         
+        }
+      }
+    });
+
+
+  });
+});
+
+//sửa nhân viên
+$(document).ready(function () {
+  $('#suanv').on('submit', function (event) {
+    event.preventDefault();
+    var id = $('#button_sua').val();
+    var form_data = new FormData(this);
+    form_data.append('idnv',id);
+    $.ajax({
+      url: "ajax/suanhanvien",
+      method: 'POST',
+      data: form_data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Sửa nhân viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+
+          $("#huynv_sua").on("click", function () {
+            location.reload();
+          });
+          $("#suaNV").on("click", function () {
+            location.reload();
+          });
+
+        }
+        else if(data == 4){
+          Swal.close();
+          toastr.error('Không được bỏ trống dữ liệu', 'Gặp lỗi!')
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sửa nhân viên thất bại',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+
+        }
+
+      }
+    });
+
+
+  });
+});
+
+//xóa nhân viên
+$(document).ready(function () {
+  $(".xoanv").click(function () {
+    var manv = $(this).val();
+    var data = { manv: manv };
+    var tr2 = $(this).closest('tr');
+    $.ajax({
+      url: "ajax/xoanv",
+      method: 'POST',
+      data: data,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if (data == true) {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa nhân viên thành công',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          tr2.prop('hidden', true);
+
+        }
+        else {
+          Swal.close();
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa nhân viên thất bại vui lòng kiểm tra dữ liệu trước đó',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      }
+    });
+
+  });
+});
+
+//đổi mật khẩu
+$(document).ready(function () {
+  $('#form_doimatkhau').on('submit', function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: "ajax/doimatkhau",
+      method: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function () {
+        Swal.fire({
+          title: 'Đảng xử lý...',
+          html: 'Vui lòng chờ đợi...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        });
+      },
+      success: function (data) {
+        data = JSON.parse(data);
+        if(data == true){
+          Swal.close();
+          toastr.success('Sửa mật khẩu thành công', 'Thông báo');
+          $('#matkhaucu').val("");
+          $('#matkhaumoi').val("");
+        }else if(data == 2){
+          Swal.close();
+          toastr.error('Mật khẩu cũ không đúng', 'Gặp lỗi!');
+        }
+        else if(data == 3){
+          Swal.close();
+          toastr.error('Không bỏ trống dữ liệu', 'Gặp lỗi!');
+        }
+        else{
+          Swal.close();
+          toastr.error('Sữa mật khẩu thất bại', 'Gặp lỗi!');
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+
+       
+      }
+    });
+
+
+  });
+});
+
 
 
 function test() {

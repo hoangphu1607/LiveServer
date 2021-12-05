@@ -30,7 +30,7 @@
     <script src="public/ckeditor/ckeditor.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-   
+
 
 </head>
 
@@ -103,9 +103,9 @@
                     </div>
                 </div>
             </li>
-        
+
             <li class="nav-item">
-                <a class="nav-link collapsed"  data-toggle="collapse" data-target="#CN" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#CN" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-swatchbook"></i>
                     <span>Khoa Chuyên Ngành </span>
                 </a>
@@ -136,7 +136,7 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Quản lý</span>
                     </a>
@@ -149,7 +149,7 @@
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Tài khoản:</h6>
                             <?php if ($_SESSION["dangnhap"][2] == 2) { ?>
-                                <a class="collapse-item" href="404.html">Tài khoản giáo viên</a>
+                                <a class="collapse-item" href="admin/ShowNV">Tài khoản giáo viên</a>
                             <?php } ?>
                             <a class="collapse-item" href="admin/showSinhVien">Tài khoản sinh viên</a>
                             <div class="collapse-divider"></div>
@@ -320,12 +320,17 @@
 
                                     <!-- Dropdown - User Information -->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Đổi mật khẩu
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
+                                        <?php
+                                        if (isset($_SESSION["dangnhap"][2]) == false) { ?>
+                                            <a class="dropdown-item" href="home/doimatkhau">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Đổi mật khẩu
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                        <?php
+                                        }
+                                        ?>
+                                     
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Đăng xuất
