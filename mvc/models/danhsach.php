@@ -46,6 +46,16 @@ class danhsach extends db
         }
         return json_encode($mang);
     }
+    public function chitiet_anh($id)
+    {
+        $qr3 = "SELECT * FROM `anhchitiet` WHERE MaSach = $id ";
+        $row = mysqli_query($this->conn, $qr3);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
     public function sotrang(){
         $qr3 = "SELECT MaSach FROM `sach`";
         $row = mysqli_query($this->conn, $qr3);

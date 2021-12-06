@@ -112,6 +112,7 @@ class home extends controllers
                 "ctsach" => $this->sach->chitiet_sach($id),
                 "khoacn" => $this->sach->Khoacn(),
                 "anhlq"  => $this->sach->anhlienquan($makhoacn[0]['MaKhoaCN']),
+                "ctanh" =>$this->sach->chitiet_anh($id)
             ]);
         } catch (\Exception $ex) {
             http_response_code(404);
