@@ -546,5 +546,32 @@ class ajax extends controllers
     else {
         echo json_encode(3);
     }
+    public function datsach()
+    {        
+        $themsach = $this->model("sinhvien");
+        $kq = $themsach->themsachvaophieu();
+        if($kq == true){
+            echo json_encode($kq);
+        }else{
+            echo json_encode($kq);
+        }
+       
+    }
+
+    public function xoasachkhoiphieu()
+    {        
+        $kq = $this->model("sinhvien")->XoaSach();                
+        echo json_encode($kq);        
+    }
+    public function duyetphieumuon(){
+        if(isset($_POST["MaPhieu"])){
+            $MaPhieu = $_POST["MaPhieu"];
+            $kq = $this->model("M_admin")->ThemVaoPhieuTra($MaPhieu);
+            echo json_encode($kq);
+        }
+        else{
+            echo json_encode(false);
+        }
+    }
 }
 }

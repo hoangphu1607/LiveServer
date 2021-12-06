@@ -12,7 +12,26 @@ class xl_dn extends db{
                 $_SESSION["dangnhap"][0]=$kq_tv["IDSV"];
                 $_SESSION["dangnhap"][1]=$kq_tv["HoTen"];
                 $_SESSION["dangnhap"]["gioitinh"]=$kq_tv["GioiTinh"];
-                header('Location: http://localhost/LiveServer/');
+                $select = 'SELECT sum(SoLuong) as SoLuong, sinhvien.IDSV, phieumuon.TrangThai 
+                FROM `chitietphieumuon`,phieumuon, sinhvien WHERE sinhvien.IDSV = '.$_SESSION["dangnhap"][0].' 
+                and phieumuon.TrangThai = "Đang Đặt" and phieumuon.MaPhieuMuon = chitietphieumuon.MaPhieuMuon';
+                $row = mysqli_query($this->conn, $select);
+                $mang = array();
+                while ($kq = mysqli_fetch_array($row)) {
+                    $mang[] = $kq;
+                }
+                $_SESSION["SoLuongSach"]=$mang[0]["SoLuong"]; 
+                $query = 'SELECT COUNT(phieumuon.MaPhieuMuon) as SoLuong 
+                FROM phieumuon 
+                WHERE IDSV = '.$_SESSION["dangnhap"][0].' and phieumuon.TrangThai = "Đang Mượn";'; 
+                $row2 = mysqli_query($this->conn, $query);
+                $mang2 = array();
+                while ($kq2 = mysqli_fetch_array($row2)) {
+                    $mang2[] = $kq2;
+                }
+                $_SESSION["ThongBao"] = $mang2[0]["SoLuong"];              
+                // header('Location: http://localhost/LiveServer/');
+                header('Location: http://localhost:8080/LiveServer/');                
                 
             }
             else{

@@ -16,11 +16,25 @@
                     <div class="lead"> <?php echo $kq_ctsach[0]["Noidungngan"]; ?> </div>
                     <div class="d-flex">
                         <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
-                        <?php if(empty($kq_ctsach[0]["file"])){ ?>
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Đặt sách
-                        </button>
+                        <?php if(empty($kq_ctsach[0]["file"])){ ?>                            
+                        <form method="post" id="myForm">                                                   
+                            <input type="hidden" id="IDSach" name="IDSach" value="<?php 
+                                if (isset($_GET["url"]) ) {
+                                    $arr =  explode("/",  filter_var(trim($_GET["url"], "/")));
+                                }
+                                echo $arr[2];
+                                $_SESSION["MaSach"] = $arr[2];
+                            ?>">          
+                            <input type="hidden" id="IDSV" name="IDSV" value="<?php 
+                            if(isset($_SESSION["dangnhap"][0])){
+                                echo $_SESSION["dangnhap"][0];
+                            }else{
+                                echo "null";
+                            }
+                            ?>">  
+                                                                   
+                            <input class="btn btn-outline-dark flex-shrink-0 bi-cart-fill me-1" type="button" value="Đặt sách" id="BtnDatSach">
+                        </form>
                         <?php } else { ?>
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" id="btn_dowload">
                             <i class="bi-cart-fill me-1"></i>

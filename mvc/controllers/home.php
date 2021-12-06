@@ -184,4 +184,30 @@ class home extends controllers
         }
         
     }
+    public function datsach()
+    {
+
+        if(!isset($_SESSION["dangnhap"])){
+            // header("Location: http://localhost/LiveServer/dangnhap");
+            header("Location: http://localhost:8080/LiveServer/dangnhap");
+        }
+        if(isset($_SESSION["DuLieuDatSach"]) && $_SESSION["DuLieuDatSach"] == "1"){
+            $this->view("trangchu",[
+                "page" => "datsach",
+                "phanloai" => $this->sach->loaisach(),
+                "khoacn" => $this->sach->Khoacn(),  
+                "result" =>$this->model("sinhvien")->themsachvaophieu()         
+            ]);
+            $_SESSION["DuLieuDatSach"] = "0";
+            
+        }
+        $IDSV = $_SESSION["dangnhap"][0];
+        $this->view("trangchu",[
+            "page" => "datsach",
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),  
+            "LayDanhSach" => $this->model("sinhvien")->LayDanhSach($IDSV) ,
+            "SachDangMuon" => $this->model("sinhvien")->SachDangMuon($IDSV)        
+        ]);
+    }  
 }

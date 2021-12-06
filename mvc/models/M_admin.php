@@ -1101,4 +1101,87 @@ class M_admin extends db
         }
         return $result;
     }
+    public function duyetsach()
+    {
+        $query = "SELECT  phieumuon.MaPhieuMuon, sinhvien.HoTen, phieumuon.TongSoSachMuon, phieumuon.NgayMuon 
+        FROM `phieumuon`, sinhvien 
+        WHERE sinhvien.IDSV = phieumuon.IDSV and TrangThai = 'Đang Đặt'";
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+
+    public function ThemVaoPhieuTra($MaPhieu){
+        try {
+            $select = "SELECT * FROM `phieumuon` WHERE phieumuon.MaPhieuMuon = '$MaPhieu'";
+            $row = mysqli_query($this->conn,$select);
+            $mang = array();
+            while ($kq = mysqli_fetch_array($row)) {
+                $mang[] = $kq;
+            }
+            $SoLuong = $mang[0]["TongSoSachMuon"];
+            $NgayTra = $mang[0]['NgayMuon'];
+            $qr = "SELECT
+                    chitietphieumuon.MaPhieuMuon,
+                    chitietphieumuon.MaSach,
+                    sach.SoLuong
+                FROM
+                    phieumuon,
+                    chitietphieumuon, 
+                    sach
+                WHERE
+                    chitietphieumuon.MaPhieuMuon = phieumuon.MaPhieuMuon
+                    and sach.MaSach = chitietphieumuon.MaSach
+                    and chitietphieumuon.MaPhieuMuon = '$MaPhieu'";
+            $dulieu = mysqli_query($this->conn,$qr);
+            $list = array();
+            while ($rs = mysqli_fetch_array($dulieu)) {
+                $list[] = $rs;
+            }
+            foreach($list as $arr){
+                $sl = $arr["SoLuong"];
+                if($sl == 0){
+                    $result = false;
+                    return ($result);
+                    exit();
+                }
+            }
+            $getDay = "SELECT DATE_ADD(CURDATE(), INTERVAL 30 DAY) as NgayTra";
+            $row2 = mysqli_query($this->conn,$getDay);
+            $mang2 = array();
+            while ($kq2 = mysqli_fetch_array($row2)) {
+                $mang2[] = $kq2;
+            }
+            $NgayTra = $mang2[0]['NgayTra'];
+            $query = "INSERT INTO `phieutrasach`(
+                `MaPhieuMuon`,
+                `NgayTra`,
+                `TongSoLuong`,
+                `TrangThai`
+            )
+            VALUES(
+                '$MaPhieu',
+                '$NgayTra',
+                '$SoLuong',
+                'Đang Mượn'
+            )";
+            
+            if (mysqli_query($this->conn, $query)) {
+                foreach($list as $arr){
+                    $ms = $arr["MaSach"];
+                    $up = "UPDATE sach set sach.SoLuong = sach.SoLuong - 1 WHERE sach.MaSach = '$ms';"; 
+                    if(mysqli_query($this->conn, $up)){
+                        
+                    }               
+                }
+                return (true) ;            
+            }            
+        } catch (\Throwable $th) {
+            return (false) ;
+        }
+        
+    }
 }

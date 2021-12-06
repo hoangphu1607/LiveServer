@@ -2072,7 +2072,82 @@ $(document).ready(function () {
 
   });
 });
+$(document).ready(function () {  
+  $( "#BtnDatSach" ).click(function() {  
+  var IDSV = $("#IDSV").val();
+  // var data = {IDSV:IDSV, IDSach:IDSach};          
+  if(IDSV == "null"){
+      window.location="http://localhost:8080/liveserver/dangnhap";                                       
+  }
+    $.ajax({
+      url: "ajax/datsach",
+      method: 'POST',
+      // data: data,
+      success: function (data) {
+       var data = JSON.parse(data);
+       console.log(data);
+       if(data == true){
+          toastr.success('Đặt Sách Thành Công', 'Thành Công'); 
+       }
+       else{
+        toastr.error('Quá Số Đặt Hoặc Trùng Sách', 'Lỗi');
+       }
+      }
+    });
+  });
+});
 
+$(document).ready(function(){  
+  $(".SachCanXoa").click(function (){ 
+    var tr = $(this).closest('tr');   
+    var getID = $(this).attr("id");
+    var data = getID.split(' ');    
+    $.ajax({
+      url: "ajax/xoasachkhoiphieu",
+      method: "POST",
+      data:{MaSach:data[0], MaPhieuMuon:data[1]},
+      success: function(data){        
+        var data = JSON.parse(data);      
+        if(data == true){                                   
+            toastr.success('Xóa Sách Thành Công', 'Thành Công');
+            tr.prop('hidden', true);
+        }
+        else{
+          toastr.error('Xóa Sách Bị Lỗi', 'Lỗi');
+        }
+      }
+    });
+    
+  });
+});
+function viewDatSach() {
+  $.post("ajax/LayDuLieuDatSach", function (data) {
+    $("results").html(data);
+  })
+}
+
+$(document).ready(function(){
+  $(".SachCanDuyet").click(function(){
+    var tr = $(this).closest('tr');
+    var getID = $(this).attr("id");
+    console.log("test");
+    $.ajax({
+      url:"ajax/duyetphieumuon",
+      method:"POST",
+      data:{MaPhieu:getID},
+      success:function(data){
+        var data = JSON.parse(data);      
+        if(data == true){                                   
+            toastr.success('Đã Được Duyệt', 'Thành Công');
+            tr.prop('hidden', true);
+        }
+        else{
+          toastr.error('Duyệt Bị Lỗi', 'Lỗi');
+        }
+      }
+    });
+  });
+});
 
 
 function test() {
@@ -2207,5 +2282,5 @@ function thongbao_loi() {
     });
   });
 
-
 }
+
