@@ -83,7 +83,7 @@ class danhsach extends db
     //SELECT * FROM sach,loaisach,tacgia,khoachuyennganh WHERE sach.MaLoaiSach = loaisach.MaLoaiSach and sach.MaTacGia = tacgia.MaTG and sach.MakhoaCN = khoachuyennganh.MaKhoaCN AND sach.TenSach LIKE '%Giao trinh%'OR loaisach.TenLoaiSach LIKE '%Giao trinh%' OR tacgia.TenTG LIKE '%Giao trinh%' OR khoachuyennganh.TenCN LIKE '%Giao trinh%';
     public function timkiemtensach($trang,$tensach){
         $tranghientai = ($trang - 1) * $this->sotin1trang;
-        $qr4 = "SELECT * FROM `sach` WHERE `TenSach` LIKE '%$tensach%' ORDER BY `MaSach` DESC LIMIT $tranghientai,$this->sotin1trang";
+        $qr4 = "SELECT sach.MaSach , sach.TenSach,sach.Noidungngan,sach.SoLuong,sach.NgayNhap,sach.AnhDaiDien,sach.Gia,sach.MaLoaiSach,sach.MaTacGia,sach.MakhoaCN,sach.file FROM sach,loaisach,tacgia,khoachuyennganh WHERE sach.MaLoaiSach = loaisach.MaLoaiSach AND loaisach.TenLoaiSach LIKE N'%$tensach%' OR sach.MaTacGia = tacgia.MaTG AND tacgia.TenTG LIKE N'%$tensach%' OR sach.MakhoaCN = khoachuyennganh.MaKhoaCN AND khoachuyennganh.TenCN LIKE N'%$tensach%'  OR sach.TenSach LIKE N'%$tensach%' GROUP BY sach.MaSach , sach.TenSach,sach.Noidungngan,sach.SoLuong,sach.NgayNhap,sach.AnhDaiDien,sach.Gia,sach.MaLoaiSach,sach.MaTacGia,sach.MakhoaCN,sach.file ORDER BY `MaSach` DESC LIMIT $tranghientai,$this->sotin1trang";
         $row2 = mysqli_query($this->conn, $qr4);
         if($row2->num_rows > 0){
             $mang = array();

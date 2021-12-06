@@ -289,16 +289,6 @@ class admin extends controllers
             "kq_KhoaHoc" => $kq
         ]);
     }
-    public function showTable1()
-    {
-        $test = array(
-            "ten" => $_POST['ten'],
-            "CMND" => $_POST['CMND'],
-            "pass" => $_POST['pass'],
-            "gt" => $_POST['gt'],
-        );
-        echo json_encode($test);
-    }
     public function thongke()
     {
         echo "day la thong ke";
@@ -316,35 +306,6 @@ class admin extends controllers
             "khoacn" => $this->sach->Khoacn(),
         ]);
     }
-    public function dowload()
-    {         
-        $filename = $_POST['file'];
-        if (!empty($filename)) {
-            $file = basename($filename);
-            $foder_luu = "public/file_sach/";
-            $duongdan = $foder_luu . basename($file);
-            if (file_exists($duongdan)) {                         
-                header('Content-Description: File Transfer');
-                header('Pragma: public');
-                header('Expires: 0');
-                header('Content-Type: application/octet-stream');
-                header('Cache-Control: must-revalidate');
-                header("Content-Disposition: attachment; filename=$file");
-                header('Content-Transfer-Emcoding: binary');                                     
-            } 
-            else{
-               
-                echo json_encode(0);
-            }
-
-        }
-        else{
-                       
-                echo json_encode(1);
-        } 
-
-    }
-
     public function check_tenkhoahoc()
     {
         $admin =  $this->model("M_admin");

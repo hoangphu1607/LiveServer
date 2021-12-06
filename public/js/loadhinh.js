@@ -793,13 +793,16 @@ $(document).ready(function () {
     var file = $('#tenfile').val();
     var data = { 'file': file };
     $.ajax({
-      url: "admin/dowload",
+      url: "home/dowload",
       method: 'POST',
       data: data,
       success: function (data) {
         data = JSON.parse(data);
         if (data == 0) {
           toastr.error('File không tồn tại', 'Thông báo !');
+        }
+        else if (data == 2) {
+          toastr.error('Vui lòng đăng nhập', 'Thông báo !');
         }
         else if (data == 1) {
           toastr.error('Tên file không được rỗng', 'Thông báo !');
@@ -808,6 +811,7 @@ $(document).ready(function () {
     });
   });
 });
+
 
 
 

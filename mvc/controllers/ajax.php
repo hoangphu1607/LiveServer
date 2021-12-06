@@ -546,6 +546,8 @@ class ajax extends controllers
     else {
         echo json_encode(3);
     }
+    
+    }
     public function datsach()
     {        
         $themsach = $this->model("sinhvien");
@@ -574,4 +576,4 @@ class ajax extends controllers
         }
     }
 }
-}
+

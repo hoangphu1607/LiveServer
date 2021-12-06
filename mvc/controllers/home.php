@@ -184,6 +184,43 @@ class home extends controllers
         }
         
     }
+    public function dowload()
+    {   
+        if(isset($_SESSION['dangnhap'])){
+            $filename = $_POST['file'];
+            if (!empty($filename)) {
+                $file = basename($filename);
+                $foder_luu = "public/file_sach/";
+                $duongdan = $foder_luu . basename($file);
+                if (file_exists($duongdan)) {                         
+                    header('Content-Description: File Transfer');
+                    header('Pragma: public');
+                    header('Expires: 0');
+                    header('Content-Type: application/octet-stream');
+                    header('Cache-Control: must-revalidate');
+                    header("Content-Disposition: attachment; filename=$file");
+                    header('Content-Transfer-Emcoding: binary');                                     
+                } 
+                else{
+                   
+                    echo json_encode(0);
+                }
+    
+            }
+            else{
+                           
+                    echo json_encode(1);
+            } 
+        } 
+        else{
+            echo json_encode(2);
+        }     
+       
+
+    }
+
+
+
     public function datsach()
     {
 
