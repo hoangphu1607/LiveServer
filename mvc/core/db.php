@@ -4,7 +4,7 @@ class db {
     protected  $server_name ="localhost";
     protected $user_name ="root";
     protected $pass ="";
-    protected $db_name="thuvien5";
+    protected $db_name="thuvien7";
     
 
 

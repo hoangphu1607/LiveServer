@@ -51,10 +51,10 @@
                             <tr id="<?php echo $sach["MaSach"] ?>">
                                 <td><?php echo $i ?></td>
                                 <td><?php echo $sach["TenSach"] ?></td>
-                                <td><?php echo $sach["Noidungngan"] ?></td>
+                                <td><?php echo substr($sach["Noidungngan"],0,50). "..."; ?></td>
                                 <td><?php echo $sach["SoLuong"] ?></td>
                                 <td><?php echo $sach["NgayNhap"] ?></td>
-                                <td><?php echo $sach["AnhDaiDien"] ?></td>
+                                <td><?php echo substr(basename($sach["AnhDaiDien"]),0,20)."..."; ?></td>                         
                                 <td><?php echo $sach["Gia"] ?></td>
                                 <td><?php echo $sach["TenLoaiSach"] ?></td>
                                 <td><?php echo $sach["TenTG"] ?></td>
@@ -62,7 +62,7 @@
                                 <td><?php if (empty($sach["file"])) {
                                         echo "Sách không có File";
                                     } else {
-                                        echo $sach["file"];
+                                        echo substr(basename($sach["file"]),0,25)."...";
                                     }  ?></td>
                                 <td><a type="button" class="btn btn-success" href="admin/suasach/<?php echo $sach["MaSach"] ?>">Sửa</a></td>
                                 <td><button type="button" class="btn btn-danger xoattsach">Xóa</button></td>

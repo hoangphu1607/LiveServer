@@ -508,7 +508,7 @@ $(document).ready(function () {
       processData: false,
       beforeSend: function () {
         Swal.fire({
-          title: 'Đảng xử lý...',
+          title: 'Đang xử lý...',
           html: 'Vui lòng chờ đợi...',
           allowEscapeKey: false,
           allowOutsideClick: false,
@@ -518,6 +518,7 @@ $(document).ready(function () {
         });
       },
       success: function (data2) {
+        console.log(data2);
         var data_ex = JSON.parse(data2);
         console.log(data_ex);
         swal.close();
