@@ -81,7 +81,7 @@
                     <div class="col mb-6">
                         <div class="card h-100 ">
                             <!-- Product image-->
-                            <img class="card-img-top" src="<?php echo $value_anhlq['AnhDaiDien'] ?>" alt="ảnh sách liên quan" />
+                            <img class="card-img-top hinhlq" src="<?php echo $value_anhlq['AnhDaiDien'] ?>" alt="ảnh sách liên quan" />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">

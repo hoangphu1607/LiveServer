@@ -1,4 +1,3 @@
-console.log("hello");
 const modal = document.querySelector(".show-img");
 const previews = document.querySelectorAll(".hact img");
 const original = document.querySelector(".full");
