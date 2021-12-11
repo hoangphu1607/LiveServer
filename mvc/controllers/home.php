@@ -8,6 +8,7 @@ class home extends controllers
     {
         $this->sach = $this->model("danhsach");
     }
+
     public function sayhi($trang = 1)
     {
         settype($trang, "integer");
@@ -199,6 +200,7 @@ class home extends controllers
                     header('Cache-Control: must-revalidate');
                     header('Pragma: public');
                     header('Content-Length: '.filesize($duongdan));
+                    ob_clean();
                     flush();
                     readfile($duongdan);
                     exit;
@@ -242,4 +244,36 @@ class home extends controllers
             "SachDangMuon" => $this->model("sinhvien")->SachDangMuon($IDSV)
         ]);
     }
+
+    public function dowload2()
+    {      
+            $filename = $_POST['file'];
+            if (!empty($filename)) {
+                $file = basename($filename);
+                $foder_luu = "public/file_sach/";
+                $duongdan = $foder_luu . basename($file);
+                if (file_exists($duongdan)) {
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/pdf');
+                    header("Content-Disposition:attachment; filename=$file");
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate');
+                    header('Pragma: public');
+                    header('Content-Length: '.filesize($duongdan));
+                    ob_clean();
+                    flush();
+                    readfile($duongdan);
+
+                    exit;
+                } else {
+
+                    echo json_encode(0);
+                }
+            } else {
+
+                echo json_encode(1);
+            }
+       
+    }
+
 }
