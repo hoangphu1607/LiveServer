@@ -112,7 +112,7 @@ class home extends controllers
                 "ctsach" => $this->sach->chitiet_sach($id),
                 "khoacn" => $this->sach->Khoacn(),
                 "anhlq"  => $this->sach->anhlienquan($makhoacn[0]['MaKhoaCN']),
-                "ctanh" =>$this->sach->chitiet_anh($id)
+                "ctanh" => $this->sach->chitiet_anh($id)
             ]);
         } catch (\Exception $ex) {
             http_response_code(404);
@@ -168,56 +168,51 @@ class home extends controllers
     {
         if (isset($_SESSION["dangnhap"]) == false) {
             header('Location: http://localhost/LiveServer/');
-        }
-        else if(isset($_SESSION["dangnhap"][2])){
+        } else if (isset($_SESSION["dangnhap"][2])) {
             header('Location: http://localhost/LiveServer/');
             exit();
         }
         $admin = $this->model("M_admin");
         $matk = $_SESSION["dangnhap"][0];
-        if(isset($_SESSION["dangnhap"][2]) == false) {
+        if (isset($_SESSION["dangnhap"][2]) == false) {
             $this->view("trangchu", [
                 "page" => "doimatkhau",
                 "khoacn" => $this->sach->Khoacn(),
                 "phanloai" => $this->sach->loaisach(),
-                "sinhvien" => $admin->kiemtra_taikhoan_sv($matk),             
+                "sinhvien" => $admin->kiemtra_taikhoan_sv($matk),
             ]);
         }
-        
     }
     public function dowload()
-    {   
-        if(isset($_SESSION['dangnhap'])){
+    {
+        if (isset($_SESSION['dangnhap'])) {
             $filename = $_POST['file'];
             if (!empty($filename)) {
                 $file = basename($filename);
                 $foder_luu = "public/file_sach/";
                 $duongdan = $foder_luu . basename($file);
-                if (file_exists($duongdan)) {                         
+                if (file_exists($duongdan)) {
                     header('Content-Description: File Transfer');
                     header('Pragma: public');
                     header('Expires: 0');
                     header('Content-Type: application/octet-stream');
                     header('Cache-Control: must-revalidate');
                     header("Content-Disposition: attachment; filename=$file");
-                    header('Content-Transfer-Emcoding: binary');                                     
-                } 
-                else{
-                   
+                    header('Content-Transfer-Emcoding: binary');
+                    flush();
+                    readfile($duongdan);
+                    exit;
+                } else {
+
                     echo json_encode(0);
                 }
-    
-            }
-            else{
-                           
-                    echo json_encode(1);
-            } 
-        } 
-        else{
-            echo json_encode(2);
-        }     
-       
+            } else {
 
+                echo json_encode(1);
+            }
+        } else {
+            echo json_encode(2);
+        }
     }
 
 
@@ -225,7 +220,7 @@ class home extends controllers
     public function datsach()
     {
 
-        if(!isset($_SESSION["dangnhap"])){
+        if (!isset($_SESSION["dangnhap"])) {
             // header("Location: http://localhost/LiveServer/dangnhap");
             header("Location: http://localhost:8080/LiveServer/dangnhap");
         }
@@ -239,12 +234,12 @@ class home extends controllers
         //     $_SESSION["DuLieuDatSach"] = "0";            
         // }
         $IDSV = $_SESSION["dangnhap"][0];
-        $this->view("trangchu",[
+        $this->view("trangchu", [
             "page" => "datsach",
             "phanloai" => $this->sach->loaisach(),
-            "khoacn" => $this->sach->Khoacn(),  
-            "LayDanhSach" => $this->model("sinhvien")->LayDanhSach($IDSV) ,
-            "SachDangMuon" => $this->model("sinhvien")->SachDangMuon($IDSV)        
+            "khoacn" => $this->sach->Khoacn(),
+            "LayDanhSach" => $this->model("sinhvien")->LayDanhSach($IDSV),
+            "SachDangMuon" => $this->model("sinhvien")->SachDangMuon($IDSV)
         ]);
-    }  
+    }
 }
