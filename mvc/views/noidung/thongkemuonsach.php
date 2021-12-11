@@ -13,18 +13,16 @@
                         <tr>
                         <th>Stt</th>                                             
                         <th>Tên Sinh Viên</th>                                              
-                        <th>Ngày Mượn</th>
-                        <th>Số Lượng</th>                        
-                        <th>Duyệt</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Trả</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                         <th>Stt</th>                                             
                         <th>Tên Sinh Viên</th>                                              
-                        <th>Ngày Mượn</th>
-                        <th>Số Lượng</th>                         
-                        <th>Duyệt</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Trả</th>
                         </tr>
                     </tfoot>
                     <tbody id="results">                    
@@ -37,9 +35,8 @@
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $sach["HoTen"] ?></td>
-                            <td><?php echo $sach["NgayMuon"] ?></td>                                       
-                            <td><?php echo $sach["TongSoSachMuon"] ?></td> 
-                            <td><a type="button" class="btn btn-primary SachCanDuyet" id="<?php echo $sach["MaPhieuMuon"]?> <?php echo $sach["MSSV"] ?>">Duyệt</a></td>
+                            <td><?php echo $sach["TenSach"] ?></td>                                       
+                            <td><?php echo $sach["NgayTra"] ?></td> 
                         </tr>
                         <?php $i++; } ?>
                     </tbody>

@@ -32,7 +32,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 </head>
 
 <body id="page-top">
@@ -163,18 +163,29 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="admin/DuyetDanhSachmuon">
                         <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Thống kê</span></a>
+                        <span>Quản Lý Mượn Sách</span></a>
                 </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
+                    <a class="nav-link" href="admin/DuyetDanhSachTra">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Mượn trả</span></a>
+                        <span>Quản Lý Trả Sách</span></a>
+                </li>                
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QuanLy" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-home"></i>
+                        <span>Thống Kê</span>
+                    </a>
+                    <div id="QuanLy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">                        
+                            <a class="collapse-item" href="admin/ThongKeMuonSach">Sinh Viên Đang Mượn</a>
+                            <a class="collapse-item" href="admin/sachchuatra">Sinh Viên Chưa Trả</a>
+                        </div>
+                    </div>
                 </li>
-
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
             <?php } ?>
@@ -251,14 +262,16 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-address-book fa-lg"></i>
                                     <!-- Counter - Alerts -->
-                                    <span class="badge badge-danger badge-counter"><?php  if($_SESSION["ThongBao"]) echo $_SESSION["ThongBao"] ?>+</span>
+                                    <span class="badge badge-danger badge-counter"><?php  if($_SESSION["ThongBao"]) echo $_SESSION["ThongBao"]. "+" ?></span>
                                 </a>
                                 <!-- Dropdown - Alerts -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                     <h6 class="dropdown-header">
                                     Thông Báo
                                     </h6>
-                                    <?php for($i=0; $i< $_SESSION["ThongBao"]; $i++){
+                                    <?php 
+                                    $ListMaDatSach = $_SESSION["ListMaDatSach"];
+                                    foreach($ListMaDatSach as $Ma){
                                         echo '<a class="dropdown-item d-flex align-items-center" href="home/datsach">
                                                 <div class="mr-3">
                                                     <div class="icon-circle bg-success">
@@ -267,7 +280,7 @@
                                                 </div>
                                                 <div>
                                                     <div class="small text-gray-500">Sách Đặt Thành Công</div>
-                                                    Sách Đã Được Chuẩn Bị, Đến Thư Viện Nhận Sách Ngay
+                                                    Sách Đã Được Chuẩn Bị, Mã Đặt Sách là : '. $Ma["MaDatSach"]. '
                                                 </div>
                                             </a>';                                       
                                     } ?> 

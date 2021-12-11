@@ -2134,26 +2134,85 @@ function viewDatSach() {
 $(document).ready(function(){
   $(".SachCanDuyet").click(function(){
     var tr = $(this).closest('tr');
-    var getID = $(this).attr("id");
-    console.log("test");
+    var getID = $(this).attr("id"); 
+    var dulieu = getID.split(' ');   
     $.ajax({
       url:"ajax/duyetphieumuon",
       method:"POST",
-      data:{MaPhieu:getID},
+      data:{MaPhieu:dulieu[0], MSSV:dulieu[1]},
       success:function(data){
         var data = JSON.parse(data);      
         if(data == true){                                   
             toastr.success('Đã Được Duyệt', 'Thành Công');
             tr.prop('hidden', true);
+            $.ajax({
+              url:"ajax/laymadatsach",
+              method:"POST",
+              data:{MaPhieu:dulieu[0]},
+              success:function(data){
+                var madatsach = JSON.parse(data); 
+                Email.send({
+                  Host : "smtp.gmail.com",
+                  Username : "vhphu01@gmail.com",
+                  Password : "hoangphu123",
+                  To : dulieu[1]+'@student.vlute.edu.vn',
+                  From : "vhphu01@gmail.com",
+                  Subject : "Thông Báo Đặt Sách Thành Công",
+                  Body : "Sách của bạn đã được chuẩn bị đầy đủ, vui lòng đến thư viện để nhận được sách! Mã Đặt Sách Của bạn là: "+ madatsach +". Xin Cảm Ơn!!"
+              }).then(
+                message => alert(madatsach)          
+              );
+              }
+            });            
         }
         else{
           toastr.error('Duyệt Bị Lỗi', 'Lỗi');
+          $.ajax({
+            url:"ajax/sachbithieu",
+              method:"POST",
+              data:{MaPhieu:dulieu[0]},
+              success:function(data){
+                var data = JSON.parse(data);  
+                var sachthieu = data; 
+                Email.send({
+                  Host : "smtp.gmail.com",
+                  Username : "vhphu01@gmail.com",
+                  Password : "hoangphu123",
+                  To : dulieu[1]+'@student.vlute.edu.vn',
+                  From : "vhphu01@gmail.com",
+                  Subject : "Sách Không Đủ Số Lượng",
+                  Body : "Hiện tại sách bạn đang đặt bị thiếu: " + sachthieu,
+              }).then(
+                                     
+              );
+              }
+          });
         }
       }
     });
   });
 });
-
+$(document).ready(function(){
+  $(".SachTra").click(function(){
+    var tr = $(this).closest('tr');
+    var getID = $(this).attr("id");
+    $.ajax({
+      url:"ajax/duyettrasach",
+      method:"POST",
+      data:{MaPhieu:getID},
+      success:function(data){
+        var data = JSON.parse(data);      
+        if(data == true){                                   
+            toastr.success('Đã Trả Sách', 'Thành Công');
+            tr.prop('hidden', true);
+        }
+        else{
+          toastr.error('Chưa Xử Lý Được', 'Lỗi');
+        }
+      }
+    });
+  });
+});
 
 function test() {
   $(document).ready(function () {

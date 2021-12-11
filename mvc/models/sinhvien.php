@@ -21,11 +21,12 @@
         while ($kq = mysqli_fetch_array($row2)) {
             $mang2[] = $kq;
         }
-        $CheckMaPhieu = $mang2[0]['MaPhieuMuon'];             
+        $CheckMaPhieu = $mang2[0]['MaPhieuMuon'];
+        $trangthai = $mang2[0]["TrangThai"];             
         $day = date("Y-m-d");
         $result = false;        
         $MaSach = $_SESSION["MaSach"];
-        if($SoDong == 0 || $CheckMaPhieu == NULL ){
+        if($SoDong == 0 || $CheckMaPhieu == NULL || $trangthai == "Đang Mượn"){
             $qr = "INSERT INTO `phieumuon`( `IDSV`, `NgayMuon`, `TrangThai`, `TongSoSachMuon`) 
             VALUES ('$IDSV','$day','Đang Đặt','0')";
             if(mysqli_query($this->conn, $qr)){

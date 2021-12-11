@@ -14,7 +14,9 @@
                         <th>Stt</th>                                             
                         <th>Tên Sinh Viên</th>                                              
                         <th>Ngày Mượn</th>
-                        <th>Số Lượng</th>                        
+                        <th>Ngày Trả</th>
+                        <th>Số Lượng</th>
+                        <th>Mã Đặt Sách</th>                        
                         <th>Duyệt</th>
                         </tr>
                     </thead>
@@ -23,7 +25,9 @@
                         <th>Stt</th>                                             
                         <th>Tên Sinh Viên</th>                                              
                         <th>Ngày Mượn</th>
-                        <th>Số Lượng</th>                         
+                        <th>Ngày Trả</th>
+                        <th>Số Lượng</th>  
+                        <th>Mã Đặt Sách</th>                         
                         <th>Duyệt</th>
                         </tr>
                     </tfoot>
@@ -37,9 +41,11 @@
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $sach["HoTen"] ?></td>
-                            <td><?php echo $sach["NgayMuon"] ?></td>                                       
+                            <td><?php echo $sach["NgayMuon"] ?></td>
+                            <td><?php echo $sach["NgayTra"] ?></td>                                      
                             <td><?php echo $sach["TongSoSachMuon"] ?></td> 
-                            <td><a type="button" class="btn btn-primary SachCanDuyet" id="<?php echo $sach["MaPhieuMuon"]?> <?php echo $sach["MSSV"] ?>">Duyệt</a></td>
+                            <td><?php echo $sach["MaDatSach"] ?></td>
+                            <td><a type="button" class="btn btn-primary SachTra" id="<?php echo $sach["MaPhieuMuon"]?>">Duyệt</a></td>
                         </tr>
                         <?php $i++; } ?>
                     </tbody>

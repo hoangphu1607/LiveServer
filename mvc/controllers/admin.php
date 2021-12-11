@@ -3,7 +3,6 @@ class admin extends controllers
 {
     // public $Location = "Location: http://localhost:8080/LiveServer/";
     // public $Location = "Location: http://localhost/LiveServer";
-    public $Location2 = "Location: http://localhost/LiveServer/quantri";
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
@@ -424,6 +423,44 @@ class admin extends controllers
             }
         
     }
+    public function DuyetDanhSachMuon()
+    {
+        $this->view("trangchu",[
+            "page"=>"duyetdanhsach",
+            "sachcanduyet" => $this->model("M_admin")->duyetsach(),
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
+    public function DuyetDanhSachTra(){
+        $this->view("trangchu",[
+            "page"=>"trasach",
+            "sachcanduyet" => $this->model("M_admin")->duyetsachdangmuon(),
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
+    public function ThongKeMuonSach()
+    {
+        $this->view("trangchu",[
+            "page"=>"thongkemuonsach",
+            "sachcanduyet" => $this->model("M_admin")->ThongKeSachMuon(),
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
+
+    public function SachChuaTra()
+    {
+        $this->view("trangchu",[
+            "page"=>"trasachtre",
+            "sachchuatra" => $this->model("M_admin")->SachChuaTra(),
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
+
+    
 
     
  

@@ -29,7 +29,20 @@ class xl_dn extends db{
                 while ($kq2 = mysqli_fetch_array($row2)) {
                     $mang2[] = $kq2;
                 }
-                $_SESSION["ThongBao"] = $mang2[0]["SoLuong"];              
+                $_SESSION["ThongBao"] = $mang2[0]["SoLuong"];  
+                $getCode = 'SELECT
+                    sinhvien.IDSV,phieumuon.TrangThai,phieumuon.MaDatSach,sinhvien.HoTen
+                FROM
+                    sinhvien,
+                    phieumuon
+                WHERE
+                    sinhvien.IDSV = '.$_SESSION["dangnhap"][0].' AND phieumuon.TrangThai = "Đang Mượn" AND sinhvien.IDSV = phieumuon.IDSV';       
+                $MaDatSach = mysqli_query($this->conn,$getCode);
+                $arr = array();
+                while($ListMaDatSach = mysqli_fetch_array($MaDatSach)){
+                    $arr[] = $ListMaDatSach;
+                }
+                $_SESSION["ListMaDatSach"] = $arr;
                 // header('Location: http://localhost/LiveServer/');
                 header('Location: http://localhost:8080/LiveServer/');                
                 

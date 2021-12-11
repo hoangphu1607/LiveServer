@@ -1103,7 +1103,7 @@ class M_admin extends db
     }
     public function duyetsach()
     {
-        $query = "SELECT  phieumuon.MaPhieuMuon, sinhvien.HoTen, phieumuon.TongSoSachMuon, phieumuon.NgayMuon 
+        $query = "SELECT  phieumuon.MaPhieuMuon, sinhvien.HoTen, phieumuon.TongSoSachMuon, phieumuon.NgayMuon ,sinhvien.MSSV
         FROM `phieumuon`, sinhvien 
         WHERE sinhvien.IDSV = phieumuon.IDSV and TrangThai = 'Đang Đặt'";
         $row = mysqli_query($this->conn,$query);
@@ -1113,7 +1113,28 @@ class M_admin extends db
         }
         return json_encode($mang);
     }
-
+    public function duyetsachdangmuon()
+    {
+        $query = "SELECT
+        phieumuon.MaPhieuMuon,
+        sinhvien.HoTen,
+        phieumuon.TongSoSachMuon,
+        phieumuon.NgayMuon,
+        phieutrasach.NgayTra,
+        phieumuon.MaDatSach
+    FROM
+        phieumuon,
+        sinhvien,
+        phieutrasach
+    WHERE
+        sinhvien.IDSV = phieumuon.IDSV AND phieumuon.TrangThai = 'Đang Mượn' and phieutrasach.MaPhieuMuon = phieumuon.MaPhieuMuon";
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
     public function ThemVaoPhieuTra($MaPhieu){
         try {
             $select = "SELECT * FROM `phieumuon` WHERE phieumuon.MaPhieuMuon = '$MaPhieu'";
@@ -1156,17 +1177,21 @@ class M_admin extends db
                 $mang2[] = $kq2;
             }
             $NgayTra = $mang2[0]['NgayTra'];
+            
+            $MaPhieuDat = crc32("$MaPhieu-$NgayTra");
             $query = "INSERT INTO `phieutrasach`(
                 `MaPhieuMuon`,
                 `NgayTra`,
                 `TongSoLuong`,
-                `TrangThai`
+                `TrangThai`,
+                `MaDatSach`
             )
             VALUES(
                 '$MaPhieu',
                 '$NgayTra',
                 '$SoLuong',
-                'Đang Mượn'
+                'Đang Mượn',
+                '$MaPhieuDat'
             )";
             
             if (mysqli_query($this->conn, $query)) {
@@ -1183,5 +1208,126 @@ class M_admin extends db
             return (false) ;
         }
         
+    }
+    public function DuyetTraSach($MaPhieu)
+    {
+        try {
+            $update = "UPDATE `phieutrasach` SET `TrangThai`='Hoàn Tất' WHERE MaPhieuMuon = $MaPhieu";
+            if(mysqli_query($this->conn,$update)){
+                $qr = "SELECT
+                    chitietphieumuon.MaPhieuMuon,
+                    chitietphieumuon.MaSach,
+                    sach.SoLuong
+                FROM
+                    phieumuon,
+                    chitietphieumuon, 
+                    sach
+                WHERE
+                    chitietphieumuon.MaPhieuMuon = phieumuon.MaPhieuMuon
+                    and sach.MaSach = chitietphieumuon.MaSach
+                    and chitietphieumuon.MaPhieuMuon = '$MaPhieu'";
+                $dulieu = mysqli_query($this->conn,$qr);
+                $list = array();
+                while ($rs = mysqli_fetch_array($dulieu)) {
+                    $list[] = $rs;
+                }                
+                foreach($list as $arr){
+                    $ms = $arr["MaSach"];
+                    $up = "UPDATE sach set sach.SoLuong = sach.SoLuong + 1 WHERE sach.MaSach = '$ms';"; 
+                    if(mysqli_query($this->conn, $up)){
+                        
+                    }               
+                }
+                return (true) ; 
+            }
+        } catch (\Throwable $th) {
+            return (false) ;
+        }
+        
+    }
+
+    public function ThongKeSachMuon()
+    {
+        $query = 'SELECT
+            sinhvien.IDSV,
+            sinhvien.MSSV,
+            sinhvien.HoTen,    
+            GROUP_CONCAT(DISTINCT sach.TenSach SEPARATOR ", ") AS TenSach,    
+            phieutrasach.NgayTra    
+        FROM
+            sinhvien,
+            sach,
+            phieumuon,
+            chitietphieumuon, 
+            phieutrasach
+        WHERE
+            sinhvien.IDSV = phieumuon.IDSV and
+            sach.MaSach = chitietphieumuon.MaSach AND
+            phieumuon.TrangThai = "Đang Mượn" AND
+            phieumuon.MaPhieuMuon = chitietphieumuon.MaPhieuMuon and
+            phieumuon.MaPhieuMuon = phieutrasach.MaPhieuMuon
+        GROUP BY sinhvien.IDSV';
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function SachChuaTra()
+    {
+        $query = 'SELECT
+            phieutrasach.NgayTra, sinhvien.HoTen,  GROUP_CONCAT(DISTINCT sach.TenSach SEPARATOR ", ") AS TenSach, phieutrasach.MaDatSach,
+            phieumuon.NgayMuon, phieumuon.TongSoSachMuon
+        FROM
+            phieutrasach, sach, sinhvien,chitietphieumuon, phieumuon
+        WHERE
+            phieutrasach.MaPhieuMuon = chitietphieumuon.MaPhieuMuon AND
+            sach.MaSach = chitietphieumuon.MaSach AND
+            sinhvien.IDSV = phieumuon.IDSV AND
+            chitietphieumuon.MaPhieuMuon = phieumuon.MaPhieuMuon AND
+            CURDATE() > phieutrasach.NgayTra 
+        GROUP BY sinhvien.HoTen';
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return json_encode($mang);
+    }
+    public function laymadatsach($MaPhieu)
+    {
+        $query="SELECT MaDatSach FROM `phieumuon` WHERE phieumuon.MaPhieuMuon = '$MaPhieu'";
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        return ($mang[0]);
+    }
+    public function sachbithieu($MaPhieu)
+    {
+        $query='SELECT
+            sach.TenSach,
+            sach.SoLuong
+        FROM
+            chitietphieumuon,
+            sach
+        WHERE
+            chitietphieumuon.MaPhieuMuon = '.$MaPhieu.' AND
+            sach.MaSach = chitietphieumuon.MaSach';
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        $str = array();
+        foreach($mang as $arr){
+            $sl = $arr["SoLuong"];
+            if($sl == 0){
+                $str[] = $arr["TenSach"];                
+            }
+        }
+        return $str;
     }
 }
