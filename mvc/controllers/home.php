@@ -193,12 +193,12 @@ class home extends controllers
                 $duongdan = $foder_luu . basename($file);
                 if (file_exists($duongdan)) {
                     header('Content-Description: File Transfer');
-                    header('Pragma: public');
-                    header('Expires: 0');
                     header('Content-Type: application/octet-stream');
+                    header("Content-Disposition:File Transfer; filename=$file");
+                    header('Expires: 0');
                     header('Cache-Control: must-revalidate');
-                    header("Content-Disposition: attachment; filename=$file");
-                    header('Content-Transfer-Emcoding: binary');
+                    header('Pragma: public');
+                    header('Content-Length: '.filesize($duongdan));
                     flush();
                     readfile($duongdan);
                     exit;
