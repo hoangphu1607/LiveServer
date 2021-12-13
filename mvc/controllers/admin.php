@@ -459,7 +459,14 @@ class admin extends controllers
             "khoacn" => $this->sach->Khoacn(),
         ]);
     }
-
+    public function char()
+    {
+        $this->view("trangchu",[
+            "page"=> "char",
+            "phanloai" => $this->sach->loaisach(),
+            "khoacn" => $this->sach->Khoacn(),
+        ]);
+    }
     
 
     

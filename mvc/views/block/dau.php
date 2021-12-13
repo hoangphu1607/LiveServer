@@ -32,7 +32,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    
 </head>
 
 <body id="page-top">
@@ -183,6 +185,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">                        
                             <a class="collapse-item" href="admin/ThongKeMuonSach">Sinh Viên Đang Mượn</a>
                             <a class="collapse-item" href="admin/sachchuatra">Sinh Viên Chưa Trả</a>
+                            <a class="collapse-item" href="admin/char">Thống Kê Sách Từng Ngành</a>
                         </div>
                     </div>
                 </li>

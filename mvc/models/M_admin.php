@@ -1330,4 +1330,25 @@ class M_admin extends db
         }
         return $str;
     }
+
+    public function laysoluongsach()
+    {
+        $query='SELECT           
+            count(sach.MakhoaCN) as SoLuong
+        FROM
+            sach, khoachuyennganh
+        WHERE
+            sach.MakhoaCN = khoachuyennganh.MaKhoaCN 
+        GROUP by sach.MakhoaCN';
+        $row = mysqli_query($this->conn,$query);
+        $mang = array();
+        while ($kq = mysqli_fetch_array($row)) {
+            $mang[] = $kq;
+        }
+        $sl = array();
+        foreach($mang as $arr){
+            $sl[] = $arr["SoLuong"];            
+        }
+        return ($sl);
+    }
 }
