@@ -877,6 +877,7 @@ $(document).ready(function () {
 });
 });
 
+
 ////kiểm tra tên khóa học khi sửa
 $(document).ready(function () {
   $(".TenKhoaHoc").keyup(function () {
@@ -917,13 +918,12 @@ $(document).ready(function () {
 });
 });
 
-
 //thêm khóa học
 $(document).ready(function () {
-  $('#form_themkhoacn').on('submit', function (event) {
+  $('#form_themkhoahoc').on('submit', function (event) {
     event.preventDefault();
     $.ajax({
-      url: "admin/themkhoacn",
+      url: "admin/addKhoaHoc",
       method: 'POST',
       data: new FormData(this),
       contentType: false,
@@ -942,24 +942,26 @@ $(document).ready(function () {
       },
       success: function (data2) {
         var data2 = JSON.parse(data2);
+        console.log(data2);
         if (data2 == true) {
           Swal.close();
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Thêm Khoa Chuyên Ngành Thành Công',
+            title: 'Thêm khóa học thành công',
             showConfirmButton: false,
             timer: 2000
           })
-          $("#thoatthemkhoacn").on("click", function () {
+          setTimeout(function () {
             location.reload();
-          });       
+          }, 2000);
+          
         } else {
           Swal.close();
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: 'Thêm Khoa Chuyên Ngành Thất Bại',
+            title: 'Thêm khóa học thất bại',
             showConfirmButton: false,
             timer: 2000
           })
@@ -1142,14 +1144,13 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#form_themkhoacn').on('submit', function (event) {
     event.preventDefault();
-    var tenkhoacn = $("#tenkhoacn").val();
-    var data = {
-      tenkhoacn: tenkhoacn,
-    };
     $.ajax({
-      url: "admin/addTacGia",
+      url: "admin/themkhoacn",
       method: 'POST',
-      data: data,
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData: false,
       beforeSend: function () {
         Swal.fire({
           title: 'Đảng xử lý...',
@@ -1163,29 +1164,24 @@ $(document).ready(function () {
       },
       success: function (data2) {
         var data2 = JSON.parse(data2);
-        console.log(data2);
         if (data2 == true) {
           Swal.close();
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Thêm tác giả thành công',
+            title: 'Thêm Khoa Chuyên Ngành Thành Công',
             showConfirmButton: false,
             timer: 2000
           })
-          $("#thoatthemtacgia").on("click", function () {
+          $("#thoatthemkhoacn").on("click", function () {
             location.reload();
-          });
-          $("#btn_thoatthemtg").on("click", function () {
-            location.reload();
-          });
-
+          });       
         } else {
           Swal.close();
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: 'Thêm tác giả thất bại',
+            title: 'Thêm Khoa Chuyên Ngành Thất Bại',
             showConfirmButton: false,
             timer: 2000
           })
@@ -1196,7 +1192,6 @@ $(document).ready(function () {
 
   });
 });
-
 //lấy id khoa cn cần sửa
 $(document).ready(function () {
   $(".suakhoacn").click(function () {
