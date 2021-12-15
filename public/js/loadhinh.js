@@ -2125,7 +2125,25 @@ function viewDatSach() {
     $("results").html(data);
   })
 }
-
+$(document).ready(function(){  
+  $(".SachTraTre").click(function (){ 
+    var tr = $(this).closest('tr');   
+    var getID = $(this).attr("id"); 
+    var dulieu = getID.split(' ');
+    tr.prop('hidden', true); 
+    toastr.success('Gửi Thông Báo Thành Công', 'Thành Công');       
+    Email.send({
+      Host : "smtp.gmail.com",
+      Username : "vhphu01@gmail.com",
+      Password : "hoangphu123",
+      To : dulieu[1]+'@student.vlute.edu.vn',
+      From : "vhphu01@gmail.com",
+      Subject : "Thông Báo Quá Hạn Trả Sách",
+      Body : "Sách bạn đặt đã quá hạn, vui lòng trả sách lại cho thư viện, nếu không sẽ bị xử phạt"
+  }).then(          
+  );
+  });
+});
 $(document).ready(function(){
   $(".SachCanDuyet").click(function(){
     var tr = $(this).closest('tr');
@@ -2155,7 +2173,7 @@ $(document).ready(function(){
                   Subject : "Thông Báo Đặt Sách Thành Công",
                   Body : "Sách của bạn đã được chuẩn bị đầy đủ, vui lòng đến thư viện để nhận được sách! Mã Đặt Sách Của bạn là: "+ madatsach +". Xin Cảm Ơn!!"
               }).then(
-                message => alert(madatsach)          
+                         
               );
               }
             });            

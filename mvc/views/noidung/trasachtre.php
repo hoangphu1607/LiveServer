@@ -17,8 +17,8 @@
                         <th>Ngày Trả</th>
                         <th>Số Lượng</th>
                         <th>Tên Sách</th>
-                        <th>Mã Đặt Sách</th>                        
-                        
+                        <th>Mã Đặt Sách</th>
+                        <th>Gửi Thông Báo</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -30,7 +30,7 @@
                         <th>Số Lượng</th> 
                         <th>Tên Sách</th> 
                         <th>Mã Đặt Sách</th>                         
-                        
+                        <th>Gửi Thông Báo</th>
                         </tr>
                     </tfoot>
                     <tbody id="results">                    
@@ -48,6 +48,7 @@
                             <td><?php echo $sach["TongSoSachMuon"] ?></td> 
                             <td><?php echo $sach["TenSach"] ?></td>
                             <td><?php echo $sach["MaDatSach"] ?></td>
+                            <td><a type="button" class="btn btn-primary SachTraTre" id="<?php echo $sach["IDSV"]?> <?php echo $sach["MSSV"]?>">Duyệt</a></td>
                         </tr>
                         <?php $i++; } ?>
                     </tbody>

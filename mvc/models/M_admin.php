@@ -1277,7 +1277,7 @@ class M_admin extends db
     public function SachChuaTra()
     {
         $query = 'SELECT
-            phieutrasach.NgayTra, sinhvien.HoTen,  GROUP_CONCAT(DISTINCT sach.TenSach SEPARATOR ", ") AS TenSach, phieutrasach.MaDatSach,
+            sinhvien.IDSV, sinhvien.MSSV, phieutrasach.NgayTra, sinhvien.HoTen,  GROUP_CONCAT(DISTINCT sach.TenSach SEPARATOR ", ") AS TenSach, phieutrasach.MaDatSach,
             phieumuon.NgayMuon, phieumuon.TongSoSachMuon
         FROM
             phieutrasach, sach, sinhvien,chitietphieumuon, phieumuon
