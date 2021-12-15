@@ -1333,7 +1333,8 @@ class M_admin extends db
 
     public function laysoluongsach()
     {
-        $query='SELECT           
+        $query='SELECT 
+            khoachuyennganh.TenCN,          
             count(sach.MakhoaCN) as SoLuong
         FROM
             sach, khoachuyennganh
@@ -1345,10 +1346,10 @@ class M_admin extends db
         while ($kq = mysqli_fetch_array($row)) {
             $mang[] = $kq;
         }
-        $sl = array();
-        foreach($mang as $arr){
-            $sl[] = $arr["SoLuong"];            
-        }
-        return ($sl);
+        // $sl = array();
+        // foreach($mang as $arr){
+        //     $sl[] = $arr["SoLuong"];            
+        // }
+        return ($mang);
     }
 }

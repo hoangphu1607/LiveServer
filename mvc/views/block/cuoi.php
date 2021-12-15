@@ -64,9 +64,7 @@
     <script src="public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="public/js/demo/datatables-demo.js"></script>   
        
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <script src="public/js/char.js"></script>              
+                
 
     <!-- Page level plugins -->
     <!-- <script src="public/vendor/chart/Chart.min.js"></script> -->
