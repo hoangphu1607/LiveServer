@@ -5,16 +5,17 @@
     public function themsachvaophieu()
     {
         $IDSV = $_SESSION["dangnhap"][0];
-        $select = 'SELECT IDSV,  SUM(TongSoSachMuon) as Tong FROM `phieumuon` WHERE IDSV = '.$IDSV.' and TrangThai = "Đang Đặt" Or TrangThai = "Đang Mượn"';
+        $select = 'SELECT IDSV,  SUM(TongSoSachMuon) as Tong FROM `phieumuon` WHERE IDSV = '.$IDSV.' and TrangThai = "Đang Đặt" OR IDSV = '.$IDSV.' AND TrangThai = "Đang Mượn"';
         $row = mysqli_query($this->conn, $select);
         $mang = array();
         while ($kq = mysqli_fetch_array($row)) {
             $mang[] = $kq;
         }
+        $ID = $mang[0]["IDSV"];
         $Tong = $mang[0]['Tong']; 
         $SoDong = mysqli_num_rows($row);
         $query = "SELECT phieumuon.MaPhieuMuon, IDSV, TrangThai,SUM(chitietphieumuon.SoLuong) as TongSachDangDat 
-        FROM `phieumuon`,chitietphieumuon WHERE IDSV = '$IDSV' and TrangThai = 'Đang Đặt' or TrangThai = 'Đang Mượn'
+        FROM `phieumuon`,chitietphieumuon WHERE IDSV = '$IDSV' and TrangThai = 'Đang Đặt'
         and chitietphieumuon.MaPhieuMuon = phieumuon.MaPhieuMuon";
         $row2 = mysqli_query($this->conn, $query);
         $mang2 = array();
@@ -26,7 +27,7 @@
         $day = date("Y-m-d");
         $result = false;        
         $MaSach = $_SESSION["MaSach"];
-        if($SoDong == 0 || $CheckMaPhieu == NULL || $trangthai == "Đang Mượn"){
+        if($CheckMaPhieu == NULL || $ID == NULL){
             $qr = "INSERT INTO `phieumuon`( `IDSV`, `NgayMuon`, `TrangThai`, `TongSoSachMuon`) 
             VALUES ('$IDSV','$day','Đang Đặt','0')";
             if(mysqli_query($this->conn, $qr)){

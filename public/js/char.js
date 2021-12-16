@@ -20,6 +20,5 @@ $(document).ready(function (){
           labels: ['Số Lượng']
         });
       }     
-  });
-  
+  });  
 });
