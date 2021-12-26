@@ -1105,7 +1105,7 @@ class M_admin extends db
     {
         $query = "SELECT  phieumuon.MaPhieuMuon, sinhvien.HoTen, phieumuon.TongSoSachMuon, phieumuon.NgayMuon ,sinhvien.MSSV
         FROM `phieumuon`, sinhvien 
-        WHERE sinhvien.IDSV = phieumuon.IDSV and TrangThai = 'Đang Đặt'";
+        WHERE sinhvien.IDSV = phieumuon.IDSV and TrangThai = 'Đang Đặt' and phieumuon.TongSoSachMuon > 0";
         $row = mysqli_query($this->conn,$query);
         $mang = array();
         while ($kq = mysqli_fetch_array($row)) {
