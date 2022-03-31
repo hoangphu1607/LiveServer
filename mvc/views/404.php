@@ -29,7 +29,7 @@
         <div class="text-center">
             <div class="error mx-auto" data-text="404"> 404 </div>
             <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <h2 class="text-gray-500 mb-0">Không tìm thấy trang mọi người ơi 😭</h2>
+            <h2 class="text-gray-500 mb-0">Không tìm thấy trang , vui lòng về trang chủ</h2>
             <a href="index.php">&larr; Quay về trang chủ </a>
         </div>
 

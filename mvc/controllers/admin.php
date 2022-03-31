@@ -2,14 +2,14 @@
 class admin extends controllers
 {
     // public $Location = "Location: http://localhost:8080/LiveServer/";
-    // public $Location = "Location: http://localhost/LiveServer";
+     public $Location = "Location: http://localhost/LiveServer";
     public function __construct()
     {
         $this->sach = $this->model("danhsach");
 
         if (isset($_SESSION["dangnhap"][2]) == false) {
             $_SESSION['thongbao'] = "vui lòng nhập đúng với mã quyền của bạn";
-            header($this->Location2);
+            header($this->Location);
         }
     }
     public function sayhi()

@@ -43,8 +43,9 @@ class xl_dn extends db{
                     $arr[] = $ListMaDatSach;
                 }
                 $_SESSION["ListMaDatSach"] = $arr;
-                // header('Location: http://localhost/LiveServer/');
-                header('Location: http://localhost:8080/LiveServer/');                
+                $khoacn = $kq_tv["MaKhoa"];
+                header('Location: http://localhost/LiveServer/home/chi_tiet_khoacn/'.$khoacn.'');
+               // header('Location: http://localhost:8080/LiveServer/');                
                 
             }
             else{

@@ -2077,7 +2077,7 @@ $(document).ready(function () {
   var IDSV = $("#IDSV").val();
   // var data = {IDSV:IDSV, IDSach:IDSach};          
   if(IDSV == "null"){
-      window.location="http://localhost:8080/liveserver/dangnhap";                                       
+      window.location="http://localhost/liveserver/dangnhap";                                       
   }
     $.ajax({
       url: "ajax/datsach",
@@ -2359,5 +2359,16 @@ function thongbao_loi() {
     });
   });
 
+
 }
 
+$(document).ready(function () {
+  $.ajax({
+    url: "ajax/test",
+    method: 'POST',
+    success: function (data2) {
+      var data2 = JSON.parse(data2); 
+      console.log(data2);
+    }
+  });
+});

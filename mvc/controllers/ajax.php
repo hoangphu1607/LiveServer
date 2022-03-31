@@ -613,5 +613,13 @@ class ajax extends controllers
         $kq = $this->model("M_admin")->laysoluongsach();
         echo json_encode ($kq);
     }
+
+    
+    public function test()
+    {
+        $kq = $this->model("M_admin")->showKhoaCN();
+        echo $kq;
+    }
+    
 }
 
